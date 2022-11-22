@@ -4,10 +4,27 @@
  */
 package Comunicaciones;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+
 /**
  *
  * @author vchin
  */
 public class ThreadCliente {
+    private Socket socketRef;
+    public DataInputStream reader;
+    public DataOutputStream writer;
     
+    public ThreadCliente(Socket socketRef) throws IOException {
+        this.socketRef = socketRef;
+        reader = new DataInputStream(socketRef.getInputStream());
+        writer = new DataOutputStream(socketRef.getOutputStream());
+        //this.refPantalla = refPantalla;
+    }
+    public void run (){
+        
+    }
 }

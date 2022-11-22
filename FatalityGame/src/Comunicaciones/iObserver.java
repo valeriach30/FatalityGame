@@ -10,5 +10,5 @@ package Comunicaciones;
  * @author vchin
  */
 public interface iObserver {
-    public void notify(iClientMessage msg);
+    public void notificar(iClientMessage msg);
 }

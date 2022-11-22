@@ -5,12 +5,11 @@
  */
 package Comunicaciones;
 
-import Comunicaciones.iClientMessage;
 /**
  *
  * @author vchin
  */
 public interface iObserved {
-    public void notifyAll(iClientMessage msg);
-    public void addObserver(iObserver observer);
+    public void notificarTodos(iClientMessage msg);
+    public void agregarObserver(iObserver observer);
 }
