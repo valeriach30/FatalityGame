@@ -11,18 +11,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author vchin
  */
 public class Configuracion extends javax.swing.JFrame {
-    private int cont = 0;
-    /**
-     * Creates new form Configuracion
-     */
+    private int cantidadPersonajes = 0;
+    private Controlador elControlador = new Controlador();
+    
     public Configuracion() throws IOException, FontFormatException {
         initComponents();
+        this.elControlador.crear();
     }
 
     /**
@@ -48,9 +49,14 @@ public class Configuracion extends javax.swing.JFrame {
         hielobtn = new javax.swing.JButton();
         acidbtn = new javax.swing.JButton();
         espiritualidadbtn = new javax.swing.JButton();
-        fuegobtn1 = new javax.swing.JButton();
+        crearbtn = new javax.swing.JButton();
         nombretxt = new javax.swing.JTextField();
+        personaje4 = new javax.swing.JLabel();
+        personaje1 = new javax.swing.JLabel();
+        personaje3 = new javax.swing.JLabel();
+        personaje2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        titulo2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,10 +64,10 @@ public class Configuracion extends javax.swing.JFrame {
         jPanel1.setLayout(null);
 
         titulo1.setFont(new java.awt.Font("Matura MT Script Capitals", 1, 48)); // NOI18N
-        titulo1.setForeground(new java.awt.Color(208, 0, 0));
-        titulo1.setText("Choose your fighters");
+        titulo1.setForeground(new java.awt.Color(255, 186, 8));
+        titulo1.setText("choosen characters");
         jPanel1.add(titulo1);
-        titulo1.setBounds(10, 20, 510, 80);
+        titulo1.setBounds(580, 420, 440, 80);
 
         imagentxt.setBackground(new java.awt.Color(51, 51, 51));
         imagentxt.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
@@ -131,17 +137,17 @@ public class Configuracion extends javax.swing.JFrame {
         jPanel1.add(espiritualidadbtn);
         espiritualidadbtn.setBounds(320, 320, 90, 90);
 
-        fuegobtn1.setBackground(new java.awt.Color(232, 93, 4));
-        fuegobtn1.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
-        fuegobtn1.setForeground(new java.awt.Color(0, 0, 0));
-        fuegobtn1.setText("Crear");
-        fuegobtn1.addActionListener(new java.awt.event.ActionListener() {
+        crearbtn.setBackground(new java.awt.Color(232, 93, 4));
+        crearbtn.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
+        crearbtn.setForeground(new java.awt.Color(0, 0, 0));
+        crearbtn.setText("Crear");
+        crearbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fuegobtn1ActionPerformed(evt);
+                crearbtnActionPerformed(evt);
             }
         });
-        jPanel1.add(fuegobtn1);
-        fuegobtn1.setBounds(20, 430, 160, 40);
+        jPanel1.add(crearbtn);
+        crearbtn.setBounds(20, 430, 160, 40);
 
         nombretxt.setBackground(new java.awt.Color(51, 51, 51));
         nombretxt.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
@@ -154,22 +160,34 @@ public class Configuracion extends javax.swing.JFrame {
         });
         jPanel1.add(nombretxt);
         nombretxt.setBounds(20, 120, 200, 40);
+        jPanel1.add(personaje4);
+        personaje4.setBounds(830, 230, 200, 200);
+        jPanel1.add(personaje1);
+        personaje1.setBounds(620, 20, 200, 200);
+        jPanel1.add(personaje3);
+        personaje3.setBounds(620, 230, 200, 200);
+        jPanel1.add(personaje2);
+        personaje2.setBounds(830, 20, 200, 200);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logoMK2.gif"))); // NOI18N
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(120, 110, 740, 400);
+        jLabel1.setBounds(120, 80, 740, 420);
+
+        titulo2.setFont(new java.awt.Font("Matura MT Script Capitals", 1, 48)); // NOI18N
+        titulo2.setForeground(new java.awt.Color(208, 0, 0));
+        titulo2.setText("Choose your fighters");
+        jPanel1.add(titulo2);
+        titulo2.setBounds(10, 20, 510, 80);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 941, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1044, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -187,9 +205,35 @@ public class Configuracion extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_hierrobtnActionPerformed
 
-    private void fuegobtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fuegobtn1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fuegobtn1ActionPerformed
+    private void crearbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearbtnActionPerformed
+        if(cantidadPersonajes != 4){
+            cantidadPersonajes += 1;
+            // Obtener la ruta de la imagen
+            String ruta = imagentxt.getText();
+            // Crear aqui el personaje
+            switch(cantidadPersonajes){
+                case 1:
+                    personaje1.setIcon(new javax.swing.ImageIcon(getClass().getResource(ruta))); 
+                    break;
+                case 2:
+                    personaje2.setIcon(new javax.swing.ImageIcon(getClass().getResource(ruta))); 
+                    break;
+                case 3:
+                    personaje3.setIcon(new javax.swing.ImageIcon(getClass().getResource(ruta))); 
+                    break;
+                case 4:
+                    personaje4.setIcon(new javax.swing.ImageIcon(getClass().getResource(ruta))); 
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Ya ha seleccionado sus 4 jugadores! Hora de jugar", "Info", JOptionPane.OK_OPTION);
+        }
+        
+    }//GEN-LAST:event_crearbtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -236,10 +280,10 @@ public class Configuracion extends javax.swing.JFrame {
     private javax.swing.JButton acidbtn;
     private javax.swing.JButton aguabtn;
     private javax.swing.JButton airebtn;
+    private javax.swing.JButton crearbtn;
     private javax.swing.JButton electricidadbtn;
     private javax.swing.JButton espiritualidadbtn;
     private javax.swing.JButton fuegobtn;
-    private javax.swing.JButton fuegobtn1;
     private javax.swing.JButton hielobtn;
     private javax.swing.JButton hierrobtn;
     private javax.swing.JTextField imagentxt;
@@ -249,6 +293,11 @@ public class Configuracion extends javax.swing.JFrame {
     private javax.swing.JButton magiabbtn;
     private javax.swing.JButton magianbtn;
     private javax.swing.JTextField nombretxt;
+    private javax.swing.JLabel personaje1;
+    private javax.swing.JLabel personaje2;
+    private javax.swing.JLabel personaje3;
+    private javax.swing.JLabel personaje4;
     private javax.swing.JLabel titulo1;
+    private javax.swing.JLabel titulo2;
     // End of variables declaration//GEN-END:variables
 }

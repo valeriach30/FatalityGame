@@ -9,5 +9,9 @@ package fatalitygame;
  * @author vchin
  */
 public class Controlador {
+
+    void crear() {
+        // nada
+    }
     
 }
