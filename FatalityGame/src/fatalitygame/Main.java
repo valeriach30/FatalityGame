@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class Main extends javax.swing.JDialog {
 
-    private Controlador controlMain;
+    public Controlador controlMain;
     public Cliente refCliente;
     private int id;
     
@@ -370,7 +370,6 @@ public class Main extends javax.swing.JDialog {
 
     private void chatbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatbtnActionPerformed
         try {
-            // TODO add your handling code here:
             refCliente.hiloCliente.writer.writeInt(2);
             refCliente.hiloCliente.writer.writeUTF("hola a todos");
         } catch (IOException ex) {

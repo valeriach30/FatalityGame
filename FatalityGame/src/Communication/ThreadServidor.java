@@ -5,12 +5,17 @@
  */
 package Communication;
 
+import Libreria.Juego.Jugador;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,13 +23,13 @@ import java.util.Random;
  */
 class ThreadServidor extends Thread implements iObserver{
     
-   private int ficha;
-    private int dinero;
-    private int propiedad;
+    private int ficha;
     private int id;
     private Socket socketRef;
     public DataInputStream reader;
     public DataOutputStream writer;
+    public ObjectInputStream Objectreader;
+    public ObjectOutputStream Objectwriter;
     private String nombre;
     private boolean running = true;
     Servidor server;
@@ -33,6 +38,8 @@ class ThreadServidor extends Thread implements iObserver{
         this.socketRef = socketRef;
         reader = new DataInputStream(socketRef.getInputStream());
         writer = new DataOutputStream(socketRef.getOutputStream());
+        Objectreader = new ObjectInputStream(socketRef.getInputStream());
+        Objectwriter = new ObjectOutputStream(socketRef.getOutputStream());
         this.server = server;
         this.id = id;
     }
@@ -42,14 +49,18 @@ class ThreadServidor extends Thread implements iObserver{
         int instruccionId = 1;
         while (running){
             try {
-                //reader = new DataInputStream(socketRef.getInputStream());
-                //writer = new DataOutputStream(socketRef.getOutputStream());
                 instruccionId = reader.readInt(); // esperar hasta que reciba un entero
                 System.out.println("instruccion server: " + instruccionId);
                 switch (instruccionId){
                     //----------------------------INFO PERSONAL----------------------------
                     case 1:
+                        
                         nombre = reader.readUTF();
+                        Jugador player = (Jugador) Objectreader.readObject();
+                        server.controlMain.agregarJugador(player);
+                        for (int i = 0; i < server.controlMain.juego.getJugadores().size(); i++) {
+                            System.out.println(server.controlMain.juego.getJugadores().get(i).toString());
+                        }
                         writer.writeInt(1);
                         writer.writeInt(id);
                         writer.writeInt(server.getTurno());
@@ -57,7 +68,6 @@ class ThreadServidor extends Thread implements iObserver{
                     
                     //----------------------------CHAT----------------------------
                     case 2:
-                        System.out.println("hola servidor?");
                         String mensaje = reader.readUTF();
                         for (int i = 0; i < server.conexiones.size(); i++) {
                             ThreadServidor current = server.conexiones.get(i);
@@ -74,6 +84,8 @@ class ThreadServidor extends Thread implements iObserver{
             } catch (IOException ex) {
                 System.out.println("error servidor");
                 System.out.println(ex.toString());
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     } 

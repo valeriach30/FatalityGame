@@ -5,6 +5,8 @@
  */
 package Communication;
 
+import Juego.Personaje.Personaje;
+import Libreria.Juego.Jugador;
 import fatalitygame.Main;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -21,18 +23,27 @@ public class Cliente implements iObserver{
     public Main refPantalla;
     public ThreadCliente hiloCliente;
     public String name;
-    public int Ficha;
+    public Jugador player;
     private static Cliente client;
+    private ArrayList<Personaje> personajes = new ArrayList<Personaje>();
     
     public Cliente(){
     }
     
-    public Cliente(Main refPantalla, int numFicha) {
+    public Cliente(Main refPantalla) {
         this.refPantalla = refPantalla;
-        this.Ficha = numFicha;
         this.refPantalla.setRefCliente(this);
+        Jugador player = new Jugador();
+        this.player = player;
     }
-    
+    public Cliente(Main refPantalla, ArrayList<Personaje> personajes) {
+        this.refPantalla = refPantalla;
+        this.refPantalla.setRefCliente(this);
+        // Crear jugador
+        Jugador player = new Jugador();
+        player.setPersonajes(personajes);
+        this.player = player;
+    }
     public static Cliente getInstance(Main refPantalla) throws UnknownHostException{
         if(client==null){
             client = new Cliente();
@@ -45,14 +56,17 @@ public class Cliente implements iObserver{
  
         try{
             this.refPantalla.setRefCliente(this);
+            
             socketRef = new Socket("localhost", 35775);
-            hiloCliente = new ThreadCliente(socketRef, refPantalla);
+            hiloCliente = new ThreadCliente(socketRef, refPantalla, player);
             hiloCliente.start();
             
-            String nombre = JOptionPane.showInputDialog("Introduzca un Nick:");
-            name = nombre;
+            String nombre = JOptionPane.showInputDialog("Nickname:");
+            this.name = nombre;
+            this.player.setNombre(nombre);
             hiloCliente.writer.writeInt(1); //instruccion para el switch del thraed servidor
             hiloCliente.writer.writeUTF(nombre); //instruccion para el switch del thraed servidor
+            hiloCliente.Objectwriter.writeObject(player);
             refPantalla.setTitle(nombre);
             
         }

@@ -363,12 +363,12 @@ public class Configuracion extends javax.swing.JFrame {
         }
         else{
             // Ir a la pantalla cliente
-//            this.setVisible(false);
-//            Main pant1 = new Main(this, true,elControlador);
-//            pant1.setVisible(true);  
-//            Cliente c = new Cliente(pant1, personajes);
-//            pant1.setVisible(true);
-//            c.conectar();
+            this.setVisible(false);
+            Main pant1 = new Main(this, true,elControlador);
+            pant1.setVisible(true);  
+            //Cliente c = new Cliente(pant1, personajes);
+            pant1.setVisible(true);
+            //c.conectar();
         }
         
     }//GEN-LAST:event_crearbtnActionPerformed
@@ -444,7 +444,7 @@ public class Configuracion extends javax.swing.JFrame {
         this.setVisible(false);
             Main pant1 = new Main(this, true,elControlador);
             //Cliente c = new Cliente(pant1, personajes);
-            Cliente c = new Cliente(pant1, 1);
+            Cliente c = new Cliente(pant1);
             c.conectar();
             pant1.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed

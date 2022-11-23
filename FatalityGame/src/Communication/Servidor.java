@@ -5,6 +5,9 @@
  */
 package Communication;
 
+import Libreria.Juego.Juego;
+import Libreria.Juego.Jugador;
+import fatalitygame.Controlador;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -22,10 +25,9 @@ public class Servidor implements iObserved{
     private int turno;
     private int FichaTurno;
     private boolean partidaIniciada = false;
-    public int lanzamientoInicial[] = new int[6];
-    public int[] FichaConexiones = new int [6];
     private final ArrayList<iObserver> observers = new ArrayList<iObserver>();
-
+    public Controlador controlMain = new Controlador();
+    
     public Servidor(ServerForm refPantalla) {
         this.refPantalla = refPantalla;
         conexiones = new ArrayList<ThreadServidor>();
@@ -41,6 +43,7 @@ public class Servidor implements iObserved{
     public int getTurno() {
         return turno;
     }
+    
     public void runServer() throws IOException{
         
         int contador = 0;
@@ -50,16 +53,17 @@ public class Servidor implements iObserved{
             refPantalla.addMensaje(".: Esperando conexiones");
             Socket refSocket = srv.accept();
             
-            if(!partidaIniciada && conexiones.size() < 6){
+            if(!partidaIniciada){
                 refPantalla.addMensaje(".: Conexion realizada: " + (++contador));
 
                 // Thread
                 ThreadServidor newThread = new ThreadServidor(refSocket, this, conexiones.size());
                 conexiones.add(newThread);
+                
                 newThread.start();
             }
             else
-                refPantalla.addMensaje(".: Conexion denegada, partida ya inicio / ya hay 6 jugadores");
+                refPantalla.addMensaje(".: Conexion denegada, partida ya inicio");
         }
     }
 
