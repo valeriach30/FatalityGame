@@ -1,0 +1,87 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Communication;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author vchin
+ */
+public class Servidor {
+    ServerForm refPantalla;
+    public ArrayList<ThreadServidor> conexiones;
+    private boolean running = true;
+    private ServerSocket srv;
+    private int turno;
+    private int FichaTurno;
+    private boolean partidaIniciada = false;
+    public int lanzamientoInicial[] = new int[6];
+    public int[] FichaConexiones = new int [6];
+    
+    public Servidor(ServerForm refPantalla) {
+        this.refPantalla = refPantalla;
+        conexiones = new ArrayList<ThreadServidor>();
+        this.refPantalla.setSrv(this);
+    }
+    
+    
+    public String printArregloDados(){
+        String str = "Arreglo:  ";
+        for (int i = 0; i < conexiones.size(); i++) {
+            str += lanzamientoInicial[i] + "   ";
+        }
+        return str;
+    }
+    
+    public void iniciarPartida(){
+        this.partidaIniciada = true;
+    }
+    
+    public int getTurnoSiguiente(){
+        if (++turno >= conexiones.size())
+            turno = 0;
+        
+        return turno;
+    }
+
+    public int getTurno() {
+        return turno;
+    }
+    
+    public int getFichaTurno(){
+        return FichaTurno;
+    }
+    
+    public void stopserver(){
+        running = false;
+    }
+    
+    public void runServer() throws IOException{
+        
+        int contador = 0;
+        srv = new ServerSocket(35775);
+        
+        while(running){
+            refPantalla.addMensaje(".: Esperando conexiones");
+            Socket refSocket = srv.accept();
+            
+            if(!partidaIniciada && conexiones.size() < 6){
+                refPantalla.addMensaje(".: Conexion realizada: " + (++contador));
+
+                // Thread
+                ThreadServidor newThread = new ThreadServidor(refSocket, this, conexiones.size());
+                conexiones.add(newThread);
+                newThread.start();
+            }
+            else
+                refPantalla.addMensaje(".: Conexion denegada, partida ya inicio / ya hay 6 jugadores");
+        }
+    }
+}

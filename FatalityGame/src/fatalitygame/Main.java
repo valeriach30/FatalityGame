@@ -4,9 +4,13 @@
  */
 package fatalitygame;
 
-import Comunicaciones.Cliente;
+import Communication.Cliente;
 import Juego.Personaje.Personaje;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,7 +19,8 @@ import java.util.ArrayList;
 public class Main extends javax.swing.JDialog {
 
     private Controlador controlMain;
-    Cliente refCliente;
+    public Cliente refCliente;
+    private int id;
     
     public Main(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -76,8 +81,9 @@ public class Main extends javax.swing.JDialog {
         personaje2btn = new javax.swing.JButton();
         personaje3btn = new javax.swing.JButton();
         consola2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        consolaTxta = new javax.swing.JTextArea();
         typename = new javax.swing.JLabel();
+        chatbtn = new javax.swing.JButton();
 
         consola.setBackground(new java.awt.Color(0, 0, 0));
         consola.setColumns(20);
@@ -312,12 +318,12 @@ public class Main extends javax.swing.JDialog {
         jPanel1.add(personaje3btn);
         personaje3btn.setBounds(790, 320, 200, 200);
 
-        jTextArea1.setBackground(new java.awt.Color(0, 0, 0));
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("OCR A Extended", 0, 18)); // NOI18N
-        jTextArea1.setForeground(new java.awt.Color(0, 102, 255));
-        jTextArea1.setRows(5);
-        consola2.setViewportView(jTextArea1);
+        consolaTxta.setBackground(new java.awt.Color(0, 0, 0));
+        consolaTxta.setColumns(20);
+        consolaTxta.setFont(new java.awt.Font("OCR A Extended", 0, 18)); // NOI18N
+        consolaTxta.setForeground(new java.awt.Color(0, 102, 255));
+        consolaTxta.setRows(5);
+        consola2.setViewportView(consolaTxta);
 
         jPanel1.add(consola2);
         consola2.setBounds(0, 560, 1360, 130);
@@ -327,6 +333,15 @@ public class Main extends javax.swing.JDialog {
         typename.setText("Name");
         jPanel1.add(typename);
         typename.setBounds(470, 430, 90, 40);
+
+        chatbtn.setText("chat");
+        chatbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chatbtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(chatbtn);
+        chatbtn.setBounds(310, 530, 72, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -351,6 +366,17 @@ public class Main extends javax.swing.JDialog {
     private void personaje4btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_personaje4btnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_personaje4btnActionPerformed
+
+    private void chatbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatbtnActionPerformed
+        try {
+            // TODO add your handling code here:
+            refCliente.hiloCliente.writer.writeInt(2);
+            refCliente.hiloCliente.writer.writeUTF("hola a todos");
+        } catch (IOException ex) {
+
+        }
+        
+    }//GEN-LAST:event_chatbtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -398,8 +424,10 @@ public class Main extends javax.swing.JDialog {
     private javax.swing.JLabel atacante;
     private javax.swing.JLabel atacante1;
     private javax.swing.JLabel attackername;
+    private javax.swing.JButton chatbtn;
     private javax.swing.JTextArea consola;
     private javax.swing.JScrollPane consola2;
+    private javax.swing.JTextArea consolaTxta;
     private javax.swing.JTextArea enemiestxta;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -410,7 +438,6 @@ public class Main extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton personaje1btn;
     private javax.swing.JButton personaje2btn;
     private javax.swing.JButton personaje3btn;
@@ -439,4 +466,15 @@ public class Main extends javax.swing.JDialog {
     private javax.swing.JLabel victim4;
     private javax.swing.JLabel weaponused;
     // End of variables declaration//GEN-END:variables
+
+    public void addMensaje(String string) {
+        consolaTxta.setText(string);
+    }
+
+    public void setRefCliente(Cliente cliente) {
+        this.refCliente = cliente;
+    }
+    public void setID(int num){
+       this.id = num;
+    }
 }

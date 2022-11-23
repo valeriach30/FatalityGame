@@ -5,7 +5,7 @@
 package fatalitygame;
 
 
-import Comunicaciones.Cliente;
+import Communication.Cliente;
 import Juego.Armas.Arma;
 import Juego.Personaje.Personaje;
 import java.awt.FontFormatException;
@@ -254,14 +254,14 @@ public class Configuracion extends javax.swing.JFrame {
         jPanel1.add(jLabel1);
         jLabel1.setBounds(120, 80, 740, 420);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("entrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(530, 30, 75, 23);
+        jButton1.setBounds(530, 30, 72, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -363,12 +363,12 @@ public class Configuracion extends javax.swing.JFrame {
         }
         else{
             // Ir a la pantalla cliente
-            this.setVisible(false);
-            Main pant1 = new Main(this, true,elControlador);
-            pant1.setVisible(true);  
-            Cliente c = new Cliente(pant1, personajes);
-            pant1.setVisible(true);
-            c.conectar();
+//            this.setVisible(false);
+//            Main pant1 = new Main(this, true,elControlador);
+//            pant1.setVisible(true);  
+//            Cliente c = new Cliente(pant1, personajes);
+//            pant1.setVisible(true);
+//            c.conectar();
         }
         
     }//GEN-LAST:event_crearbtnActionPerformed
@@ -443,8 +443,9 @@ public class Configuracion extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
             this.setVisible(false);
             Main pant1 = new Main(this, true,elControlador);
-            pant1.setVisible(true);  
-            Cliente c = new Cliente(pant1, personajes);
+            //Cliente c = new Cliente(pant1, personajes);
+            Cliente c = new Cliente(pant1, 1);
+            c.conectar();
             pant1.setVisible(true);
             c.conectar();    }//GEN-LAST:event_jButton1ActionPerformed
 
