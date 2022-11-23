@@ -1,27 +1,27 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package fatalitygame;
 
 import Juego.Armas.Arma;
 import Juego.Personaje.Personaje;
-import java.util.ArrayList;
 
 /**
  *
  * @author vchin
  */
-public class CharacterCard extends javax.swing.JFrame {
+public class Card extends javax.swing.JDialog {
 
     /**
-     * Creates new form CharacterCard
+     * Creates new form Card
      */
-    public CharacterCard() {
+    public Card(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
     }
-    
-    public CharacterCard(Personaje p) {
+    public Card(java.awt.Frame parent, boolean modal, Personaje p) {
+        super(parent, modal);
         initComponents();
         nombrelbl.setText(p.getNombre());
         personaje.setIcon(new javax.swing.ImageIcon(getClass().getResource(p.getApariencia()))); 
@@ -30,23 +30,23 @@ public class CharacterCard extends javax.swing.JFrame {
         for (int i = 0; i < p.getArmas().size(); i++) {
             Arma arma = p.getArmas().get(i);
             switch(i){
-                case 1:
+                case 0:
                     arma1.setText(arma.getName());
                     ArrArm1.setText(arma.getDanhos().toString());
                     break;
-                case 2:
+                case 1:
                     arma2.setText(arma.getName());
                     ArrArm2.setText(arma.getDanhos().toString());
                     break;
-                case 3:
+                case 2:
                     arma3.setText(arma.getName());
                     ArrArm3.setText(arma.getDanhos().toString());
                     break;
-                case 4:
+                case 3:
                     arma4.setText(arma.getName());
                     ArrArm4.setText(arma.getDanhos().toString());
                     break;
-                case 5:
+                case 4:
                     arma5.setText(arma.getName());
                     ArrArm5.setText(arma.getDanhos().toString());
                     break;
@@ -63,7 +63,6 @@ public class CharacterCard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         nombrelbl = new javax.swing.JLabel();
         arma2 = new javax.swing.JLabel();
@@ -80,18 +79,15 @@ public class CharacterCard extends javax.swing.JFrame {
         personaje = new javax.swing.JLabel();
         tipolbl = new javax.swing.JLabel();
 
-        jLabel1.setText("jLabel1");
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(386, 545));
         setMinimumSize(new java.awt.Dimension(386, 545));
         setPreferredSize(new java.awt.Dimension(386, 545));
-        setSize(386, 545);
+        setSize(new java.awt.Dimension(386, 545));
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setMaximumSize(new java.awt.Dimension(386, 545));
         jPanel1.setMinimumSize(new java.awt.Dimension(386, 545));
-        jPanel1.setPreferredSize(new java.awt.Dimension(386, 545));
         jPanel1.setLayout(null);
 
         nombrelbl.setFont(new java.awt.Font("OCR A Extended", 1, 18)); // NOI18N
@@ -100,65 +96,65 @@ public class CharacterCard extends javax.swing.JFrame {
         jPanel1.add(nombrelbl);
         nombrelbl.setBounds(60, 290, 130, 20);
 
-        arma2.setFont(new java.awt.Font("OCR A Extended", 1, 18)); // NOI18N
+        arma2.setFont(new java.awt.Font("MS UI Gothic", 1, 18)); // NOI18N
         arma2.setForeground(new java.awt.Color(0, 0, 0));
         arma2.setText("Arma 2");
         jPanel1.add(arma2);
-        arma2.setBounds(70, 380, 80, 20);
+        arma2.setBounds(70, 360, 170, 19);
 
-        arma1.setFont(new java.awt.Font("OCR A Extended", 1, 18)); // NOI18N
+        arma1.setFont(new java.awt.Font("MS Gothic", 1, 18)); // NOI18N
         arma1.setForeground(new java.awt.Color(0, 0, 0));
         arma1.setText("Arma 1");
         jPanel1.add(arma1);
-        arma1.setBounds(70, 350, 80, 20);
+        arma1.setBounds(70, 320, 160, 19);
 
-        arma5.setFont(new java.awt.Font("OCR A Extended", 1, 18)); // NOI18N
+        arma5.setFont(new java.awt.Font("MS UI Gothic", 1, 18)); // NOI18N
         arma5.setForeground(new java.awt.Color(0, 0, 0));
         arma5.setText("Arma 5");
         jPanel1.add(arma5);
-        arma5.setBounds(100, 470, 80, 20);
+        arma5.setBounds(100, 470, 140, 19);
 
-        arma4.setFont(new java.awt.Font("OCR A Extended", 1, 18)); // NOI18N
+        arma4.setFont(new java.awt.Font("MS UI Gothic", 1, 18)); // NOI18N
         arma4.setForeground(new java.awt.Color(0, 0, 0));
         arma4.setText("Arma 4");
         jPanel1.add(arma4);
-        arma4.setBounds(70, 440, 80, 20);
+        arma4.setBounds(70, 430, 160, 19);
 
-        arma3.setFont(new java.awt.Font("OCR A Extended", 1, 18)); // NOI18N
+        arma3.setFont(new java.awt.Font("MS UI Gothic", 1, 18)); // NOI18N
         arma3.setForeground(new java.awt.Color(0, 0, 0));
         arma3.setText("Arma 3");
         jPanel1.add(arma3);
-        arma3.setBounds(70, 410, 80, 20);
+        arma3.setBounds(70, 400, 150, 19);
 
-        ArrArm1.setFont(new java.awt.Font("OCR A Extended", 0, 14)); // NOI18N
+        ArrArm1.setFont(new java.awt.Font("MS UI Gothic", 0, 14)); // NOI18N
         ArrArm1.setForeground(new java.awt.Color(0, 0, 0));
         ArrArm1.setText("Array");
         jPanel1.add(ArrArm1);
-        ArrArm1.setBounds(160, 350, 300, 15);
+        ArrArm1.setBounds(70, 340, 300, 15);
 
-        ArrArm4.setFont(new java.awt.Font("OCR A Extended", 0, 14)); // NOI18N
+        ArrArm4.setFont(new java.awt.Font("MS PGothic", 0, 14)); // NOI18N
         ArrArm4.setForeground(new java.awt.Color(0, 0, 0));
         ArrArm4.setText("Array");
         jPanel1.add(ArrArm4);
-        ArrArm4.setBounds(160, 440, 220, 15);
+        ArrArm4.setBounds(70, 450, 220, 15);
 
-        ArrArm3.setFont(new java.awt.Font("OCR A Extended", 0, 14)); // NOI18N
+        ArrArm3.setFont(new java.awt.Font("MS PGothic", 0, 14)); // NOI18N
         ArrArm3.setForeground(new java.awt.Color(0, 0, 0));
         ArrArm3.setText("Array");
         jPanel1.add(ArrArm3);
-        ArrArm3.setBounds(160, 410, 220, 15);
+        ArrArm3.setBounds(70, 420, 220, 15);
 
-        ArrArm2.setFont(new java.awt.Font("OCR A Extended", 0, 14)); // NOI18N
+        ArrArm2.setFont(new java.awt.Font("MS PGothic", 0, 14)); // NOI18N
         ArrArm2.setForeground(new java.awt.Color(0, 0, 0));
         ArrArm2.setText("Array");
         jPanel1.add(ArrArm2);
-        ArrArm2.setBounds(160, 380, 220, 15);
+        ArrArm2.setBounds(70, 380, 220, 15);
 
-        ArrArm5.setFont(new java.awt.Font("OCR A Extended", 0, 14)); // NOI18N
+        ArrArm5.setFont(new java.awt.Font("MS PGothic", 0, 14)); // NOI18N
         ArrArm5.setForeground(new java.awt.Color(0, 0, 0));
         ArrArm5.setText("Array");
         jPanel1.add(ArrArm5);
-        ArrArm5.setBounds(180, 470, 200, 15);
+        ArrArm5.setBounds(100, 500, 200, 15);
 
         carta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/card3 (1).png"))); // NOI18N
         jPanel1.add(carta);
@@ -168,10 +164,12 @@ public class CharacterCard extends javax.swing.JFrame {
         jPanel1.add(personaje);
         personaje.setBounds(100, 90, 200, 200);
 
-        tipolbl.setFont(new java.awt.Font("OCR A Extended", 1, 14)); // NOI18N
+        tipolbl.setBackground(new java.awt.Color(255, 255, 255));
+        tipolbl.setFont(new java.awt.Font("OCR A Extended", 1, 18)); // NOI18N
+        tipolbl.setForeground(new java.awt.Color(255, 36, 0));
         tipolbl.setText("Tipo");
         jPanel1.add(tipolbl);
-        tipolbl.setBounds(80, 110, 80, 15);
+        tipolbl.setBounds(80, 105, 80, 20);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -204,20 +202,27 @@ public class CharacterCard extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CharacterCard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Card.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CharacterCard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Card.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CharacterCard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Card.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CharacterCard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Card.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CharacterCard().setVisible(true);
+                Card dialog = new Card(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
@@ -234,7 +239,6 @@ public class CharacterCard extends javax.swing.JFrame {
     private javax.swing.JLabel arma4;
     private javax.swing.JLabel arma5;
     private javax.swing.JLabel carta;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel nombrelbl;
     private javax.swing.JLabel personaje;

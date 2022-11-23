@@ -19,10 +19,12 @@ import javax.swing.JOptionPane;
 public class Main extends javax.swing.JDialog {
 
     public Cliente refCliente;
+    private java.awt.Frame parent;
     private int id;
     
     public Main(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        this.parent =parent;
         initComponents();
     }
     /**
@@ -366,14 +368,14 @@ public class Main extends javax.swing.JDialog {
 
     private void personaje3btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_personaje3btnActionPerformed
         Personaje per3 = refCliente.player.getPersonajes().get(2);
-        CharacterCard card = new CharacterCard(per3);
-        card.setVisible(true);
+        Card card2 = new Card(parent, true,per3);
+        card2.setVisible(true);
     }//GEN-LAST:event_personaje3btnActionPerformed
 
     private void personaje4btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_personaje4btnActionPerformed
         Personaje per4 = refCliente.player.getPersonajes().get(3);
-        CharacterCard card = new CharacterCard(per4);
-        card.setVisible(true);
+        Card card2 = new Card(parent, true,per4);
+        card2.setVisible(true);
     }//GEN-LAST:event_personaje4btnActionPerformed
 
     private void chatbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatbtnActionPerformed
@@ -388,14 +390,14 @@ public class Main extends javax.swing.JDialog {
 
     private void personaje1btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_personaje1btnActionPerformed
         Personaje per1 = refCliente.player.getPersonajes().get(0);
-        CharacterCard card = new CharacterCard(per1);
-        card.setVisible(true);
+        Card card2 = new Card(parent, true,per1);
+        card2.setVisible(true);
     }//GEN-LAST:event_personaje1btnActionPerformed
 
     private void personaje2btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_personaje2btnActionPerformed
         Personaje per2 = refCliente.player.getPersonajes().get(1);
-        CharacterCard card = new CharacterCard(per2);
-        card.setVisible(true);
+        Card card2 = new Card(parent, true,per2);
+        card2.setVisible(true);
     }//GEN-LAST:event_personaje2btnActionPerformed
 
     /**
