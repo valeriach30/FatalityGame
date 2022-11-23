@@ -364,11 +364,11 @@ public class Configuracion extends javax.swing.JFrame {
         else{
             // Ir a la pantalla cliente
             this.setVisible(false);
-            Main pant1 = new Main(this, true,elControlador);
-            pant1.setVisible(true);  
-            //Cliente c = new Cliente(pant1, personajes);
+            Main pant1 = new Main(this, true);
+            Cliente c = new Cliente(pant1, personajes);
+            c.conectar();
+            pant1.cargarPersonajes();
             pant1.setVisible(true);
-            //c.conectar();
         }
         
     }//GEN-LAST:event_crearbtnActionPerformed
@@ -441,12 +441,11 @@ public class Configuracion extends javax.swing.JFrame {
     }//GEN-LAST:event_agregarArmabtnActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        this.setVisible(false);
-            Main pant1 = new Main(this, true,elControlador);
-            //Cliente c = new Cliente(pant1, personajes);
-            Cliente c = new Cliente(pant1);
-            c.conectar();
-            pant1.setVisible(true);
+//            this.setVisible(false);
+//            Main pant1 = new Main(this, true);
+//            Cliente c = new Cliente(pant1, personajes);
+//            c.conectar();
+//            pant1.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

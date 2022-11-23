@@ -18,18 +18,12 @@ import javax.swing.JOptionPane;
  */
 public class Main extends javax.swing.JDialog {
 
-    public Controlador controlMain;
     public Cliente refCliente;
     private int id;
     
     public Main(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-    }
-    public Main(java.awt.Frame parent, boolean modal, Controlador elControl) {
-        super(parent, modal);
-        initComponents();
-        controlMain = elControl;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -476,5 +470,27 @@ public class Main extends javax.swing.JDialog {
     }
     public void setID(int num){
        this.id = num;
+    }
+    
+    public void cargarPersonajes(){
+        System.out.println("hola!!!");
+        // Cargar personajes en la interfaz
+        Personaje per1 = refCliente.player.getPersonajes().get(0);
+        personajeN1.setText(per1.getNombre());
+        System.out.println("nombre: " + per1.getNombre());
+        personaje1btn.setIcon(new javax.swing.ImageIcon(getClass().getResource(per1.getApariencia()))); 
+        
+        
+        Personaje per2 = refCliente.player.getPersonajes().get(1);
+        personajeN2.setText(per2.getNombre());
+        personaje2btn.setIcon(new javax.swing.ImageIcon(getClass().getResource(per2.getApariencia()))); 
+        
+        Personaje per3 = refCliente.player.getPersonajes().get(2);
+        personajeN3.setText(per3.getNombre());
+        personaje3btn.setIcon(new javax.swing.ImageIcon(getClass().getResource(per3.getApariencia())));
+        
+        Personaje per4 = refCliente.player.getPersonajes().get(3);
+        personajeN4.setText(per4.getNombre());
+        personaje4btn.setIcon(new javax.swing.ImageIcon(getClass().getResource(per4.getApariencia()))); 
     }
 }
