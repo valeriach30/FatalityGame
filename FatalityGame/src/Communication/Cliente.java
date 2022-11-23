@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  *
  * @author vchin
  */
-public class Cliente {
+public class Cliente implements iObserver{
     public Socket socketRef;
     public Main refPantalla;
     public ThreadCliente hiloCliente;
@@ -49,6 +49,10 @@ public class Cliente {
         
         
         
+    }
+    @Override
+    public void notificar(iClientMessage msg) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     

@@ -18,7 +18,7 @@ import java.util.Random;
  */
 class ThreadServidor extends Thread{
     
-    private int ficha;
+   private int ficha;
     private int dinero;
     private int propiedad;
     private int id;
@@ -28,7 +28,6 @@ class ThreadServidor extends Thread{
     private String nombre;
     private boolean running = true;
     Servidor server;
-    
     
     public ThreadServidor(Socket socketRef, Servidor server, int id) throws IOException {
         this.socketRef = socketRef;

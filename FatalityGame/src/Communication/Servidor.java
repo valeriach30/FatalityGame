@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *
  * @author vchin
  */
-public class Servidor {
+public class Servidor implements IObserved{
     ServerForm refPantalla;
     public ArrayList<ThreadServidor> conexiones;
     private boolean running = true;
@@ -31,38 +31,15 @@ public class Servidor {
         this.refPantalla.setSrv(this);
     }
     
-    
-    public String printArregloDados(){
-        String str = "Arreglo:  ";
-        for (int i = 0; i < conexiones.size(); i++) {
-            str += lanzamientoInicial[i] + "   ";
-        }
-        return str;
-    }
-    
     public void iniciarPartida(){
         this.partidaIniciada = true;
     }
-    
-    public int getTurnoSiguiente(){
-        if (++turno >= conexiones.size())
-            turno = 0;
-        
-        return turno;
-    }
-
-    public int getTurno() {
-        return turno;
-    }
-    
-    public int getFichaTurno(){
-        return FichaTurno;
-    }
-    
     public void stopserver(){
         running = false;
     }
-    
+    public int getTurno() {
+        return turno;
+    }
     public void runServer() throws IOException{
         
         int contador = 0;
@@ -83,5 +60,15 @@ public class Servidor {
             else
                 refPantalla.addMensaje(".: Conexion denegada, partida ya inicio / ya hay 6 jugadores");
         }
+    }
+
+    @Override
+    public void notificarTodos(iClientMessage msg) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void agregarObserver(iObserver observer) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
