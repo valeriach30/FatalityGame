@@ -4,6 +4,8 @@
  */
 package Comunicaciones;
 
+import java.io.IOException;
+
 /**
  *
  * @author vchin
@@ -13,8 +15,11 @@ public class ServidorMain {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public static void main(String[] args) throws IOException {
+        //ServerForm  pantalla = new ServerForm();
+        Servidor srv = new Servidor();
+        //pantalla.setVisible(true);
+        srv.runServer();   
     }
     
 }

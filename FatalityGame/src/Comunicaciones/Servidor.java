@@ -4,6 +4,9 @@
  */
 package Comunicaciones;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 //import Libreria.Juego.Jugador;
 /**
@@ -12,7 +15,10 @@ import java.util.ArrayList;
  */
 public class Servidor implements iObserved{
     //public ArrayList<Jugador> jugadores;
-
+    public ArrayList<ThreadServidor> conexiones;
+    private boolean running = true;
+    private ServerSocket srv;
+    
     @Override
     public void notificarTodos(iClientMessage msg) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -25,5 +31,20 @@ public class Servidor implements iObserved{
 //            this.jugadores.add((Jugador) observer);
 //        }
     }
-    
+    public void runServer() throws IOException{
+        
+        int contador = 0;
+        srv = new ServerSocket(35775);
+        System.out.println("hola???");
+        while(running){
+            System.out.println("entre");
+            Socket refSocket = srv.accept();
+            // Thread
+            ThreadServidor newThread = new ThreadServidor(refSocket, this, conexiones.size());
+            conexiones.add(newThread);
+            newThread.start();
+            System.out.println("conexiones:" + conexiones.toString());
+        }
+    }
+
 }

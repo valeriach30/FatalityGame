@@ -4,6 +4,8 @@
  */
 package Comunicaciones;
 
+import fatalitygame.Configuracion;
+
 /**
  *
  * @author vchin
@@ -14,7 +16,8 @@ public class ClienteMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Configuracion pantalla = new Configuracion();
+        pantalla.setVisible(true); 
     }
     
 }
