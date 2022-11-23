@@ -16,7 +16,7 @@ import java.util.Random;
  *
  * @author vchin
  */
-class ThreadServidor extends Thread{
+class ThreadServidor extends Thread implements iObserver{
     
    private int ficha;
     private int dinero;
@@ -77,4 +77,12 @@ class ThreadServidor extends Thread{
             }
         }
     } 
+
+    @Override
+    public void notificar(String command, Object source) {
+        for (int i = 0; i < server.conexiones.size(); i++) {
+            ThreadServidor current = server.conexiones.get(i);
+            // hace algo aqui
+        }
+    }
 }

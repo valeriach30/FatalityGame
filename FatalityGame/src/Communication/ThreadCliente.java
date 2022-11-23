@@ -15,7 +15,7 @@ import java.net.Socket;
  *
  * @author vchin
  */
-public class ThreadCliente extends Thread{
+public class ThreadCliente extends Thread implements iObserved{
 
     private Socket socketRef;
     public DataInputStream reader;
@@ -79,6 +79,16 @@ public class ThreadCliente extends Thread{
 
     public void setFichaActual(int FichaActual) {
         this.FichaActual = FichaActual;
+    }
+
+    @Override
+    public void notificarTodos(String command, Object source) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void agregarObserver(iObserver observer) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

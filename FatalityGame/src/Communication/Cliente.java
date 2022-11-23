@@ -16,14 +16,13 @@ import javax.swing.JOptionPane;
  *
  * @author vchin
  */
-public class Cliente implements IObserved{
+public class Cliente implements iObserver{
     public Socket socketRef;
     public Main refPantalla;
     public ThreadCliente hiloCliente;
     public String name;
     public int Ficha;
     private static Cliente client;
-    private final List<iObserver> observers = new ArrayList<>();
     
     public Cliente(){
     }
@@ -60,20 +59,10 @@ public class Cliente implements IObserved{
         catch(Exception e){
             System.out.println(e.getMessage());
         }
-        
-        
-        
     }
 
     @Override
-    public void notificarTodos(String command, Object source) {
-        for (iObserver observer : observers) {               
-            observer.notificar(command, source);
-        }
-    }
-
-    @Override
-    public void agregarObserver(iObserver observer) {
-        this.observers.add(observer);
+    public void notificar(String command, Object source) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

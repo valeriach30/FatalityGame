@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *
  * @author vchin
  */
-public class Servidor implements iObserver{
+public class Servidor implements iObserved{
     ServerForm refPantalla;
     public ArrayList<ThreadServidor> conexiones;
     private boolean running = true;
@@ -24,7 +24,8 @@ public class Servidor implements iObserver{
     private boolean partidaIniciada = false;
     public int lanzamientoInicial[] = new int[6];
     public int[] FichaConexiones = new int [6];
-    
+    private final ArrayList<iObserver> observers = new ArrayList<iObserver>();
+
     public Servidor(ServerForm refPantalla) {
         this.refPantalla = refPantalla;
         conexiones = new ArrayList<ThreadServidor>();
@@ -63,7 +64,14 @@ public class Servidor implements iObserver{
     }
 
     @Override
-    public void notificar(String command, Object source) {
-        System.out.println("Notificando a todos!");
+    public void notificarTodos(String command, Object source) {
+        for (iObserver observer : observers) {               
+            observer.notificar(command, source);
+        }
+    }
+
+    @Override
+    public void agregarObserver(iObserver observer) {
+        this.observers.add(observer);
     }
 }
