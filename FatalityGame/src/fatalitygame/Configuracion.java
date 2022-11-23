@@ -62,7 +62,7 @@ public class Configuracion extends javax.swing.JFrame {
         nombretxt = new javax.swing.JTextField();
         agregarArmabtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -254,14 +254,14 @@ public class Configuracion extends javax.swing.JFrame {
         jPanel1.add(jLabel1);
         jLabel1.setBounds(120, 80, 740, 420);
 
-        jButton1.setText("entrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setText("entrar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1);
-        jButton1.setBounds(530, 30, 72, 23);
+        jPanel1.add(jButton2);
+        jButton2.setBounds(520, 30, 72, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -440,14 +440,14 @@ public class Configuracion extends javax.swing.JFrame {
         
     }//GEN-LAST:event_agregarArmabtnActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            this.setVisible(false);
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.setVisible(false);
             Main pant1 = new Main(this, true,elControlador);
             //Cliente c = new Cliente(pant1, personajes);
             Cliente c = new Cliente(pant1, 1);
             c.conectar();
             pant1.setVisible(true);
-            c.conectar();    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -496,7 +496,7 @@ public class Configuracion extends javax.swing.JFrame {
     private javax.swing.JButton hielobtn;
     private javax.swing.JButton hierrobtn;
     private javax.swing.JTextField imagentxt;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblTitulo16;

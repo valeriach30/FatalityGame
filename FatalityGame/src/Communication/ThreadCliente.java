@@ -39,13 +39,12 @@ public class ThreadCliente extends Thread{
         while (running){
             try {
                 instruccionId = reader.readInt(); // esperar hasta que reciba un entero
-                
+                System.out.println("instruccion: " + instruccionId);
                 switch (instruccionId){
                     case 1:
                         this.id = reader.readInt();
                         this.turnoActual = reader.readInt();
                         refPantalla.setID(id);
-                        //refPantalla.pintarSiguienteTurno (reader.readUTF());
                         break;
                     //----------------------------CHAT----------------------------
                     case 2:
@@ -54,9 +53,14 @@ public class ThreadCliente extends Thread{
                         System.out.println("CLIENTE Recibido mensaje: " + mensaje);
                         refPantalla.addMensaje(usuario+"> " + mensaje);
                         break;
+                    case 3:
+                        break;
+                    default:
+                        break;
                 }
             } catch (IOException ex) {
-                
+                System.out.println("error cliente");
+                System.out.println(ex.toString());
             }
         }
     }

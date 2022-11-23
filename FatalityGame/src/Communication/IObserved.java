@@ -9,6 +9,6 @@ package Communication;
  * @author vchin
  */
 interface IObserved {
-    public void notificarTodos(iClientMessage msg);
+    public void notificarTodos(String command, Object source);
     public void agregarObserver(iObserver observer);
 }

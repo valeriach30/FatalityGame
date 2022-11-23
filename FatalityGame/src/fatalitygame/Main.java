@@ -373,7 +373,7 @@ public class Main extends javax.swing.JDialog {
             refCliente.hiloCliente.writer.writeInt(2);
             refCliente.hiloCliente.writer.writeUTF("hola a todos");
         } catch (IOException ex) {
-
+            System.out.println("error en pantalla");
         }
         
     }//GEN-LAST:event_chatbtnActionPerformed

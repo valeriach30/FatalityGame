@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *
  * @author vchin
  */
-public class Servidor implements IObserved{
+public class Servidor implements iObserver{
     ServerForm refPantalla;
     public ArrayList<ThreadServidor> conexiones;
     private boolean running = true;
@@ -63,12 +63,7 @@ public class Servidor implements IObserved{
     }
 
     @Override
-    public void notificarTodos(iClientMessage msg) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void agregarObserver(iObserver observer) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void notificar(String command, Object source) {
+        System.out.println("Notificando a todos!");
     }
 }

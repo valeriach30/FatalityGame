@@ -9,5 +9,5 @@ package Communication;
  * @author vchin
  */
 interface iObserver {
-    public void notificar(iClientMessage msg);
+    public void notificar(String command, Object source);
 }
