@@ -4,7 +4,10 @@
  */
 package Comunicaciones;
 
+import Juego.Personaje.Personaje;
+import fatalitygame.Main;
 import java.net.Socket;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,28 +16,26 @@ import javax.swing.JOptionPane;
  */
 public class Cliente implements iObserver{
     Socket socketRef;
-    //ClientForm refPantalla;
+    Main refPantalla;
     public ThreadCliente hiloCliente;
     public String name;
+    public ArrayList<Personaje> personajes;
     
-    public Cliente() {
-        
+    public Cliente(Main refPantalla, ArrayList<Personaje> personajes) {
+        this.refPantalla = refPantalla;
+        this.personajes = personajes;
     }
     
     public void conectar(){
  
         try{
-//            socketRef = new Socket("localhost", 35775);
-//            hiloCliente = new ThreadCliente(socketRef, refPantalla);
-//            hiloCliente.start();
-//            
-//            String nombre = JOptionPane.showInputDialog("Introduzca un Nick:");
-//            name = nombre;
-//            hiloCliente.writer.writeInt(1); //instruccion para el switch del thraed servidor
-//            hiloCliente.writer.writeUTF(nombre); //instruccion para el switch del thraed servidor
-//            hiloCliente.writer.writeInt(1500);
-//            hiloCliente.writer.writeInt(Ficha);
-//            refPantalla.setTitle(nombre);
+            socketRef = new Socket("localhost", 35775);
+            hiloCliente = new ThreadCliente(socketRef, refPantalla);
+            hiloCliente.start();
+            
+            this.name = JOptionPane.showInputDialog("Introduzca su nickname:");
+            
+            hiloCliente.writer.writeInt(1); //instruccion para el switch del thraed servidor
         }
         catch(Exception e){
             System.out.println(e.getMessage());
