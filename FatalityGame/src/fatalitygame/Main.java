@@ -294,12 +294,22 @@ public class Main extends javax.swing.JDialog {
         personaje1btn.setForeground(new java.awt.Color(0, 0, 0));
         personaje1btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/kitana.png"))); // NOI18N
         personaje1btn.setPreferredSize(new java.awt.Dimension(200, 200));
+        personaje1btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                personaje1btnActionPerformed(evt);
+            }
+        });
         jPanel1.add(personaje1btn);
         personaje1btn.setBounds(790, 80, 200, 200);
 
         personaje2btn.setBackground(new java.awt.Color(0, 0, 0));
         personaje2btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/scorpion.png"))); // NOI18N
         personaje2btn.setPreferredSize(new java.awt.Dimension(200, 200));
+        personaje2btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                personaje2btnActionPerformed(evt);
+            }
+        });
         jPanel1.add(personaje2btn);
         personaje2btn.setBounds(1080, 80, 200, 200);
 
@@ -355,11 +365,15 @@ public class Main extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void personaje3btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_personaje3btnActionPerformed
-        // TODO add your handling code here:
+        Personaje per3 = refCliente.player.getPersonajes().get(2);
+        CharacterCard card = new CharacterCard(per3);
+        card.setVisible(true);
     }//GEN-LAST:event_personaje3btnActionPerformed
 
     private void personaje4btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_personaje4btnActionPerformed
-        // TODO add your handling code here:
+        Personaje per4 = refCliente.player.getPersonajes().get(3);
+        CharacterCard card = new CharacterCard(per4);
+        card.setVisible(true);
     }//GEN-LAST:event_personaje4btnActionPerformed
 
     private void chatbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatbtnActionPerformed
@@ -371,6 +385,18 @@ public class Main extends javax.swing.JDialog {
         }
         
     }//GEN-LAST:event_chatbtnActionPerformed
+
+    private void personaje1btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_personaje1btnActionPerformed
+        Personaje per1 = refCliente.player.getPersonajes().get(0);
+        CharacterCard card = new CharacterCard(per1);
+        card.setVisible(true);
+    }//GEN-LAST:event_personaje1btnActionPerformed
+
+    private void personaje2btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_personaje2btnActionPerformed
+        Personaje per2 = refCliente.player.getPersonajes().get(1);
+        CharacterCard card = new CharacterCard(per2);
+        card.setVisible(true);
+    }//GEN-LAST:event_personaje2btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -473,24 +499,26 @@ public class Main extends javax.swing.JDialog {
     }
     
     public void cargarPersonajes(){
-        System.out.println("hola!!!");
         // Cargar personajes en la interfaz
         Personaje per1 = refCliente.player.getPersonajes().get(0);
         personajeN1.setText(per1.getNombre());
-        System.out.println("nombre: " + per1.getNombre());
+        victim1.setText(per1.getNombre());
         personaje1btn.setIcon(new javax.swing.ImageIcon(getClass().getResource(per1.getApariencia()))); 
         
         
         Personaje per2 = refCliente.player.getPersonajes().get(1);
         personajeN2.setText(per2.getNombre());
+        victim2.setText(per2.getNombre());
         personaje2btn.setIcon(new javax.swing.ImageIcon(getClass().getResource(per2.getApariencia()))); 
         
         Personaje per3 = refCliente.player.getPersonajes().get(2);
         personajeN3.setText(per3.getNombre());
+        victim3.setText(per3.getNombre());
         personaje3btn.setIcon(new javax.swing.ImageIcon(getClass().getResource(per3.getApariencia())));
         
         Personaje per4 = refCliente.player.getPersonajes().get(3);
         personajeN4.setText(per4.getNombre());
+        victim4.setText(per4.getNombre());
         personaje4btn.setIcon(new javax.swing.ImageIcon(getClass().getResource(per4.getApariencia()))); 
     }
 }

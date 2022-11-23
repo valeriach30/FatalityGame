@@ -302,7 +302,6 @@ public class Configuracion extends javax.swing.JFrame {
             String ruta = imagentxt.getText();
             // Obtener el nombre del personaje
             String nombre = nombretxt.getText();
-            System.out.println(armasPersonaje.size());
             if(armasPersonaje.size()==5){            
                 switch(cantidadPersonajes){
                     case 1:
@@ -310,6 +309,7 @@ public class Configuracion extends javax.swing.JFrame {
                         ArrayList<Arma> armasPer1 = (ArrayList<Arma>) armasPersonaje.clone();
                         // Crear el personaje
                         Personaje nuevoPer = new Personaje();
+                        
                         nuevoPer.setArmas(armasPer1);
                         nuevoPer.setApariencia(ruta);
                         nuevoPer.setNombre(nombre);
@@ -425,13 +425,13 @@ public class Configuracion extends javax.swing.JFrame {
     private void agregarArmabtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarArmabtnActionPerformed
         if(armasPersonaje.size() < 5){
             generarDanhos();
-            Arma nuevaAr = new Arma.ArmaBuilder()
-                           .setName(weapontxt.getText())
-                           .setAvailable(true)
-                           .setDanhos(danhos)
-                           .build();
+            ArrayList<Integer> danhoscopia = (ArrayList<Integer>) danhos.clone();
+            Arma nuevaAr = new Arma();
+            nuevaAr.setName(weapontxt.getText());
+            nuevaAr.setAvailable(true);
+            nuevaAr.setDanhos(danhoscopia);
             armasPersonaje.add(nuevaAr);
-             danhos.removeAll(danhos);
+            danhos.removeAll(danhos);
         }
         else{
             JOptionPane.showMessageDialog(null, "Solo puede crear 5 armas", "Error", JOptionPane.OK_OPTION);
