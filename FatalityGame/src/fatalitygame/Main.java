@@ -150,6 +150,7 @@ public class Main extends javax.swing.JDialog {
         jPanel1.add(titulo5);
         titulo5.setBounds(10, 360, 380, 80);
 
+        attackername.setBackground(new java.awt.Color(0, 51, 204));
         attackername.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         attackername.setText("Name");
         jPanel1.add(attackername);
@@ -246,8 +247,9 @@ public class Main extends javax.swing.JDialog {
         jPanel1.add(personaje4btn);
         personaje4btn.setBounds(1080, 320, 200, 200);
 
+        jLabel8.setBackground(new java.awt.Color(0, 51, 204));
         jLabel8.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setForeground(new java.awt.Color(255, 129, 10));
         jLabel8.setText("Attacker");
         jPanel1.add(jLabel8);
         jLabel8.setBounds(330, 90, 210, 40);
@@ -323,6 +325,7 @@ public class Main extends javax.swing.JDialog {
         consolaTxta.setFont(new java.awt.Font("OCR A Extended", 0, 18)); // NOI18N
         consolaTxta.setForeground(new java.awt.Color(0, 102, 255));
         consolaTxta.setRows(5);
+        consolaTxta.setText(">");
         consola2.setViewportView(consolaTxta);
 
         jPanel1.add(consola2);
@@ -351,9 +354,7 @@ public class Main extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 664, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 664, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
