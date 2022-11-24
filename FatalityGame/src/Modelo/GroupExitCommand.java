@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fatalitygame;
+package Modelo;
 
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -11,8 +11,8 @@ import java.util.ArrayList;
  *
  * @author vchin
  */
-public class SelectPlayerCommand extends BaseCommand{
-    public static final String COMMAND_NAME = "select";       
+public class GroupExitCommand extends BaseCommand{
+    public static final String COMMAND_NAME = "groupexit";       
     
     @Override       
     public String getCommandName() {           

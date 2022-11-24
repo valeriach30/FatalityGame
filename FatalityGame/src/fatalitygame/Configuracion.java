@@ -5,6 +5,7 @@
 package fatalitygame;
 
 
+import Modelo.Controlador;
 import Communication.Cliente;
 import Juego.Armas.Arma;
 import Juego.Personaje.Personaje;
@@ -18,7 +19,6 @@ import javax.swing.JOptionPane;
  */
 public class Configuracion extends javax.swing.JFrame {
     private int cantidadPersonajes = 0;
-    private Controlador elControlador = new Controlador();
     private ArrayList<Arma> armasPersonaje = new ArrayList<Arma>();
     private ArrayList<Personaje> personajes = new ArrayList<Personaje>();
     private String tipoActual;
@@ -26,7 +26,6 @@ public class Configuracion extends javax.swing.JFrame {
     
     public Configuracion(){
         initComponents();
-        this.elControlador.crear();
     }
     
     /**

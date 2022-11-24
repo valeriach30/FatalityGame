@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  *
  * @author vchin
  */
-class ThreadServidor extends Thread implements iObserver{
+public class ThreadServidor extends Thread implements iObserver{
     
     private int ficha;
     private int id;

@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fatalitygame;
+package Modelo;
 
+import Communication.ThreadServidor;
 import Libreria.Juego.Juego;
 import Libreria.Juego.Jugador;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
  */
 public class Controlador {
     public Juego juego = new Juego();
+    public ArrayList<ThreadServidor> conexiones;
     
     void crear() {
         // nada

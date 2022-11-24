@@ -7,7 +7,7 @@ package Communication;
 
 import Libreria.Juego.Juego;
 import Libreria.Juego.Jugador;
-import fatalitygame.Controlador;
+import Modelo.Controlador;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
