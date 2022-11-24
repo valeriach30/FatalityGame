@@ -40,6 +40,7 @@ public class ThreadCliente extends Thread implements iObserved{
         
         this.refPantalla = refPantalla;
         this.player = jugador;
+        player.setActivo(true);
     }
     
     public void run (){
@@ -59,6 +60,9 @@ public class ThreadCliente extends Thread implements iObserved{
                         String comando = reader.readUTF();
                         switch(comando){
                             case "attack":
+                                if(player.isActivo()){
+                                    // atacar
+                                }
                                 break;
                             case "chat":
                                 String usuario = reader.readUTF();
@@ -66,11 +70,21 @@ public class ThreadCliente extends Thread implements iObserved{
                                 refPantalla.addMensaje(usuario+" - " + mensaje + "\n>");
                                 break;
                             case "giveup":
+                                player.setActivo(false);
+                                // tal vez haya que agregar alguna logica aca para eliminar 
+                                // el jugador de las conexiones y para que no haya errores
+                                // en el turno
+                                refPantalla.addMensaje("Ya no puede participar en el juego" + "\n>");
                                 break;
                             case "groupexit":
+                                if(player.isActivo()){
+                                    // groupexit
+                                }
                                 break;
                             case "pass":
-                                this.turnoActual = reader.readInt(); 
+                                if(player.isActivo()){
+                                    this.turnoActual = reader.readInt(); 
+                                }
                                 break;
                             case "privatechat":
                                 String usuario2 = reader.readUTF();
@@ -78,11 +92,17 @@ public class ThreadCliente extends Thread implements iObserved{
                                 refPantalla.addMensaje(usuario2+" (Private) - " + mensaje2 + "\n>");
                                 break;
                             case "reload":
+                                if(player.isActivo()){
+                                    // reload
+                                }
                                 break;
                             case "select":
                                 refPantalla.infoJugador(player);
                                 break;    
                             case "wildcard":
+                                if(player.isActivo()){
+                                    // wildcard
+                                }
                                 break;
                         }
                         break;

@@ -79,6 +79,7 @@ public class ThreadServidor extends Thread implements iObserver{
                                 server.controlMain.chat(mensaje, nombre);
                                 break;
                             case "giveup":
+                                server.controlMain.rendirse(nombre);
                                 break;
                             case "groupexit":
                                 break;

@@ -78,4 +78,11 @@ public class Controlador {
         ICommand command = manager.getCommand("select");   
         command.execute(commandArgs, System.out, server.conexiones);        
     }
+    
+    public void rendirse(String nombre){
+        ArrayList<String> commandArgs = new ArrayList<String>();
+        commandArgs.add(nombre);
+        ICommand command = manager.getCommand("giveup");   
+        command.execute(commandArgs, System.out, server.conexiones);        
+    }
 }

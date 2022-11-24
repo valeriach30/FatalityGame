@@ -534,4 +534,5 @@ public class Main extends javax.swing.JDialog {
         PlayerInfo player = new PlayerInfo(parent, true, jugador);
         player.setVisible(true);
     }
+    
 }
