@@ -30,7 +30,7 @@ public class ThreadServidor extends Thread implements iObserver{
     public DataOutputStream writer;
     public ObjectInputStream Objectreader;
     public ObjectOutputStream Objectwriter;
-    private String nombre;
+    public String nombre;
     private boolean running = true;
     Servidor server;
     
@@ -83,8 +83,12 @@ public class ThreadServidor extends Thread implements iObserver{
                                 break;
                             case "pass":
                                 break;
-                            case "privateChat":
-                                String mensaje2 = arrayComandos[1];
+                            case "privatechat":
+                                String jugador = arrayComandos[1];
+                                System.out.println("jugador:" + jugador);
+                                String mensajePrivado = arrayComandos[2];
+                                System.out.println("mensaje privado:" + mensajePrivado);
+                                server.controlMain.chatPrivado(mensajePrivado, nombre, jugador);
                                 break;
                             case "reload":
                                 break;

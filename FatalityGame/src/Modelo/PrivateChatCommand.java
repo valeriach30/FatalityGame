@@ -5,15 +5,18 @@
 package Modelo;
 
 import Communication.ThreadServidor;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author vchin
  */
 public class PrivateChatCommand extends BaseCommand{
-    public static final String COMMAND_NAME = "privateChat";       
+    public static final String COMMAND_NAME = "privatechat";       
     
     @Override       
     public String getCommandName() {           
@@ -22,7 +25,27 @@ public class PrivateChatCommand extends BaseCommand{
     
     @Override       
     public ArrayList<String> execute(ArrayList<String> args, OutputStream out, ArrayList<ThreadServidor> conexiones) {           
+        String mensaje= args.get(0);
+        String nombre= args.get(1);
+        String jugador= args.get(2);
+        
+        for (int i = 0; i < conexiones.size(); i++) {
+            ThreadServidor current = conexiones.get(i);
+            try {
+                System.out.println("nombre del thread actual:" + current.nombre);
+                System.out.println("nombre del que envia:" + nombre);
+                if(current.nombre.equals(jugador)){
+                    current.writer.writeInt(2);
+                    current.writer.writeUTF("privatechat");
+                    current.writer.writeUTF(nombre);
+                    current.writer.writeUTF(mensaje);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(ChatCommand.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         ArrayList<String> array = new ArrayList<String>();
-        return array;  
+        return array;    
     }
 }

@@ -57,10 +57,33 @@ public class ThreadCliente extends Thread implements iObserved{
                         break;
                     //----------------------------COMMANDOS----------------------------
                     case 2:
-                        String usuario = reader.readUTF();
-                        String mensaje = reader.readUTF();
-                        System.out.println("CLIENTE Recibido mensaje: " + mensaje);
-                        refPantalla.addMensaje(usuario+"> " + mensaje);
+                        String comando = reader.readUTF();
+                        switch(comando){
+                            case "attack":
+                                break;
+                            case "chat":
+                                String usuario = reader.readUTF();
+                                String mensaje = reader.readUTF();
+                                refPantalla.addMensaje(usuario+" - " + mensaje + "\n>");
+                                break;
+                            case "giveup":
+                                break;
+                            case "groupexit":
+                                break;
+                            case "pass":
+                                break;
+                            case "privatechat":
+                                String usuario2 = reader.readUTF();
+                                String mensaje2 = reader.readUTF();
+                                refPantalla.addMensaje(usuario2+" (Private) - " + mensaje2 + "\n>");
+                                break;
+                            case "reload":
+                                break;
+                            case "select":
+                                break;    
+                            case "wildcard":
+                                break;
+                        }
                         break;
                     case 3:
                         break;

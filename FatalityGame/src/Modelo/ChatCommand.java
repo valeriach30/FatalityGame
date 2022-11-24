@@ -32,6 +32,7 @@ public class ChatCommand extends BaseCommand{
             ThreadServidor current = conexiones.get(i);
             try {
                 current.writer.writeInt(2);
+                current.writer.writeUTF("chat");
                 current.writer.writeUTF(nombre);
                 current.writer.writeUTF(mensaje);
             } catch (IOException ex) {

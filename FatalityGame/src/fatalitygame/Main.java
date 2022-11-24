@@ -419,7 +419,10 @@ public class Main extends javax.swing.JDialog {
             // Agregar nueva linea
             consolaTxta.setText(consolaTxta.getText() + "\n>");
         }else{
-            command += evt.getKeyChar();
+            if(evt.getKeyCode() != evt.VK_CAPS_LOCK){
+                System.out.println(evt.getKeyChar());
+                command += evt.getKeyChar();
+            }
         }
     }//GEN-LAST:event_consolaTxtaKeyPressed
 
@@ -513,7 +516,7 @@ public class Main extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     public void addMensaje(String string) {
-        consolaTxta.setText(string);
+        consolaTxta.setText(consolaTxta.getText() + string);
     }
 
     public void setRefCliente(Cliente cliente) {
