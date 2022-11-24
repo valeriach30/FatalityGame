@@ -23,7 +23,6 @@ public class Servidor implements iObserved{
     private boolean running = true;
     private ServerSocket srv;
     private int turno;
-    private int FichaTurno;
     private boolean partidaIniciada = false;
     private final ArrayList<iObserver> observers = new ArrayList<iObserver>();
     public Controlador controlMain = new Controlador(this);
@@ -43,6 +42,14 @@ public class Servidor implements iObserved{
     public int getTurno() {
         return turno;
     }
+    public void setTurno(int nuevoT){
+        nuevoT += 1;
+        if (nuevoT >= conexiones.size()){
+            this.turno = 0;
+        }else{
+            this.turno = nuevoT;
+        }
+    }
     
     public void runServer() throws IOException{
         
@@ -59,7 +66,6 @@ public class Servidor implements iObserved{
                 // Thread
                 ThreadServidor newThread = new ThreadServidor(refSocket, this, conexiones.size());
                 conexiones.add(newThread);
-                //controlMain.conexiones.add(newThread);
                 newThread.start();
             }
             else

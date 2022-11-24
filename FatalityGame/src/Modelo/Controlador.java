@@ -56,15 +56,19 @@ public class Controlador {
     }
     
     public void chatPrivado(String mensaje, String nombre, String jugador){
-        System.out.println("llegue!!!");
         ArrayList<String> commandArgs = new ArrayList<String>();
         commandArgs.add(mensaje);
         commandArgs.add(nombre);
         commandArgs.add(jugador);
-        System.out.println("msj:" + mensaje);
-        System.out.println("nombre;" + nombre);
-        System.out.println("jugador;" + jugador);
         ICommand command = manager.getCommand("privatechat");   
         command.execute(commandArgs, System.out, server.conexiones);        
+    }
+
+    public void pasarTurno(int turno) {
+        server.setTurno(turno++);
+        ArrayList<String> commandArgs = new ArrayList<String>();
+        commandArgs.add(Integer.toString(turno));
+        ICommand command = manager.getCommand("pass");   
+        ArrayList<String> resultados = command.execute(commandArgs, System.out, server.conexiones);        
     }
 }

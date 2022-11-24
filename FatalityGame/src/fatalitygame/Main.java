@@ -410,17 +410,19 @@ public class Main extends javax.swing.JDialog {
             System.out.println("enter!");
             String[] arrayComandos = command.split(" -");
             try {
+                System.out.println(arrayComandos[0]);
                 // Llamar al thread
                 refCliente.hiloCliente.writer.writeInt(2);
                 refCliente.hiloCliente.Objectwriter.writeObject(arrayComandos);
-            } catch (IOException ex) {
+                command= "";
+            }
+            catch (IOException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
             // Agregar nueva linea
             consolaTxta.setText(consolaTxta.getText() + "\n>");
         }else{
             if(evt.getKeyCode() != evt.VK_CAPS_LOCK){
-                System.out.println(evt.getKeyChar());
                 command += evt.getKeyChar();
             }
         }

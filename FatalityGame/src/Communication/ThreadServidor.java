@@ -6,6 +6,8 @@
 package Communication;
 
 import Libreria.Juego.Jugador;
+import Modelo.ChatCommand;
+import fatalitygame.Main;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -23,7 +25,6 @@ import java.util.logging.Logger;
  */
 public class ThreadServidor extends Thread implements iObserver{
     
-    private int ficha;
     private int id;
     private Socket socketRef;
     public DataInputStream reader;
@@ -69,12 +70,12 @@ public class ThreadServidor extends Thread implements iObserver{
                     //----------------------------COMMANDOS----------------------------
                     case 2:
                         String[] arrayComandos = (String[]) Objectreader.readObject();
+                        System.out.println(arrayComandos[0]);
                         switch(arrayComandos[0]){
                             case "attack":
                                 break;
                             case "chat":
                                 String mensaje = arrayComandos[1];
-                                System.out.println("mensaje: " + mensaje);
                                 server.controlMain.chat(mensaje, nombre);
                                 break;
                             case "giveup":
@@ -82,6 +83,21 @@ public class ThreadServidor extends Thread implements iObserver{
                             case "groupexit":
                                 break;
                             case "pass":
+                                if(this.id == server.getTurno()){
+                                    server.controlMain.pasarTurno(server.getTurno());
+                                }
+                                else{
+                                    for (int i = 0; i < server.conexiones.size(); i++) {
+                                        ThreadServidor current = server.conexiones.get(i);
+                                        try {
+                                            if(i == this.id){
+                                                current.writer.writeInt(3);
+                                            }
+                                        } catch (IOException ex) {
+                                            Logger.getLogger(ChatCommand.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                    }
+                                }
                                 break;
                             case "privatechat":
                                 String jugador = arrayComandos[1];
@@ -95,6 +111,12 @@ public class ThreadServidor extends Thread implements iObserver{
                             case "wildcard":
                                 break;
                         }
+                        break;
+                    case 3:
+                        System.out.println("instruccion 3!!!");
+                        writer.writeInt(3);
+                        
+                        break;
                     default:
                         break;
                 }

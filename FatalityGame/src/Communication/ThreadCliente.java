@@ -30,7 +30,6 @@ public class ThreadCliente extends Thread implements iObserved{
     private Main  refPantalla;
     private int id ;
     private int turnoActual = 0;
-    private int FichaActual;
     
     public ThreadCliente(Socket socketRef, Main refPantalla, Jugador jugador) throws IOException {
         this.socketRef = socketRef;
@@ -71,6 +70,7 @@ public class ThreadCliente extends Thread implements iObserved{
                             case "groupexit":
                                 break;
                             case "pass":
+                                this.turnoActual = reader.readInt(); 
                                 break;
                             case "privatechat":
                                 String usuario2 = reader.readUTF();
@@ -86,6 +86,7 @@ public class ThreadCliente extends Thread implements iObserved{
                         }
                         break;
                     case 3:
+                        refPantalla.addMensaje("No es su turno \n>");
                         break;
                     default:
                         break;
@@ -103,14 +104,6 @@ public class ThreadCliente extends Thread implements iObserved{
 
     public int getTurnoActual() {
         return turnoActual;
-    }
-    
-    public int getFichaActual() {
-        return FichaActual;
-    }
-
-    public void setFichaActual(int FichaActual) {
-        this.FichaActual = FichaActual;
     }
 
     @Override
