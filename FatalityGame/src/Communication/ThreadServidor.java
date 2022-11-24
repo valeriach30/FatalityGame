@@ -66,12 +66,32 @@ public class ThreadServidor extends Thread implements iObserver{
                         writer.writeInt(server.getTurno());
                         break;
                     
-                    //----------------------------CHAT----------------------------
+                    //----------------------------COMMANDOS----------------------------
                     case 2:
-                        String mensaje = reader.readUTF();
-                        server.controlMain.chat(mensaje, nombre);
-                    case 3:
-                        break;
+                        String[] arrayComandos = (String[]) Objectreader.readObject();
+                        switch(arrayComandos[0]){
+                            case "attack":
+                                break;
+                            case "chat":
+                                String mensaje = arrayComandos[1];
+                                System.out.println("mensaje: " + mensaje);
+                                server.controlMain.chat(mensaje, nombre);
+                                break;
+                            case "giveup":
+                                break;
+                            case "groupexit":
+                                break;
+                            case "pass":
+                                break;
+                            case "privateChat":
+                                break;
+                            case "reload":
+                                break;
+                            case "select":
+                                break;    
+                            case "wildcard":
+                                break;
+                        }
                     default:
                         break;
                 }

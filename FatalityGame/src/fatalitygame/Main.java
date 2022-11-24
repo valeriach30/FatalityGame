@@ -21,7 +21,7 @@ public class Main extends javax.swing.JDialog {
     public Cliente refCliente;
     private java.awt.Frame parent;
     private int id;
-    
+    private String command = "";
     public Main(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         this.parent =parent;
@@ -332,6 +332,11 @@ public class Main extends javax.swing.JDialog {
         consolaTxta.setForeground(new java.awt.Color(0, 102, 255));
         consolaTxta.setRows(5);
         consolaTxta.setText(">");
+        consolaTxta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                consolaTxtaKeyPressed(evt);
+            }
+        });
         consola2.setViewportView(consolaTxta);
 
         jPanel1.add(consola2);
@@ -399,6 +404,24 @@ public class Main extends javax.swing.JDialog {
         Card card2 = new Card(parent, true,per2);
         card2.setVisible(true);
     }//GEN-LAST:event_personaje2btnActionPerformed
+
+    private void consolaTxtaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_consolaTxtaKeyPressed
+        if (evt.getKeyCode() == evt.VK_ENTER){
+            System.out.println("enter!");
+            String[] arrayComandos = command.split(" -");
+            try {
+                // Llamar al thread
+                refCliente.hiloCliente.writer.writeInt(2);
+                refCliente.hiloCliente.Objectwriter.writeObject(arrayComandos);
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            // Agregar nueva linea
+            consolaTxta.setText(consolaTxta.getText() + "\n>");
+        }else{
+            command += evt.getKeyChar();
+        }
+    }//GEN-LAST:event_consolaTxtaKeyPressed
 
     /**
      * @param args the command line arguments

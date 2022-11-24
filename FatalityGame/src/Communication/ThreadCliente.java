@@ -55,7 +55,7 @@ public class ThreadCliente extends Thread implements iObserved{
                         this.turnoActual = reader.readInt();
                         refPantalla.setID(id);
                         break;
-                    //----------------------------CHAT----------------------------
+                    //----------------------------COMMANDOS----------------------------
                     case 2:
                         String usuario = reader.readUTF();
                         String mensaje = reader.readUTF();

@@ -695,6 +695,9 @@
                 <Property name="rows" type="int" value="5"/>
                 <Property name="text" type="java.lang.String" value="&gt;"/>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="consolaTxtaKeyPressed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
