@@ -32,8 +32,6 @@ public class PrivateChatCommand extends BaseCommand{
         for (int i = 0; i < conexiones.size(); i++) {
             ThreadServidor current = conexiones.get(i);
             try {
-                System.out.println("nombre del thread actual:" + current.nombre);
-                System.out.println("nombre del que envia:" + nombre);
                 if(current.nombre.equals(jugador)){
                     current.writer.writeInt(2);
                     current.writer.writeUTF("privatechat");

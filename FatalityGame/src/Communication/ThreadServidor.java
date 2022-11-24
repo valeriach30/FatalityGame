@@ -85,9 +85,7 @@ public class ThreadServidor extends Thread implements iObserver{
                                 break;
                             case "privatechat":
                                 String jugador = arrayComandos[1];
-                                System.out.println("jugador:" + jugador);
                                 String mensajePrivado = arrayComandos[2];
-                                System.out.println("mensaje privado:" + mensajePrivado);
                                 server.controlMain.chatPrivado(mensajePrivado, nombre, jugador);
                                 break;
                             case "reload":
