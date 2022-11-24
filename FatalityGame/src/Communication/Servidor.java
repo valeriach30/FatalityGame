@@ -26,7 +26,7 @@ public class Servidor implements iObserved{
     private int FichaTurno;
     private boolean partidaIniciada = false;
     private final ArrayList<iObserver> observers = new ArrayList<iObserver>();
-    public Controlador controlMain = new Controlador();
+    public Controlador controlMain = new Controlador(this);
     
     public Servidor(ServerForm refPantalla) {
         this.refPantalla = refPantalla;
@@ -59,7 +59,7 @@ public class Servidor implements iObserved{
                 // Thread
                 ThreadServidor newThread = new ThreadServidor(refSocket, this, conexiones.size());
                 conexiones.add(newThread);
-                
+                //controlMain.conexiones.add(newThread);
                 newThread.start();
             }
             else

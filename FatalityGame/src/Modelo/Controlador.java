@@ -4,9 +4,15 @@
  */
 package Modelo;
 
+import Communication.Servidor;
 import Communication.ThreadServidor;
 import Libreria.Juego.Juego;
 import Libreria.Juego.Jugador;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -16,6 +22,15 @@ import java.util.ArrayList;
 public class Controlador {
     public Juego juego = new Juego();
     public ArrayList<ThreadServidor> conexiones;
+    private Servidor server;
+    public DataInputStream reader;
+    public DataOutputStream writer;
+    public ObjectInputStream Objectreader;
+    public ObjectOutputStream Objectwriter;
+    
+    public Controlador(Servidor server){
+        this.server = server;
+    }
     
     void crear() {
         // nada
@@ -31,4 +46,12 @@ public class Controlador {
         }
     }
     
+    public void chat(String mensaje, String nombre) throws IOException{
+        for (int i = 0; i < server.conexiones.size(); i++) {
+            ThreadServidor current = server.conexiones.get(i);
+            current.writer.writeInt(2);
+            current.writer.writeUTF(nombre);
+            current.writer.writeUTF(mensaje);
+        }
+    }
 }

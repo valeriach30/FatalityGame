@@ -69,13 +69,7 @@ public class ThreadServidor extends Thread implements iObserver{
                     //----------------------------CHAT----------------------------
                     case 2:
                         String mensaje = reader.readUTF();
-                        for (int i = 0; i < server.conexiones.size(); i++) {
-                            ThreadServidor current = server.conexiones.get(i);
-                            current.writer.writeInt(2);
-                            current.writer.writeUTF(nombre);
-                            current.writer.writeUTF(mensaje);
-                        }
-                        break;
+                        server.controlMain.chat(mensaje, nombre);
                     case 3:
                         break;
                     default:
