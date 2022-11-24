@@ -107,6 +107,8 @@ public class ThreadServidor extends Thread implements iObserver{
                             case "reload":
                                 break;
                             case "select":
+                                String jugadorSeleccionado = arrayComandos[1];
+                                server.controlMain.seleccionarJugador(jugadorSeleccionado);
                                 break;    
                             case "wildcard":
                                 break;

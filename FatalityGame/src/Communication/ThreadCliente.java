@@ -80,6 +80,7 @@ public class ThreadCliente extends Thread implements iObserved{
                             case "reload":
                                 break;
                             case "select":
+                                refPantalla.infoJugador(player);
                                 break;    
                             case "wildcard":
                                 break;

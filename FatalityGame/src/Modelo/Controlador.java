@@ -71,4 +71,11 @@ public class Controlador {
         ICommand command = manager.getCommand("pass");   
         ArrayList<String> resultados = command.execute(commandArgs, System.out, server.conexiones);        
     }
+    
+    public void seleccionarJugador(String jugador){
+        ArrayList<String> commandArgs = new ArrayList<String>();
+        commandArgs.add(jugador);
+        ICommand command = manager.getCommand("select");   
+        command.execute(commandArgs, System.out, server.conexiones);        
+    }
 }

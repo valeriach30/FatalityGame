@@ -82,7 +82,6 @@ public class Card extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(386, 545));
         setMinimumSize(new java.awt.Dimension(386, 545));
-        setPreferredSize(new java.awt.Dimension(386, 545));
         setSize(new java.awt.Dimension(386, 545));
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));

@@ -6,6 +6,7 @@ package fatalitygame;
 
 import Communication.Cliente;
 import Juego.Personaje.Personaje;
+import Libreria.Juego.Jugador;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -79,7 +80,6 @@ public class Main extends javax.swing.JDialog {
         consola2 = new javax.swing.JScrollPane();
         consolaTxta = new javax.swing.JTextArea();
         typename = new javax.swing.JLabel();
-        chatbtn = new javax.swing.JButton();
 
         consola.setBackground(new java.awt.Color(0, 0, 0));
         consola.setColumns(20);
@@ -348,15 +348,6 @@ public class Main extends javax.swing.JDialog {
         jPanel1.add(typename);
         typename.setBounds(470, 430, 90, 40);
 
-        chatbtn.setText("chat");
-        chatbtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chatbtnActionPerformed(evt);
-            }
-        });
-        jPanel1.add(chatbtn);
-        chatbtn.setBounds(310, 530, 72, 23);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -383,16 +374,6 @@ public class Main extends javax.swing.JDialog {
         card2.setVisible(true);
     }//GEN-LAST:event_personaje4btnActionPerformed
 
-    private void chatbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatbtnActionPerformed
-        try {
-            refCliente.hiloCliente.writer.writeInt(2);
-            refCliente.hiloCliente.writer.writeUTF("hola a todos");
-        } catch (IOException ex) {
-            System.out.println("error en pantalla");
-        }
-        
-    }//GEN-LAST:event_chatbtnActionPerformed
-
     private void personaje1btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_personaje1btnActionPerformed
         Personaje per1 = refCliente.player.getPersonajes().get(0);
         Card card2 = new Card(parent, true,per1);
@@ -407,10 +388,8 @@ public class Main extends javax.swing.JDialog {
 
     private void consolaTxtaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_consolaTxtaKeyPressed
         if (evt.getKeyCode() == evt.VK_ENTER){
-            System.out.println("enter!");
             String[] arrayComandos = command.split(" -");
             try {
-                System.out.println(arrayComandos[0]);
                 // Llamar al thread
                 refCliente.hiloCliente.writer.writeInt(2);
                 refCliente.hiloCliente.Objectwriter.writeObject(arrayComandos);
@@ -474,7 +453,6 @@ public class Main extends javax.swing.JDialog {
     private javax.swing.JLabel atacante;
     private javax.swing.JLabel atacante1;
     private javax.swing.JLabel attackername;
-    private javax.swing.JButton chatbtn;
     private javax.swing.JTextArea consola;
     private javax.swing.JScrollPane consola2;
     private javax.swing.JTextArea consolaTxta;
@@ -550,5 +528,10 @@ public class Main extends javax.swing.JDialog {
         personajeN4.setText(per4.getNombre());
         victim4.setText(per4.getNombre());
         personaje4btn.setIcon(new javax.swing.ImageIcon(getClass().getResource(per4.getApariencia()))); 
+    }
+    
+    public void infoJugador(Jugador jugador){
+        PlayerInfo player = new PlayerInfo(parent, true, jugador);
+        player.setVisible(true);
     }
 }
