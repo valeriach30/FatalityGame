@@ -4,6 +4,7 @@
  */
 package Modelo;
 
+import Communication.ThreadServidor;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
@@ -13,5 +14,5 @@ import java.util.ArrayList;
  */
 public interface ICommand {
     public String getCommandName();       
-    public ArrayList<String> execute(ArrayList<String> args, OutputStream out);   
+    public ArrayList<String> execute(ArrayList<String> args, OutputStream out, ArrayList<ThreadServidor> conexiones);   
 }

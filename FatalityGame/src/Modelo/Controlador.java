@@ -27,7 +27,8 @@ public class Controlador {
     public DataOutputStream writer;
     public ObjectInputStream Objectreader;
     public ObjectOutputStream Objectwriter;
-    
+    CommandManager manager = CommandManager.getIntance(); 
+
     public Controlador(Servidor server){
         this.server = server;
     }
@@ -47,11 +48,10 @@ public class Controlador {
     }
     
     public void chat(String mensaje, String nombre) throws IOException{
-        for (int i = 0; i < server.conexiones.size(); i++) {
-            ThreadServidor current = server.conexiones.get(i);
-            current.writer.writeInt(2);
-            current.writer.writeUTF(nombre);
-            current.writer.writeUTF(mensaje);
-        }
+        ArrayList<String> commandArgs = new ArrayList<String>();
+        commandArgs.add(mensaje);
+        commandArgs.add(nombre);
+        ICommand command = manager.getCommand("chat");   
+        command.execute(commandArgs, System.out, server.conexiones);        
     }
 }

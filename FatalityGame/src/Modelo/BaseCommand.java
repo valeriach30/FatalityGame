@@ -4,6 +4,7 @@
  */
 package Modelo;
 
+import Communication.ThreadServidor;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
@@ -18,7 +19,7 @@ public abstract class BaseCommand  implements ICommand {
     public abstract String getCommandName();       
     
     @Override       
-    public abstract ArrayList<String> execute(ArrayList<String> args, OutputStream out);       
+    public abstract ArrayList<String> execute(ArrayList<String> args, OutputStream out, ArrayList<ThreadServidor> conexiones);       
     
     public void write(OutputStream out, String message) {           
         try {   

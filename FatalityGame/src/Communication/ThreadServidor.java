@@ -84,6 +84,7 @@ public class ThreadServidor extends Thread implements iObserver{
                             case "pass":
                                 break;
                             case "privateChat":
+                                String mensaje2 = arrayComandos[1];
                                 break;
                             case "reload":
                                 break;

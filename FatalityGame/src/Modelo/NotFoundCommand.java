@@ -4,6 +4,7 @@
  */
 package Modelo;
 
+import Communication.ThreadServidor;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public class NotFoundCommand extends BaseCommand{
     }       
     
     @Override       
-    public ArrayList<String> execute(ArrayList<String> args, OutputStream out) {  
+    public ArrayList<String> execute(ArrayList<String> args, OutputStream out, ArrayList<ThreadServidor> conexiones) {  
        ArrayList<String> array = new ArrayList<String>();
        array.add("Comando no encontrado");
        return array;   
