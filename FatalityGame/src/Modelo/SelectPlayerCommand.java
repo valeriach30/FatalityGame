@@ -29,13 +29,8 @@ public class SelectPlayerCommand extends BaseCommand{
         
         for (int i = 0; i < conexiones.size(); i++) {
             ThreadServidor current = conexiones.get(i);
-            try {
-                if(current.nombre.equals(jugador)){
-                    current.writer.writeInt(2);
-                    current.writer.writeUTF("select");
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(ChatCommand.class.getName()).log(Level.SEVERE, null, ex);
+            if(current.nombre.equals(jugador)){
+                current.notificar("select", "");
             }
         }
         ArrayList<String> array = new ArrayList<String>();

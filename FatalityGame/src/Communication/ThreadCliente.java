@@ -17,7 +17,7 @@ import java.net.Socket;
  *
  * @author vchin
  */
-public class ThreadCliente extends Thread implements iObserved{
+public class ThreadCliente extends Thread implements iObserver{
 
     private Socket socketRef;
     public DataInputStream reader;
@@ -65,9 +65,8 @@ public class ThreadCliente extends Thread implements iObserved{
                                 }
                                 break;
                             case "chat":
-                                String usuario = reader.readUTF();
                                 String mensaje = reader.readUTF();
-                                refPantalla.addMensaje(usuario+" - " + mensaje + "\n>");
+                                refPantalla.addMensaje(mensaje);
                                 break;
                             case "giveup":
                                 player.setActivo(false);
@@ -87,9 +86,8 @@ public class ThreadCliente extends Thread implements iObserved{
                                 }
                                 break;
                             case "privatechat":
-                                String usuario2 = reader.readUTF();
                                 String mensaje2 = reader.readUTF();
-                                refPantalla.addMensaje(usuario2+" (Private) - " + mensaje2 + "\n>");
+                                refPantalla.addMensaje(mensaje2);
                                 break;
                             case "reload":
                                 if(player.isActivo()){
@@ -127,14 +125,9 @@ public class ThreadCliente extends Thread implements iObserved{
         return turnoActual;
     }
 
-    @Override
-    public void notificarTodos(String command, Object source) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void agregarObserver(iObserver observer) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+   @Override
+    public void notificar(String command, Object source) {
+        // hace algo de la pantalla aca
     }
     
 }

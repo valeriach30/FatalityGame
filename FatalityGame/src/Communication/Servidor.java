@@ -17,14 +17,13 @@ import java.util.ArrayList;
  *
  * @author vchin
  */
-public class Servidor implements iObserved{
+public class Servidor {
     ServerForm refPantalla;
     public ArrayList<ThreadServidor> conexiones;
     private boolean running = true;
     private ServerSocket srv;
     private int turno;
     private boolean partidaIniciada = false;
-    private final ArrayList<iObserver> observers = new ArrayList<iObserver>();
     public Controlador controlMain = new Controlador(this);
     
     public Servidor(ServerForm refPantalla) {
@@ -73,15 +72,4 @@ public class Servidor implements iObserved{
         }
     }
 
-    @Override
-    public void notificarTodos(String command, Object source) {
-        for (iObserver observer : observers) {               
-            observer.notificar(command, source);
-        }
-    }
-
-    @Override
-    public void agregarObserver(iObserver observer) {
-        this.observers.add(observer);
-    }
 }

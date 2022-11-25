@@ -31,18 +31,17 @@ public class PrivateChatCommand extends BaseCommand{
         
         for (int i = 0; i < conexiones.size(); i++) {
             ThreadServidor current = conexiones.get(i);
-            try {
-                if(current.nombre.equals(jugador)){
-                    current.writer.writeInt(2);
-                    current.writer.writeUTF("privatechat");
-                    current.writer.writeUTF(nombre);
-                    current.writer.writeUTF(mensaje);
+            if(current.nombre.equals(jugador)){
+                String textoMsj = nombre+" (Private) - " + mensaje + "\n>";
+                current.notificar("privatechat", textoMsj);
+            }
+            else{
+                if(current.nombre.equals(nombre)){
+                    String textoMsj = "Private message sent to " + jugador + " - " + mensaje + "\n>";
+                    current.notificar("privatechat", textoMsj);
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(ChatCommand.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
         ArrayList<String> array = new ArrayList<String>();
         return array;    
     }

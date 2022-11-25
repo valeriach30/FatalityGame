@@ -59,9 +59,6 @@ public class ThreadServidor extends Thread implements iObserver{
                         nombre = reader.readUTF();
                         Jugador player = (Jugador) Objectreader.readObject();
                         server.controlMain.agregarJugador(player);
-                        for (int i = 0; i < server.controlMain.juego.getJugadores().size(); i++) {
-                            System.out.println(server.controlMain.juego.getJugadores().get(i).toString());
-                        }
                         writer.writeInt(1);
                         writer.writeInt(id);
                         writer.writeInt(server.getTurno());
@@ -70,7 +67,6 @@ public class ThreadServidor extends Thread implements iObserver{
                     //----------------------------COMMANDOS----------------------------
                     case 2:
                         String[] arrayComandos = (String[]) Objectreader.readObject();
-                        System.out.println(arrayComandos[0]);
                         switch(arrayComandos[0]){
                             case "attack":
                                 break;
@@ -134,9 +130,54 @@ public class ThreadServidor extends Thread implements iObserver{
 
     @Override
     public void notificar(String command, Object source) {
-        for (int i = 0; i < server.conexiones.size(); i++) {
-            ThreadServidor current = server.conexiones.get(i);
-            // hace algo aqui
+        switch(command){
+            case "chat":
+                try {
+                    writer.writeInt(2);
+                    writer.writeUTF("chat");
+                    writer.writeUTF((String)source);
+                } catch (IOException ex) {
+                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            case "privatechat":
+                try {
+                    writer.writeInt(2);
+                    writer.writeUTF("privatechat");
+                    writer.writeUTF((String)source);
+                } catch (IOException ex) {
+                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            case "select":
+                try {
+                    writer.writeInt(2);
+                    writer.writeUTF("select");
+                } catch (IOException ex) {
+                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            case "pass":
+                try{
+                    writer.writeInt(2);
+                    writer.writeUTF("pass");
+                    writer.writeInt((Integer)source);
+                } catch (IOException ex) {
+                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            case "giveup":
+                break;
+            case "reload":
+                break;
+            case "wildcard":
+                break;
+            case "groupexit":
+                break;
+            case "attack":
+                break;
+            default:
+                break;
         }
     }
 }

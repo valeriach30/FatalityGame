@@ -8,6 +8,6 @@ package Communication;
  *
  * @author vchin
  */
-interface iObserver {
+public interface iObserver {
     public void notificar(String command, Object source);
 }

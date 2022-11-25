@@ -6,6 +6,8 @@ package Modelo;
 
 import Communication.Servidor;
 import Communication.ThreadServidor;
+import Communication.iObserved;
+import Communication.iObserver;
 import Libreria.Juego.Juego;
 import Libreria.Juego.Jugador;
 import java.io.DataInputStream;
@@ -19,15 +21,16 @@ import java.util.ArrayList;
  *
  * @author vchin
  */
-public class Controlador {
+public class Controlador implements iObserved{
     public Juego juego = new Juego();
-    public ArrayList<ThreadServidor> conexiones;
+    public ArrayList<iObserver> observers;
     private Servidor server;
     public DataInputStream reader;
     public DataOutputStream writer;
     public ObjectInputStream Objectreader;
     public ObjectOutputStream Objectwriter;
     CommandManager manager = CommandManager.getIntance(); 
+    
 
     public Controlador(Servidor server){
         this.server = server;
@@ -84,5 +87,18 @@ public class Controlador {
         commandArgs.add(nombre);
         ICommand command = manager.getCommand("giveup");   
         command.execute(commandArgs, System.out, server.conexiones);        
+    }
+    
+    
+    @Override
+    public void notificarTodos(String command, Object source) {
+        for (iObserver observer : observers) {               
+            observer.notificar(command, source);
+        }
+    }
+
+    @Override
+    public void agregarObserver(iObserver observer) {
+        this.observers.add(observer);
     }
 }

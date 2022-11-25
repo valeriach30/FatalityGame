@@ -30,14 +30,8 @@ public class ChatCommand extends BaseCommand{
         
         for (int i = 0; i < conexiones.size(); i++) {
             ThreadServidor current = conexiones.get(i);
-            try {
-                current.writer.writeInt(2);
-                current.writer.writeUTF("chat");
-                current.writer.writeUTF(nombre);
-                current.writer.writeUTF(mensaje);
-            } catch (IOException ex) {
-                Logger.getLogger(ChatCommand.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            String textoMsj = nombre+" - " + mensaje + "\n>";
+            current.notificar("chat", textoMsj);
         }
         
         ArrayList<String> array = new ArrayList<String>();

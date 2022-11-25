@@ -32,13 +32,7 @@ public class PassTurnCommand extends BaseCommand{
         
         for (int i = 0; i < conexiones.size(); i++) {
             ThreadServidor current = conexiones.get(i);
-            try {
-                current.writer.writeInt(2);
-                current.writer.writeUTF("pass");
-                current.writer.writeInt(turno);
-            } catch (IOException ex) {
-                Logger.getLogger(ChatCommand.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            current.notificar("pass", turno);
         }
         
         ArrayList<String> array = new ArrayList<String>();

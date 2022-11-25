@@ -8,7 +8,7 @@ package Communication;
  *
  * @author vchin
  */
-interface iObserved {
+public interface iObserved {
     public void notificarTodos(String command, Object source);
     public void agregarObserver(iObserver observer);
 }
