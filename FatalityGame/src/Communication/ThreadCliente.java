@@ -101,10 +101,8 @@ public class ThreadCliente extends Thread implements iObserver{
                                 break;
                             case "giveup":
                                 player.setActivo(false);
-                                // tal vez haya que agregar alguna logica aca para eliminar 
-                                // el jugador de las conexiones y para que no haya errores
-                                // en el turno
                                 refPantalla.addMensaje("Ya no puede participar en el juego" + "\n>");
+                                refPantalla.desactivarConsola();
                                 break;
                             case "groupexit":
                                 if(player.isActivo()){

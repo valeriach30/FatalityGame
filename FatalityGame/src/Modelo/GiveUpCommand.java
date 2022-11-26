@@ -29,13 +29,8 @@ public class GiveUpCommand extends BaseCommand{
         
         for (int i = 0; i < conexiones.size(); i++) {
             ThreadServidor current = conexiones.get(i);
-            try {
-                if(current.nombre.equals(nombre)){
-                    current.writer.writeInt(2);
-                    current.writer.writeUTF("giveup");
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(ChatCommand.class.getName()).log(Level.SEVERE, null, ex);
+            if(current.nombre.equals(nombre)){
+                current.notificar("giveup", i);
             }
         }
         ArrayList<String> array = new ArrayList<String>();

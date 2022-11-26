@@ -29,7 +29,7 @@ import javax.swing.JOptionPane;
  */
 public class ThreadServidor extends Thread implements iObserver{
     
-    private int id;
+    public int id;
     private Socket socketRef;
     public DataInputStream reader;
     public DataOutputStream writer;
@@ -104,6 +104,9 @@ public class ThreadServidor extends Thread implements iObserver{
                             case "groupexit":
                                 break;
                             case "pass":
+                                System.out.println("pass");
+                                System.out.println("id: " + this.id);
+                                System.out.println("turno server: " + server.getTurno());
                                 if(this.id == server.getTurno()){
                                     server.controlMain.pasarTurno(server.getTurno());
                                 }
@@ -187,7 +190,9 @@ public class ThreadServidor extends Thread implements iObserver{
             case "pass":
                 try{
                     Integer turno = (Integer)source;
+                    System.out.println("turno:" + turno);
                     String nombreDelTurno = server.conexiones.get(server.getTurno()).nombre;
+                    System.out.println("nombre del turno: " + nombreDelTurno);
                     writer.writeInt(2);
                     writer.writeUTF("pass");
                     writer.writeInt(turno);
@@ -197,6 +202,30 @@ public class ThreadServidor extends Thread implements iObserver{
                 }
                 break;
             case "giveup":
+                try {
+                    // Eliminar de las conexiones
+                    Integer indice = (Integer)source;
+                    writer.writeInt(2);
+                    writer.writeUTF("giveup");
+
+                    // Eliminar conexion
+                    ArrayList<ThreadServidor> nuevasConexiones = new ArrayList<ThreadServidor>();
+                    for (int i = 0; i < server.conexiones.size(); i++) {
+                        if(i != indice){
+                            nuevasConexiones.add(server.conexiones.get(i));
+                        }
+                    }
+                    server.conexiones=(ArrayList<ThreadServidor>) nuevasConexiones.clone();
+                    
+                    // Eliminar de los jugadores del juego
+                    server.controlMain.eliminarJugador(nombre);
+                    // Actualizar id para cada thread servidor id - 1
+                    server.controlMain.actualizarIndices();
+                    server.controlMain.pasarTurno(server.getTurno());
+                    
+                } catch (IOException ex) {
+                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 break;
             case "reload":
                 break;

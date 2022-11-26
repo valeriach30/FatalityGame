@@ -267,4 +267,22 @@ public class Controlador implements iObserved{
             nombres.add(nombreP);
         }
     }
+    
+    public void eliminarJugador(String nombreJ){
+        for (int i = 0; i < juego.getJugadores().size(); i++) {
+            // Jugador actual
+            if(juego.getJugadores().get(i).getNombre().equals(nombreJ)){
+                juego.getJugadores().remove(i);
+            }
+        }
+    }
+    
+    public void actualizarIndices(){
+        for (int i = 0; i < server.conexiones.size(); i++) {
+            ThreadServidor current = server.conexiones.get(i);
+            if(current.id != 0){
+                current.id--;
+            }
+        }
+    }
 }

@@ -647,4 +647,8 @@ public class Main extends javax.swing.JDialog {
     public void pintarSiguienteTurno(String user){
         lblTurno.setText("Turno de " + user);
     }
+    
+    public void desactivarConsola(){
+        consolaTxta.setEnabled(false);
+    }
 }
