@@ -302,6 +302,7 @@ public class Configuracion extends javax.swing.JFrame {
                         nuevoPer.setApariencia(ruta);
                         nuevoPer.setNombre(nombre);
                         nuevoPer.setNombreCategoria(tipoActual);
+                        nuevoPer.setVida(100);
                         personajes.add(nuevoPer);
                         reset();
                         break;
@@ -314,6 +315,7 @@ public class Configuracion extends javax.swing.JFrame {
                         nuevoPer2.setApariencia(ruta);
                         nuevoPer2.setNombre(nombre);
                         nuevoPer2.setNombreCategoria(tipoActual);
+                        nuevoPer2.setVida(100);
                         personajes.add(nuevoPer2);
                         reset();
                         break;
@@ -326,6 +328,7 @@ public class Configuracion extends javax.swing.JFrame {
                         nuevoPer3.setApariencia(ruta);
                         nuevoPer3.setNombre(nombre);
                         nuevoPer3.setNombreCategoria(tipoActual);
+                        nuevoPer3.setVida(100);
                         personajes.add(nuevoPer3);
                         reset();
                         break;
@@ -338,6 +341,7 @@ public class Configuracion extends javax.swing.JFrame {
                         nuevoPer4.setApariencia(ruta);
                         nuevoPer4.setNombre(nombre);
                         nuevoPer4.setNombreCategoria(tipoActual);
+                        nuevoPer4.setVida(100);
                         personajes.add(nuevoPer4);
                         reset();
                         break;

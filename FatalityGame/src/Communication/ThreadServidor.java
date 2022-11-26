@@ -183,97 +183,114 @@ public class ThreadServidor extends Thread implements iObserver{
                 break;
             // Ataque del atacante
             case "attack":
-                // Info
-                ArrayList<String> infoAtaque = (ArrayList<String>)source;
-                String victima= infoAtaque.get(0);
-                String personaje= infoAtaque.get(1);
-                String arma= infoAtaque.get(2);
-                Integer respuesta = server.controlMain.determinarAtaqueValido(nombre, victima, personaje, arma);
-                if(respuesta == -1){
-                    try {
-                        writer.writeInt(4);
-                        writer.writeUTF("Error: el arma no existe");
-                    } catch (IOException ex) {
-                        Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                else{
-                    if(respuesta == -2){
-                        try {
-                            writer.writeInt(4);
-                            writer.writeUTF("Error: el personaje no existe");
-                        } catch (IOException ex) {
-                            Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                    else{
-                        if(respuesta == -3){
-                            try {
-                                writer.writeInt(4);
-                                writer.writeUTF("Error: el jugador no existe");
-                            } catch (IOException ex) {
-                                Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                        else{
-                            // Ataque valido
-                            try{
-                                String tipoPersonaje = server.controlMain.personajeAtacante.getNombreCategoria();
-                                String imagenAtacante = server.controlMain.personajeAtacante.getApariencia();
-                                writer.writeInt(2);
-                                writer.writeUTF("attack");
-                                writer.writeUTF(victima);
-                                writer.writeUTF(imagenAtacante);
-                                writer.writeUTF(arma);
-                                writer.writeUTF(tipoPersonaje);
-                                writer.writeInt(respuesta);
-                            } catch (IOException ex) {
-                                Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                    }
-                }
-
+                atacar(source);
                 break;
             // Ataque de la victima
             case "attackVictim":
-                ArrayList<String> infoAtaque2 = (ArrayList<String>)source;
-                String jugadorAtacante= infoAtaque2.get(0);
-                String victima2= infoAtaque2.get(1);
-                String personaje2= infoAtaque2.get(2);
-                String arma2= infoAtaque2.get(3);
-                Integer danho = server.controlMain.determinarAtaqueValido(jugadorAtacante, victima2, personaje2, arma2);
-                System.out.println("danho:");
-                System.out.println(danho);
-                if(danho != -1 && danho != -2 && danho != -3){
-                    // ataque valido
-                    // Obtener las victimas
-                    String tipoAtacante = server.controlMain.personajeAtacante.getNombreCategoria();
-                    ArrayList<Personaje> victimas = server.controlMain.getVictimas(victima2, tipoAtacante);
-                    Personaje atacante = server.controlMain.personajeAtacante;
-                    atacante.setDamage(danho);
-                    atacante.setEnemigos(victimas);
-                    String resultado = atacante.atacar();
-                    
-                    try{
-                        String imagenAtacante = atacante.getApariencia();
-                        ArrayList<Integer> indices = server.controlMain.getIndicesVictimas(victima2, tipoAtacante);
-                        writer.writeInt(2);
-                        writer.writeUTF("attackVictim");
-                        writer.writeUTF(atacante.getNombre());
-                        writer.writeUTF(imagenAtacante);
-                        writer.writeUTF(tipoAtacante);
-                        writer.writeUTF(jugadorAtacante);
-                        writer.writeUTF(arma2);
-                        writer.writeInt(danho);
-                        Objectwriter.writeObject(indices);
-                    } catch (IOException ex) {
-                        Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
+                atacarVictima(source);
                 break;
             default:
                 break;
         }
     }
+    
+    private void atacar(Object source){
+        // Info
+        ArrayList<String> infoAtaque = (ArrayList<String>)source;
+        String victima= infoAtaque.get(0);
+        String personaje= infoAtaque.get(1);
+        String arma= infoAtaque.get(2);
+        Integer respuesta = server.controlMain.determinarAtaqueValido(nombre, victima, personaje, arma);
+        if(respuesta == 0){
+            try {
+                writer.writeInt(4);
+                writer.writeUTF("Error: el arma ya fue usada");
+            } catch (IOException ex) {
+                Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            if(respuesta == -1){
+                try {
+                    writer.writeInt(4);
+                    writer.writeUTF("Error: el arma no existe");
+                } catch (IOException ex) {
+                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else{
+                if(respuesta == -2){
+                    try {
+                        writer.writeInt(4);
+                        writer.writeUTF("Error: el personaje no existe");
+                    } catch (IOException ex) {
+                        Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                else{
+                    if(respuesta == -3){
+                        try {
+                            writer.writeInt(4);
+                            writer.writeUTF("Error: el jugador no existe");
+                        } catch (IOException ex) {
+                            Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    else{
+                        // Ataque valido
+                        try{
+                            String tipoPersonaje = server.controlMain.personajeAtacante.getNombreCategoria();
+                            String imagenAtacante = server.controlMain.personajeAtacante.getApariencia();
+                            writer.writeInt(2);
+                            writer.writeUTF("attack");
+                            writer.writeUTF(victima);
+                            writer.writeUTF(imagenAtacante);
+                            writer.writeUTF(arma);
+                            writer.writeUTF(tipoPersonaje);
+                            writer.writeInt(respuesta);
+                        } catch (IOException ex) {
+                            Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private void atacarVictima(Object source){
+        ArrayList<String> infoAtaque2 = (ArrayList<String>)source;
+        String jugadorAtacante= infoAtaque2.get(0);
+        String victima2= infoAtaque2.get(1);
+        String personaje2= infoAtaque2.get(2);
+        String arma2= infoAtaque2.get(3);
+        Integer danho = server.controlMain.determinarAtaqueValido(jugadorAtacante, victima2, personaje2, arma2);
+        if(danho != -1 && danho != -2 && danho != -3){
+            // ataque valido
+            // Obtener las victimas
+            String tipoAtacante = server.controlMain.personajeAtacante.getNombreCategoria();
+            ArrayList<Personaje> victimas = server.controlMain.getVictimas(victima2, tipoAtacante);
+            Personaje atacante = server.controlMain.personajeAtacante;
+            atacante.setDamage(danho);
+            atacante.setEnemigos(victimas);
+            String resultado = atacante.atacar();
+
+            try{
+                String imagenAtacante = atacante.getApariencia();
+                ArrayList<Integer> indices = server.controlMain.getIndicesVictimas(victima2, tipoAtacante);
+                writer.writeInt(2);
+                writer.writeUTF("attackVictim");
+                writer.writeUTF(atacante.getNombre());
+                writer.writeUTF(imagenAtacante);
+                writer.writeUTF(tipoAtacante);
+                writer.writeUTF(jugadorAtacante);
+                writer.writeUTF(arma2);
+                writer.writeInt(danho);
+                writer.writeUTF(resultado);
+                Objectwriter.writeObject(indices);
+            } catch (IOException ex) {
+                Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
 }

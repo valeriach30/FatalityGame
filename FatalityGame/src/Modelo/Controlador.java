@@ -142,12 +142,17 @@ public class Controlador implements iObserved{
                     }
                 }
                 if(armaActual != null){
-                    armaActual.setAvailable(false);
-                    // ataque 
-                    personajeAtacante = personajeAct;
-                    // determinar la cantidad de danho que le va a hacer a los personajes
-                    Integer danhoFinal = getDanho(personajeAct, armaActual);
-                    return danhoFinal;
+                    if(armaActual.isAvailable()){
+                        armaActual.setAvailable(false);
+                        // ataque 
+                        personajeAtacante = personajeAct;
+                        // determinar la cantidad de danho que le va a hacer a los personajes
+                        Integer danhoFinal = getDanho(personajeAct, armaActual);
+                        return danhoFinal;
+                    }
+                    else{
+                        return 0;
+                    }
                 }else{
                     // ataque invalido: el arma no existe
                     return -1;

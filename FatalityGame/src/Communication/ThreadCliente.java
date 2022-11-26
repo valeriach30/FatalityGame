@@ -83,9 +83,12 @@ public class ThreadCliente extends Thread implements iObserver{
                                     String jugadorAtacante = reader.readUTF();
                                     String arma = reader.readUTF();
                                     Integer danhoAtacante = reader.readInt();
+                                    String ataque = reader.readUTF();
                                     ArrayList<Integer> indices = (ArrayList<Integer>) Objectreader.readObject();
                                     refPantalla.ultimoAtaqueRecibido(nombreAtacante, imagen, 
                                     tipoAtacante, jugadorAtacante, danhoAtacante, indices, arma);
+                                    refPantalla.addMensaje(ataque);
+                                    refPantalla.addLine();
                                 }
                                 break;
                             case "chat":

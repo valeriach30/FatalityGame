@@ -270,25 +270,25 @@ public class Main extends javax.swing.JDialog {
 
         prc3.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         prc3.setForeground(new java.awt.Color(255, 255, 255));
-        prc3.setText("100%");
+        prc3.setText("100");
         jPanel1.add(prc3);
         prc3.setBounds(1000, 390, 70, 40);
 
         prc1.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         prc1.setForeground(new java.awt.Color(255, 255, 255));
-        prc1.setText("100%");
+        prc1.setText("100");
         jPanel1.add(prc1);
         prc1.setBounds(1000, 150, 70, 40);
 
         prc2.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         prc2.setForeground(new java.awt.Color(255, 255, 255));
-        prc2.setText("100%");
+        prc2.setText("100");
         jPanel1.add(prc2);
         prc2.setBounds(1290, 160, 70, 40);
 
         prc4.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         prc4.setForeground(new java.awt.Color(255, 255, 255));
-        prc4.setText("100%");
+        prc4.setText("100");
         jPanel1.add(prc4);
         prc4.setBounds(1290, 400, 70, 40);
 
@@ -609,15 +609,28 @@ public class Main extends javax.swing.JDialog {
             switch(indices.get(i)){
                 case 0:
                     porcentaje1.setText(danhoAtacante.toString() + "%");
+                    // Actualizar vida
+                    Integer vidaActual = Integer.parseInt(prc1.getText());
+                    Integer vidaResultante = vidaActual - danhoAtacante;
+                    prc1.setText(vidaResultante.toString());
                     break;
                 case 1:
                     porcentaje2.setText(danhoAtacante.toString()+ "%");
+                    Integer vidaActual2 = Integer.parseInt(prc2.getText());
+                    Integer vidaResultante2 = vidaActual2 - danhoAtacante;
+                    prc2.setText(vidaResultante2.toString());
                     break;
                 case 2:
                     porcentaje3.setText(danhoAtacante.toString()+ "%");
+                    Integer vidaActual3 = Integer.parseInt(prc3.getText());
+                    Integer vidaResultante3 = vidaActual3 - danhoAtacante;
+                    prc3.setText(vidaResultante3.toString());
                     break;
                 case 3:
                     porcentaje4.setText(danhoAtacante.toString()+ "%");
+                    Integer vidaActual4 = Integer.parseInt(prc4.getText());
+                    Integer vidaResultante4 = vidaActual4 - danhoAtacante;
+                    prc4.setText(vidaResultante4.toString());
                     break;
             }
         }
