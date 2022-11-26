@@ -59,6 +59,9 @@ public class ThreadCliente extends Thread implements iObserver{
                         this.id = reader.readInt();
                         this.turnoActual = reader.readInt();
                         refPantalla.setID(id);
+                        nombre = reader.readUTF();
+                        refPantalla.setTitle(nombre);
+                        refPantalla.setVisible(true);
                         break;
                     //----------------------------COMMANDOS----------------------------
                     case 2:

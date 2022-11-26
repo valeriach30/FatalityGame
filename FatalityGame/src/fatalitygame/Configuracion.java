@@ -360,7 +360,6 @@ public class Configuracion extends javax.swing.JFrame {
             Cliente c = new Cliente(pant1, personajes);
             c.conectar();
             pant1.cargarPersonajes();
-            pant1.setVisible(true);
         }
         
     }//GEN-LAST:event_crearbtnActionPerformed

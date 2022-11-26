@@ -26,6 +26,7 @@ import java.util.ArrayList;
 public class Controlador implements iObserved{
     public Juego juego = new Juego();
     public ArrayList<iObserver> observers;
+    public ArrayList<String> nombres = null;
     private Servidor server;
     public DataInputStream reader;
     public DataOutputStream writer;
@@ -243,5 +244,27 @@ public class Controlador implements iObserved{
             }
         }
         return indices;
+    }
+    
+    public boolean nombreValido(String nombre){
+        
+        if(nombres != null){
+            System.out.println(nombres.toString());
+            if(nombres.contains(nombre)){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public void agregarNombre(String nombreP){
+        if(nombres == null){
+            ArrayList<String> nombre = new ArrayList<String>(); 
+            nombre.add(nombreP);
+            nombres = nombre;
+        }
+        else{
+            nombres.add(nombreP);
+        }
     }
 }

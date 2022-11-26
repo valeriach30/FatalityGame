@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -58,13 +60,19 @@ public class ThreadServidor extends Thread implements iObserver{
                 switch (instruccionId){
                     //----------------------------INFO PERSONAL----------------------------
                     case 1:
+                        nombre = JOptionPane.showInputDialog("Nickname:");
+                        while(server.controlMain.nombreValido(nombre) == false){
+                            nombre = JOptionPane.showInputDialog("Nickname:");
+                        }
+                        server.controlMain.agregarNombre(nombre);
                         
-                        nombre = reader.readUTF();
                         Jugador player = (Jugador) Objectreader.readObject();
+                        player.setNombre(nombre);
                         server.controlMain.agregarJugador(player);
                         writer.writeInt(1);
                         writer.writeInt(id);
                         writer.writeInt(server.getTurno());
+                        writer.writeUTF(nombre);
                         break;
                     
                     //----------------------------COMMANDOS----------------------------
@@ -119,9 +127,7 @@ public class ThreadServidor extends Thread implements iObserver{
                         }
                         break;
                     case 3:
-                        System.out.println("instruccion 3!!!");
                         writer.writeInt(3);
-                        
                         break;
                     default:
                         break;

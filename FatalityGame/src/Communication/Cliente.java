@@ -61,13 +61,9 @@ public class Cliente implements iObserver{
             hiloCliente = new ThreadCliente(socketRef, refPantalla, player);
             hiloCliente.start();
             
-            String nombre = JOptionPane.showInputDialog("Nickname:");
-            this.name = nombre;
-            this.player.setNombre(nombre);
             hiloCliente.writer.writeInt(1); //instruccion para el switch del thraed servidor
-            hiloCliente.writer.writeUTF(nombre); //instruccion para el switch del thraed servidor
             hiloCliente.Objectwriter.writeObject(player);
-            refPantalla.setTitle(nombre);
+            
             
         }
         catch(Exception e){
