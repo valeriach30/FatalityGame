@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package Communication;
+import Juego.Armas.Arma;
+import Juego.Personaje.Personaje;
 import Libreria.Juego.Jugador;
 import fatalitygame.Main;
 import java.io.DataInputStream;
@@ -61,7 +63,22 @@ public class ThreadCliente extends Thread implements iObserver{
                         switch(comando){
                             case "attack":
                                 if(player.isActivo()){
-                                    // atacar
+                                    String victima = reader.readUTF();
+                                    String personaje = reader.readUTF();
+                                    String arma = reader.readUTF();
+                                    // Obtener el personaje
+                                    for (int i = 0; i < player.getPersonajes().size(); i++) {
+                                        Personaje actual = player.getPersonajes().get(i);
+                                        if(actual.getNombre().equals(personaje)){
+                                            for (int j = 0; j < actual.getArmas().size(); j++) {
+                                                Arma armaActual = actual.getArmas().get(j);
+                                                // Desactivar arma
+                                                if(armaActual.getName().equals(arma)){
+                                                    armaActual.setAvailable(false);
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                                 break;
                             case "chat":

@@ -101,4 +101,15 @@ public class Controlador implements iObserved{
     public void agregarObserver(iObserver observer) {
         this.observers.add(observer);
     }
+
+    public void attack(String nombre, String jugadorEnemigo, String personaje, String arma) {
+        // calcula el dano aca?
+        ArrayList<String> commandArgs = new ArrayList<String>();
+        commandArgs.add(nombre);
+        commandArgs.add(jugadorEnemigo);
+        commandArgs.add(personaje);
+        commandArgs.add(arma);
+        ICommand command = manager.getCommand("attack");   
+        command.execute(commandArgs, System.out, server.conexiones);        
+    }
 }
