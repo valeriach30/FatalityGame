@@ -174,13 +174,8 @@ public class ThreadServidor extends Thread implements iObserver{
                 break;
             case "pass":
                 try{
-                    System.out.println("llege!!");
                     Integer turno = (Integer)source;
-                    System.out.println("nuevo turno: ");
-                    System.out.println(turno);
-                    String nombreDelTurno = server.conexiones.get(turno).nombre;
-                    System.out.println("nombre del nuevo turno");
-                    System.out.println(nombreDelTurno);
+                    String nombreDelTurno = server.conexiones.get(server.getTurno()).nombre;
                     writer.writeInt(2);
                     writer.writeUTF("pass");
                     writer.writeInt(turno);

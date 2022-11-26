@@ -120,6 +120,7 @@ public class ThreadCliente extends Thread implements iObserver{
                                     System.out.println("nuevo turno: ");
                                     System.out.println(turnoActual);
                                     refPantalla.pintarSiguienteTurno (reader.readUTF());
+                                    refPantalla.addLine();
                                 }
                                 break;
                             case "privatechat":
