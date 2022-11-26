@@ -62,7 +62,7 @@ public class Main extends javax.swing.JDialog {
         personajeN3 = new javax.swing.JLabel();
         weaponused = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jugadorlbl = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         titulo7 = new javax.swing.JLabel();
         personaje4btn = new javax.swing.JButton();
@@ -80,6 +80,8 @@ public class Main extends javax.swing.JDialog {
         consola2 = new javax.swing.JScrollPane();
         consolaTxta = new javax.swing.JTextArea();
         typename = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         consola.setBackground(new java.awt.Color(0, 0, 0));
         consola.setColumns(20);
@@ -166,7 +168,7 @@ public class Main extends javax.swing.JDialog {
         porcentajelbl.setForeground(new java.awt.Color(255, 255, 255));
         porcentajelbl.setText("Name");
         jPanel1.add(porcentajelbl);
-        porcentajelbl.setBounds(470, 480, 90, 40);
+        porcentajelbl.setBounds(470, 480, 140, 40);
 
         victim1.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         victim1.setForeground(new java.awt.Color(255, 255, 255));
@@ -212,19 +214,19 @@ public class Main extends javax.swing.JDialog {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Weapon:");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(330, 380, 110, 40);
+        jLabel5.setBounds(320, 380, 110, 40);
 
-        jLabel6.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Harm:");
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(330, 480, 130, 40);
+        jugadorlbl.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
+        jugadorlbl.setForeground(new java.awt.Color(255, 255, 255));
+        jugadorlbl.setText("Name");
+        jPanel1.add(jugadorlbl);
+        jugadorlbl.setBounds(470, 520, 160, 40);
 
         jLabel7.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Type:");
         jPanel1.add(jLabel7);
-        jLabel7.setBounds(330, 430, 110, 40);
+        jLabel7.setBounds(320, 430, 110, 40);
 
         titulo7.setFont(new java.awt.Font("Matura MT Script Capitals", 1, 48)); // NOI18N
         titulo7.setForeground(new java.awt.Color(255, 129, 10));
@@ -346,7 +348,19 @@ public class Main extends javax.swing.JDialog {
         typename.setForeground(new java.awt.Color(255, 255, 255));
         typename.setText("Name");
         jPanel1.add(typename);
-        typename.setBounds(470, 430, 90, 40);
+        typename.setBounds(470, 430, 130, 40);
+
+        jLabel9.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Harm:");
+        jPanel1.add(jLabel9);
+        jLabel9.setBounds(320, 480, 130, 40);
+
+        jLabel10.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Jugador:");
+        jPanel1.add(jLabel10);
+        jLabel10.setBounds(320, 520, 130, 40);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -356,7 +370,9 @@ public class Main extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 664, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 703, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -399,7 +415,7 @@ public class Main extends javax.swing.JDialog {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
             // Agregar nueva linea
-            consolaTxta.setText(consolaTxta.getText() + "\n>");
+            //consolaTxta.setText(consolaTxta.getText() + "\n>");
         }else{
             if(evt.getKeyCode() != evt.VK_CAPS_LOCK){
                 command += evt.getKeyChar();
@@ -457,15 +473,17 @@ public class Main extends javax.swing.JDialog {
     private javax.swing.JScrollPane consola2;
     private javax.swing.JTextArea consolaTxta;
     private javax.swing.JTextArea enemiestxta;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JLabel jugadorlbl;
     private javax.swing.JButton personaje1btn;
     private javax.swing.JButton personaje2btn;
     private javax.swing.JButton personaje3btn;
@@ -535,4 +553,15 @@ public class Main extends javax.swing.JDialog {
         player.setVisible(true);
     }
     
+    public void ultimoAtaqueHecho(String victima, String imagenAtacante, String arma, String tipoPersonaje,Integer danho){
+        weaponused.setText(arma);
+        typename.setText(tipoPersonaje);
+        porcentajelbl.setText(Integer.toString(danho) + "%");
+        jugadorlbl.setText(victima);
+        atacante.setIcon(new javax.swing.ImageIcon(getClass().getResource(imagenAtacante))); 
+    }
+    
+    public void addLine(){
+        consolaTxta.setText(consolaTxta.getText() + "\n>");
+    }
 }

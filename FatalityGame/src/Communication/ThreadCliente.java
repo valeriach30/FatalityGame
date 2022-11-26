@@ -64,21 +64,12 @@ public class ThreadCliente extends Thread implements iObserver{
                             case "attack":
                                 if(player.isActivo()){
                                     String victima = reader.readUTF();
-                                    String personaje = reader.readUTF();
+                                    String imagenAtacante = reader.readUTF();
                                     String arma = reader.readUTF();
-                                    // Obtener el personaje
-                                    for (int i = 0; i < player.getPersonajes().size(); i++) {
-                                        Personaje actual = player.getPersonajes().get(i);
-                                        if(actual.getNombre().equals(personaje)){
-                                            for (int j = 0; j < actual.getArmas().size(); j++) {
-                                                Arma armaActual = actual.getArmas().get(j);
-                                                // Desactivar arma
-                                                if(armaActual.getName().equals(arma)){
-                                                    armaActual.setAvailable(false);
-                                                }
-                                            }
-                                        }
-                                    }
+                                    String tipoPersonaje = reader.readUTF();
+                                    Integer danho = reader.readInt();
+                                    refPantalla.ultimoAtaqueHecho(victima, imagenAtacante, arma, tipoPersonaje, danho);
+                                    refPantalla.addLine();
                                 }
                                 break;
                             case "chat":
@@ -123,6 +114,9 @@ public class ThreadCliente extends Thread implements iObserver{
                         break;
                     case 3:
                         refPantalla.addMensaje("No es su turno \n>");
+                        break;
+                    case 4:
+                        refPantalla.addMensaje(reader.readUTF() + "\n>");
                         break;
                     default:
                         break;

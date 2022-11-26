@@ -40,7 +40,7 @@ public class AttackCommand extends BaseCommand{
             // Thread servidor de la victima
             else{
                 if(current.nombre.equals(victima)){
-                    // restarle la vida al personaeje
+                    // restarle la vida al o los personaejes
                 }
             }
         }
@@ -48,4 +48,10 @@ public class AttackCommand extends BaseCommand{
         ArrayList<String> array = new ArrayList<String>();
         return array;  
     }
+    
+    public void determinarVictimas(){
+        
+    }
+    
+    
 }

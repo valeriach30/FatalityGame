@@ -37,6 +37,7 @@ public class ThreadServidor extends Thread implements iObserver{
     private boolean running = true;
     Servidor server;
     
+    
     public ThreadServidor(Socket socketRef, Servidor server, int id) throws IOException {
         this.socketRef = socketRef;
         reader = new DataInputStream(socketRef.getInputStream());
@@ -187,57 +188,55 @@ public class ThreadServidor extends Thread implements iObserver{
                 String victima= infoAtaque.get(0);
                 String personaje= infoAtaque.get(1);
                 String arma= infoAtaque.get(2);
-                Integer respuesta = determinarAtaqueValido(nombre, victima, personaje, arma);
-                
-                try{
-                    writer.writeInt(2);
-                    writer.writeUTF("attack");
-                    writer.writeUTF(victima);
-                    writer.writeUTF(personaje);
-                    writer.writeUTF(arma);
-                } catch (IOException ex) {
-                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                Integer respuesta = server.controlMain.determinarAtaqueValido(nombre, victima, personaje, arma);
+                if(respuesta == -1){
+                    try {
+                        writer.writeInt(4);
+                        writer.writeUTF("Error: el arma no existe");
+                    } catch (IOException ex) {
+                        Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
+                else{
+                    if(respuesta == -2){
+                        try {
+                            writer.writeInt(4);
+                            writer.writeUTF("Error: el personaje no existe");
+                        } catch (IOException ex) {
+                            Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    else{
+                        if(respuesta == -3){
+                            try {
+                                writer.writeInt(4);
+                                writer.writeUTF("Error: el jugador no existe");
+                            } catch (IOException ex) {
+                                Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        else{
+                            // Ataque valido
+                            try{
+                                String tipoPersonaje = server.controlMain.personajeAtacante.getNombreCategoria();
+                                String imagenAtacante = server.controlMain.personajeAtacante.getApariencia();
+                                writer.writeInt(2);
+                                writer.writeUTF("attack");
+                                writer.writeUTF(victima);
+                                writer.writeUTF(imagenAtacante);
+                                writer.writeUTF(arma);
+                                writer.writeUTF(tipoPersonaje);
+                                writer.writeInt(respuesta);
+                            } catch (IOException ex) {
+                                Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                }
+
                 break;
             default:
                 break;
         }
-    }
-
-    private Integer determinarAtaqueValido(String nombre, String victima, String personaje, String arma) {
-        // Determinar aca si el jugador tiene ese personaje y si el arma esta activa
-        // si no es asi entonces writer.writeInt(4) y va al thread lciente para escribir el error
-        Jugador jugadorAct = null;
-        for (int i = 0; i < server.controlMain.juego.getJugadores().size(); i++) {
-            // Jugador actual
-            if(server.controlMain.juego.getJugadores().get(i).getNombre().equals(nombre)){
-                jugadorAct = server.controlMain.juego.getJugadores().get(i);
-            }
-        }
-        
-        // Determinar si tiene ese personaje
-        Personaje personajeAct = null;
-        for (int j = 0; j < jugadorAct.getPersonajes().size(); j++) {
-            if(jugadorAct.getPersonajes().get(j).getNombre().equals(personaje)){
-                personajeAct = jugadorAct.getPersonajes().get(j);
-            }
-        }
-        
-            
-        if(personajeAct != null){
-            for (int k = 0; k < personajeAct.getArmas().size(); k++) {
-                Arma armaActual = personajeAct.getArmas().get(k);
-                // Desactivar arma
-                if(armaActual.getName().equals(arma)){
-                    armaActual.setAvailable(false);
-                }
-            }
-        }
-//        else{
-//            // error
-//            return -1;
-               // writer.writeint
-//        }
-        return -1;
     }
 }

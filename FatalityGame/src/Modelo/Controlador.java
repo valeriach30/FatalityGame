@@ -8,6 +8,8 @@ import Communication.Servidor;
 import Communication.ThreadServidor;
 import Communication.iObserved;
 import Communication.iObserver;
+import Juego.Armas.Arma;
+import Juego.Personaje.Personaje;
 import Libreria.Juego.Juego;
 import Libreria.Juego.Jugador;
 import java.io.DataInputStream;
@@ -30,7 +32,7 @@ public class Controlador implements iObserved{
     public ObjectInputStream Objectreader;
     public ObjectOutputStream Objectwriter;
     CommandManager manager = CommandManager.getIntance(); 
-    
+    public Personaje personajeAtacante;
 
     public Controlador(Servidor server){
         this.server = server;
@@ -111,5 +113,103 @@ public class Controlador implements iObserved{
         commandArgs.add(arma);
         ICommand command = manager.getCommand("attack");   
         command.execute(commandArgs, System.out, server.conexiones);        
+    }
+    
+    
+    public Integer determinarAtaqueValido(String nombre, String victima, String personaje, String arma) {
+        Jugador jugadorAct = null;
+        for (int i = 0; i < juego.getJugadores().size(); i++) {
+            // Jugador actual
+            if(juego.getJugadores().get(i).getNombre().equals(nombre)){
+                jugadorAct = juego.getJugadores().get(i);
+            }
+        }
+        if(jugadorAct != null){
+            // Determinar si tiene ese personaje
+            Personaje personajeAct = null;
+            for (int j = 0; j < jugadorAct.getPersonajes().size(); j++) {
+                if(jugadorAct.getPersonajes().get(j).getNombre().equals(personaje)){
+                    personajeAct = jugadorAct.getPersonajes().get(j);
+                }
+            }
+
+            Arma armaActual = null;
+            if(personajeAct != null){
+                for (int k = 0; k < personajeAct.getArmas().size(); k++) {
+                    // Obtener el arma 
+                    if(personajeAct.getArmas().get(k).getName().equals(arma)){
+                        armaActual = personajeAct.getArmas().get(k);
+                    }
+                }
+                if(armaActual != null){
+                    armaActual.setAvailable(false);
+                    // ataque 
+                    personajeAtacante = personajeAct;
+                    // determinar la cantidad de danho que le va a hacer a los personajes
+                    Integer danhoFinal = getDanho(personajeAct, armaActual);
+                    return danhoFinal;
+                }else{
+                    // ataque invalido: el arma no existe
+                    return -1;
+                }
+            }
+            else{
+                // ataque invalido: el personaje no existe
+                return -2;
+            }
+        }
+        else{
+            // ataque invalido: el jugador no existe
+            return -3;
+        }
+    }
+    
+    public Jugador getJugador(String nombre){
+        Jugador jugadorAct = null;
+        for (int i = 0; i < juego.getJugadores().size(); i++) {
+            // Jugador actual
+            if(juego.getJugadores().get(i).getNombre().equals(nombre)){
+                jugadorAct = juego.getJugadores().get(i);
+            }
+        }
+        return jugadorAct;
+    }
+    
+    public Integer getDanho(Personaje per, Arma arma){
+        String tipo = per.getNombreCategoria();
+        Integer danho = 0;
+        switch(tipo){
+            case "fuego":
+                danho = arma.getDanhos().get(0);
+                break;
+            case "aire":
+                danho = arma.getDanhos().get(1);
+                break;
+            case "agua":
+                danho = arma.getDanhos().get(2);
+                break;
+            case "magia blanca":
+                danho = arma.getDanhos().get(3);
+                break;
+            case "magia negra":
+                danho = arma.getDanhos().get(4);
+                break;
+            case "electricidad":
+                danho = arma.getDanhos().get(5);
+                break;
+            case "hielo":
+                danho = arma.getDanhos().get(6);
+                break;
+            case "acid":
+                danho = arma.getDanhos().get(7);
+                break;
+            case "espiritualidad":
+                danho = arma.getDanhos().get(8);
+                break;
+            case "hierro":
+                danho = arma.getDanhos().get(9);
+                break;
+        }
+        return danho;
     }
 }
