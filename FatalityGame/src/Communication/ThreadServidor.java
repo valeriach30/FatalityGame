@@ -190,9 +190,7 @@ public class ThreadServidor extends Thread implements iObserver{
             case "pass":
                 try{
                     Integer turno = (Integer)source;
-                    System.out.println("turno:" + turno);
                     String nombreDelTurno = server.conexiones.get(server.getTurno()).nombre;
-                    System.out.println("nombre del turno: " + nombreDelTurno);
                     writer.writeInt(2);
                     writer.writeUTF("pass");
                     writer.writeInt(turno);
@@ -219,10 +217,12 @@ public class ThreadServidor extends Thread implements iObserver{
                     
                     // Eliminar de los jugadores del juego
                     server.controlMain.eliminarJugador(nombre);
-                    // Actualizar id para cada thread servidor id - 1
-                    server.controlMain.actualizarIndices();
-                    server.controlMain.pasarTurno(server.getTurno());
                     
+                    // Actualizar id para cada thread servidor 
+                    server.controlMain.actualizarIndices();
+                    
+                    // Pasar turno
+                    server.controlMain.pasarTurno(server.getTurno());
                 } catch (IOException ex) {
                     Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
                 }
