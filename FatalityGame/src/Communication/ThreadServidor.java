@@ -68,11 +68,13 @@ public class ThreadServidor extends Thread implements iObserver{
                         
                         Jugador player = (Jugador) Objectreader.readObject();
                         player.setNombre(nombre);
+                        player.setActivo(true);
                         server.controlMain.agregarJugador(player);
                         writer.writeInt(1);
                         writer.writeInt(id);
                         writer.writeInt(server.getTurno());
                         writer.writeUTF(nombre);
+                        writer.writeUTF(server.conexiones.get(server.getTurno()).nombre);
                         break;
                     
                     //----------------------------COMMANDOS----------------------------
@@ -172,9 +174,17 @@ public class ThreadServidor extends Thread implements iObserver{
                 break;
             case "pass":
                 try{
+                    System.out.println("llege!!");
+                    Integer turno = (Integer)source;
+                    System.out.println("nuevo turno: ");
+                    System.out.println(turno);
+                    String nombreDelTurno = server.conexiones.get(turno).nombre;
+                    System.out.println("nombre del nuevo turno");
+                    System.out.println(nombreDelTurno);
                     writer.writeInt(2);
                     writer.writeUTF("pass");
-                    writer.writeInt((Integer)source);
+                    writer.writeInt(turno);
+                    writer.writeUTF(nombreDelTurno);
                 } catch (IOException ex) {
                     Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
                 }

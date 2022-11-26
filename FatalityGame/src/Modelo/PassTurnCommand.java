@@ -26,9 +26,6 @@ public class PassTurnCommand extends BaseCommand{
     @Override       
     public ArrayList<String> execute(ArrayList<String> args, OutputStream out, ArrayList<ThreadServidor> conexiones) {           
         int turno = Integer.parseInt(args.get(0));
-        if (++turno >= conexiones.size()){
-            turno = 0;
-        }
         
         for (int i = 0; i < conexiones.size(); i++) {
             ThreadServidor current = conexiones.get(i);

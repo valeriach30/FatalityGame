@@ -42,6 +42,7 @@ public class Cliente implements iObserver{
         // Crear jugador
         Jugador player = new Jugador();
         player.setPersonajes(personajes);
+        player.setActivo(true);
         this.player = player;
     }
     public static Cliente getInstance(Main refPantalla) throws UnknownHostException{

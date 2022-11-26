@@ -86,6 +86,7 @@ public class Main extends javax.swing.JDialog {
         porcentaje2 = new javax.swing.JLabel();
         porcentaje3 = new javax.swing.JLabel();
         porcentaje4 = new javax.swing.JLabel();
+        lblTurno = new javax.swing.JLabel();
 
         consola.setBackground(new java.awt.Color(0, 0, 0));
         consola.setColumns(20);
@@ -391,6 +392,12 @@ public class Main extends javax.swing.JDialog {
         jPanel1.add(porcentaje4);
         porcentaje4.setBounds(500, 250, 100, 40);
 
+        lblTurno.setFont(new java.awt.Font("Matura MT Script Capitals", 0, 24)); // NOI18N
+        lblTurno.setForeground(new java.awt.Color(255, 255, 102));
+        lblTurno.setText("Turno");
+        jPanel1.add(lblTurno);
+        lblTurno.setBounds(1150, 10, 190, 25);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -512,6 +519,7 @@ public class Main extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel jugadorlbl;
+    private javax.swing.JLabel lblTurno;
     private javax.swing.JButton personaje1btn;
     private javax.swing.JButton personaje2btn;
     private javax.swing.JButton personaje3btn;
@@ -634,5 +642,9 @@ public class Main extends javax.swing.JDialog {
                     break;
             }
         }
+    }
+    
+    public void pintarSiguienteTurno(String user){
+        lblTurno.setText("Turno de " + user);
     }
 }

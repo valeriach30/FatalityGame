@@ -52,6 +52,7 @@ public class ThreadCliente extends Thread implements iObserver{
         int instruccionId = 1;
         while (running){
             try {
+                System.out.println("hola????");
                 instruccionId = reader.readInt(); // esperar hasta que reciba un entero
                 System.out.println("instruccion: " + instruccionId);
                 switch (instruccionId){
@@ -60,6 +61,7 @@ public class ThreadCliente extends Thread implements iObserver{
                         this.turnoActual = reader.readInt();
                         refPantalla.setID(id);
                         nombre = reader.readUTF();
+                        refPantalla.pintarSiguienteTurno (reader.readUTF());
                         refPantalla.setTitle(nombre);
                         refPantalla.setVisible(true);
                         break;
@@ -111,8 +113,13 @@ public class ThreadCliente extends Thread implements iObserver{
                                 }
                                 break;
                             case "pass":
+                                System.out.println(player.isActivo());
                                 if(player.isActivo()){
-                                    this.turnoActual = reader.readInt(); 
+                                    System.out.println("hola clinete !!");
+                                    this.turnoActual = reader.readInt();
+                                    System.out.println("nuevo turno: ");
+                                    System.out.println(turnoActual);
+                                    refPantalla.pintarSiguienteTurno (reader.readUTF());
                                 }
                                 break;
                             case "privatechat":
