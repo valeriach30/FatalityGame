@@ -389,7 +389,7 @@ public class Main extends javax.swing.JDialog {
         attack.setForeground(new java.awt.Color(255, 129, 10));
         attack.setText("Attack");
         jPanel1.add(attack);
-        attack.setBounds(330, 70, 380, 40);
+        attack.setBounds(330, 70, 540, 40);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

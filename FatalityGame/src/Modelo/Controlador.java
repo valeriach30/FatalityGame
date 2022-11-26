@@ -116,7 +116,7 @@ public class Controlador implements iObserved{
     }
     
     
-    public Integer determinarAtaqueValido(String nombre, String victima, String personaje, String arma) {
+    public Integer determinarAtaqueValido(String nombre, String victima, String personaje, String arma, Integer pasada) {
         Jugador jugadorAct = null;
         for (int i = 0; i < juego.getJugadores().size(); i++) {
             // Jugador actual
@@ -143,7 +143,9 @@ public class Controlador implements iObserved{
                 }
                 if(armaActual != null){
                     if(armaActual.isAvailable()){
-                        armaActual.setAvailable(false);
+                        if(pasada == 2){
+                            armaActual.setAvailable(false);
+                        }
                         // ataque 
                         personajeAtacante = personajeAct;
                         // determinar la cantidad de danho que le va a hacer a los personajes

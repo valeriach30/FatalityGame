@@ -200,7 +200,7 @@ public class ThreadServidor extends Thread implements iObserver{
         String victima= infoAtaque.get(0);
         String personaje= infoAtaque.get(1);
         String arma= infoAtaque.get(2);
-        Integer respuesta = server.controlMain.determinarAtaqueValido(nombre, victima, personaje, arma);
+        Integer respuesta = server.controlMain.determinarAtaqueValido(nombre, victima, personaje, arma, 1);
         if(respuesta == 0){
             try {
                 writer.writeInt(4);
@@ -263,8 +263,8 @@ public class ThreadServidor extends Thread implements iObserver{
         String victima2= infoAtaque2.get(1);
         String personaje2= infoAtaque2.get(2);
         String arma2= infoAtaque2.get(3);
-        Integer danho = server.controlMain.determinarAtaqueValido(jugadorAtacante, victima2, personaje2, arma2);
-        if(danho != -1 && danho != -2 && danho != -3){
+        Integer danho = server.controlMain.determinarAtaqueValido(jugadorAtacante, victima2, personaje2, arma2, 2);
+        if(danho != -1 && danho != -2 && danho != -3 && danho != 0){
             // ataque valido
             // Obtener las victimas
             String tipoAtacante = server.controlMain.personajeAtacante.getNombreCategoria();
