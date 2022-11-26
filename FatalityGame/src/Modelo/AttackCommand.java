@@ -40,7 +40,12 @@ public class AttackCommand extends BaseCommand{
             // Thread servidor de la victima
             else{
                 if(current.nombre.equals(victima)){
-                    // restarle la vida al o los personaejes
+                    ArrayList<String> infoAtaque = new ArrayList<String>();
+                    infoAtaque.add(atacante);
+                    infoAtaque.add(victima);
+                    infoAtaque.add(personaje);
+                    infoAtaque.add(arma);
+                    current.notificar("attackVictim", infoAtaque);
                 }
             }
         }

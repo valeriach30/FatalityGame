@@ -50,11 +50,10 @@ public class Main extends javax.swing.JDialog {
         jScrollPane4 = new javax.swing.JScrollPane();
         statustxta = new javax.swing.JTextArea();
         titulo5 = new javax.swing.JLabel();
-        attackername = new javax.swing.JLabel();
         atacante = new javax.swing.JLabel();
         victim4 = new javax.swing.JLabel();
         porcentajelbl = new javax.swing.JLabel();
-        victim1 = new javax.swing.JLabel();
+        porcentaje1 = new javax.swing.JLabel();
         victim2 = new javax.swing.JLabel();
         victim3 = new javax.swing.JLabel();
         titulo6 = new javax.swing.JLabel();
@@ -66,7 +65,7 @@ public class Main extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         titulo7 = new javax.swing.JLabel();
         personaje4btn = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
+        weaponattack = new javax.swing.JLabel();
         personajeN1 = new javax.swing.JLabel();
         personajeN4 = new javax.swing.JLabel();
         personajeN2 = new javax.swing.JLabel();
@@ -82,6 +81,11 @@ public class Main extends javax.swing.JDialog {
         typename = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        victim1 = new javax.swing.JLabel();
+        porcentaje2 = new javax.swing.JLabel();
+        porcentaje3 = new javax.swing.JLabel();
+        porcentaje4 = new javax.swing.JLabel();
+        attack = new javax.swing.JLabel();
 
         consola.setBackground(new java.awt.Color(0, 0, 0));
         consola.setColumns(20);
@@ -148,12 +152,6 @@ public class Main extends javax.swing.JDialog {
         jPanel1.add(titulo5);
         titulo5.setBounds(10, 360, 380, 80);
 
-        attackername.setBackground(new java.awt.Color(0, 51, 204));
-        attackername.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
-        attackername.setText("Name");
-        jPanel1.add(attackername);
-        attackername.setBounds(470, 90, 210, 40);
-
         atacante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/kitana.png"))); // NOI18N
         jPanel1.add(atacante);
         atacante.setBounds(550, 360, 200, 200);
@@ -170,11 +168,11 @@ public class Main extends javax.swing.JDialog {
         jPanel1.add(porcentajelbl);
         porcentajelbl.setBounds(470, 480, 140, 40);
 
-        victim1.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
-        victim1.setForeground(new java.awt.Color(255, 255, 255));
-        victim1.setText("Victim 1");
-        jPanel1.add(victim1);
-        victim1.setBounds(330, 130, 210, 40);
+        porcentaje1.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
+        porcentaje1.setForeground(new java.awt.Color(255, 255, 255));
+        porcentaje1.setText("0 %");
+        jPanel1.add(porcentaje1);
+        porcentaje1.setBounds(500, 130, 100, 40);
 
         victim2.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         victim2.setForeground(new java.awt.Color(255, 255, 255));
@@ -245,12 +243,12 @@ public class Main extends javax.swing.JDialog {
         jPanel1.add(personaje4btn);
         personaje4btn.setBounds(1080, 320, 200, 200);
 
-        jLabel8.setBackground(new java.awt.Color(0, 51, 204));
-        jLabel8.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 129, 10));
-        jLabel8.setText("Attacker");
-        jPanel1.add(jLabel8);
-        jLabel8.setBounds(330, 90, 210, 40);
+        weaponattack.setBackground(new java.awt.Color(0, 51, 204));
+        weaponattack.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
+        weaponattack.setForeground(new java.awt.Color(255, 129, 10));
+        weaponattack.setText("Weapon");
+        jPanel1.add(weaponattack);
+        weaponattack.setBounds(330, 100, 380, 40);
 
         personajeN1.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         personajeN1.setForeground(new java.awt.Color(255, 255, 255));
@@ -362,6 +360,37 @@ public class Main extends javax.swing.JDialog {
         jPanel1.add(jLabel10);
         jLabel10.setBounds(320, 520, 130, 40);
 
+        victim1.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
+        victim1.setForeground(new java.awt.Color(255, 255, 255));
+        victim1.setText("Victim 1");
+        jPanel1.add(victim1);
+        victim1.setBounds(330, 130, 210, 40);
+
+        porcentaje2.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
+        porcentaje2.setForeground(new java.awt.Color(255, 255, 255));
+        porcentaje2.setText("0 %");
+        jPanel1.add(porcentaje2);
+        porcentaje2.setBounds(500, 170, 100, 40);
+
+        porcentaje3.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
+        porcentaje3.setForeground(new java.awt.Color(255, 255, 255));
+        porcentaje3.setText("0 %");
+        jPanel1.add(porcentaje3);
+        porcentaje3.setBounds(500, 210, 100, 40);
+
+        porcentaje4.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
+        porcentaje4.setForeground(new java.awt.Color(255, 255, 255));
+        porcentaje4.setText("0 %");
+        jPanel1.add(porcentaje4);
+        porcentaje4.setBounds(500, 250, 100, 40);
+
+        attack.setBackground(new java.awt.Color(0, 51, 204));
+        attack.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
+        attack.setForeground(new java.awt.Color(255, 129, 10));
+        attack.setText("Attack");
+        jPanel1.add(attack);
+        attack.setBounds(330, 70, 380, 40);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -468,7 +497,7 @@ public class Main extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel atacante;
     private javax.swing.JLabel atacante1;
-    private javax.swing.JLabel attackername;
+    private javax.swing.JLabel attack;
     private javax.swing.JTextArea consola;
     private javax.swing.JScrollPane consola2;
     private javax.swing.JTextArea consolaTxta;
@@ -476,7 +505,6 @@ public class Main extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -492,6 +520,10 @@ public class Main extends javax.swing.JDialog {
     private javax.swing.JLabel personajeN2;
     private javax.swing.JLabel personajeN3;
     private javax.swing.JLabel personajeN4;
+    private javax.swing.JLabel porcentaje1;
+    private javax.swing.JLabel porcentaje2;
+    private javax.swing.JLabel porcentaje3;
+    private javax.swing.JLabel porcentaje4;
     private javax.swing.JLabel porcentajelbl;
     private javax.swing.JLabel prc1;
     private javax.swing.JLabel prc2;
@@ -510,6 +542,7 @@ public class Main extends javax.swing.JDialog {
     private javax.swing.JLabel victim2;
     private javax.swing.JLabel victim3;
     private javax.swing.JLabel victim4;
+    private javax.swing.JLabel weaponattack;
     private javax.swing.JLabel weaponused;
     // End of variables declaration//GEN-END:variables
 
@@ -563,5 +596,30 @@ public class Main extends javax.swing.JDialog {
     
     public void addLine(){
         consolaTxta.setText(consolaTxta.getText() + "\n>");
+    }
+
+    public void ultimoAtaqueRecibido(String nombreAtacante, String imagen, String tipoAtacante, String jugadorAtacante, 
+    Integer danhoAtacante, ArrayList<Integer> indices, String arma) {
+        
+        atacante1.setIcon(new javax.swing.ImageIcon(getClass().getResource(imagen))); 
+        attack.setText("Attacked by " + jugadorAtacante + " with " + nombreAtacante + "[" + tipoAtacante + "]");
+        weaponattack.setText("Weapon: " + arma);
+        
+        for (int i = 0; i < indices.size(); i++) {
+            switch(indices.get(i)){
+                case 0:
+                    porcentaje1.setText(danhoAtacante.toString() + "%");
+                    break;
+                case 1:
+                    porcentaje2.setText(danhoAtacante.toString()+ "%");
+                    break;
+                case 2:
+                    porcentaje3.setText(danhoAtacante.toString()+ "%");
+                    break;
+                case 3:
+                    porcentaje4.setText(danhoAtacante.toString()+ "%");
+                    break;
+            }
+        }
     }
 }

@@ -181,7 +181,7 @@ public class ThreadServidor extends Thread implements iObserver{
                 break;
             case "groupexit":
                 break;
-            // Ataque del enemigo
+            // Ataque del atacante
             case "attack":
                 // Info
                 ArrayList<String> infoAtaque = (ArrayList<String>)source;
@@ -234,6 +234,43 @@ public class ThreadServidor extends Thread implements iObserver{
                     }
                 }
 
+                break;
+            // Ataque de la victima
+            case "attackVictim":
+                ArrayList<String> infoAtaque2 = (ArrayList<String>)source;
+                String jugadorAtacante= infoAtaque2.get(0);
+                String victima2= infoAtaque2.get(1);
+                String personaje2= infoAtaque2.get(2);
+                String arma2= infoAtaque2.get(3);
+                Integer danho = server.controlMain.determinarAtaqueValido(jugadorAtacante, victima2, personaje2, arma2);
+                System.out.println("danho:");
+                System.out.println(danho);
+                if(danho != -1 && danho != -2 && danho != -3){
+                    // ataque valido
+                    // Obtener las victimas
+                    String tipoAtacante = server.controlMain.personajeAtacante.getNombreCategoria();
+                    ArrayList<Personaje> victimas = server.controlMain.getVictimas(victima2, tipoAtacante);
+                    Personaje atacante = server.controlMain.personajeAtacante;
+                    atacante.setDamage(danho);
+                    atacante.setEnemigos(victimas);
+                    String resultado = atacante.atacar();
+                    
+                    try{
+                        String imagenAtacante = atacante.getApariencia();
+                        ArrayList<Integer> indices = server.controlMain.getIndicesVictimas(victima2, tipoAtacante);
+                        writer.writeInt(2);
+                        writer.writeUTF("attackVictim");
+                        writer.writeUTF(atacante.getNombre());
+                        writer.writeUTF(imagenAtacante);
+                        writer.writeUTF(tipoAtacante);
+                        writer.writeUTF(jugadorAtacante);
+                        writer.writeUTF(arma2);
+                        writer.writeInt(danho);
+                        Objectwriter.writeObject(indices);
+                    } catch (IOException ex) {
+                        Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 break;
             default:
                 break;

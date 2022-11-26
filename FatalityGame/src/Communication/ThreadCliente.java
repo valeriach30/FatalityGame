@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -72,6 +75,19 @@ public class ThreadCliente extends Thread implements iObserver{
                                     refPantalla.addLine();
                                 }
                                 break;
+                            case "attackVictim":
+                                if(player.isActivo()){
+                                    String nombreAtacante = reader.readUTF();
+                                    String imagen = reader.readUTF();
+                                    String tipoAtacante = reader.readUTF();
+                                    String jugadorAtacante = reader.readUTF();
+                                    String arma = reader.readUTF();
+                                    Integer danhoAtacante = reader.readInt();
+                                    ArrayList<Integer> indices = (ArrayList<Integer>) Objectreader.readObject();
+                                    refPantalla.ultimoAtaqueRecibido(nombreAtacante, imagen, 
+                                    tipoAtacante, jugadorAtacante, danhoAtacante, indices, arma);
+                                }
+                                break;
                             case "chat":
                                 String mensaje = reader.readUTF();
                                 refPantalla.addMensaje(mensaje);
@@ -124,6 +140,8 @@ public class ThreadCliente extends Thread implements iObserver{
             } catch (IOException ex) {
                 System.out.println("error cliente");
                 System.out.println(ex.toString());
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ThreadCliente.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

@@ -212,4 +212,29 @@ public class Controlador implements iObserved{
         }
         return danho;
     }
+    
+    public ArrayList<Personaje> getVictimas(String nombreJugador, String categoria){
+        ArrayList<Personaje> victimas = new ArrayList<Personaje>();
+        Jugador victimaJugador = getJugador(nombreJugador);
+        for (int i = 0; i < victimaJugador.getPersonajes().size(); i++) {
+            String tipoCatPerActual = victimaJugador.getPersonajes().get(i).getNombreCategoria();
+            if(tipoCatPerActual.equals(categoria)){
+                victimas.add(victimaJugador.getPersonajes().get(i));
+            }
+        }
+        return victimas;
+    }
+    
+    public ArrayList<Integer> getIndicesVictimas(String nombreJugador, String categoria){
+        ArrayList<Integer> indices = new ArrayList<Integer>();
+        
+        Jugador victimaJugador = getJugador(nombreJugador);
+        for (int i = 0; i < victimaJugador.getPersonajes().size(); i++) {
+            String tipoCatPerActual = victimaJugador.getPersonajes().get(i).getNombreCategoria();
+            if(tipoCatPerActual.equals(categoria)){
+                indices.add(i);
+            }
+        }
+        return indices;
+    }
 }
