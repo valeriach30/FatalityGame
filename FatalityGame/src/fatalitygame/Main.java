@@ -73,6 +73,7 @@ public class Main extends javax.swing.JDialog {
         prc1 = new javax.swing.JLabel();
         prc2 = new javax.swing.JLabel();
         prc4 = new javax.swing.JLabel();
+        attack = new javax.swing.JLabel();
         personaje1btn = new javax.swing.JButton();
         personaje2btn = new javax.swing.JButton();
         personaje3btn = new javax.swing.JButton();
@@ -85,7 +86,6 @@ public class Main extends javax.swing.JDialog {
         porcentaje2 = new javax.swing.JLabel();
         porcentaje3 = new javax.swing.JLabel();
         porcentaje4 = new javax.swing.JLabel();
-        attack = new javax.swing.JLabel();
 
         consola.setBackground(new java.awt.Color(0, 0, 0));
         consola.setColumns(20);
@@ -292,6 +292,13 @@ public class Main extends javax.swing.JDialog {
         jPanel1.add(prc4);
         prc4.setBounds(1290, 400, 70, 40);
 
+        attack.setBackground(new java.awt.Color(0, 51, 204));
+        attack.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
+        attack.setForeground(new java.awt.Color(255, 129, 10));
+        attack.setText("Attack");
+        jPanel1.add(attack);
+        attack.setBounds(330, 70, 540, 40);
+
         personaje1btn.setBackground(new java.awt.Color(0, 0, 0));
         personaje1btn.setForeground(new java.awt.Color(0, 0, 0));
         personaje1btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/kitana.png"))); // NOI18N
@@ -383,13 +390,6 @@ public class Main extends javax.swing.JDialog {
         porcentaje4.setText("0 %");
         jPanel1.add(porcentaje4);
         porcentaje4.setBounds(500, 250, 100, 40);
-
-        attack.setBackground(new java.awt.Color(0, 51, 204));
-        attack.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
-        attack.setForeground(new java.awt.Color(255, 129, 10));
-        attack.setText("Attack");
-        jPanel1.add(attack);
-        attack.setBounds(330, 70, 540, 40);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

@@ -23,7 +23,7 @@ public class Servidor {
     private boolean running = true;
     private ServerSocket srv;
     private int turno;
-    private boolean partidaIniciada = false;
+    public boolean partidaIniciada = false;
     public Controlador controlMain = new Controlador(this);
     
     public Servidor(ServerForm refPantalla) {
@@ -58,7 +58,6 @@ public class Servidor {
         while(running){
             refPantalla.addMensaje(".: Esperando conexiones");
             Socket refSocket = srv.accept();
-            
             if(!partidaIniciada){
                 refPantalla.addMensaje(".: Conexion realizada: " + (++contador));
 

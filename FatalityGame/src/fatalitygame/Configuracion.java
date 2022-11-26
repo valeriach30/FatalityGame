@@ -423,7 +423,6 @@ public class Configuracion extends javax.swing.JFrame {
             nuevaAr.setAvailable(true);
             nuevaAr.setDanhos(danhoscopia);
             armasPersonaje.add(nuevaAr);
-            System.out.println(nuevaAr.toString());
             danhos.removeAll(danhos);
         }
         else{
