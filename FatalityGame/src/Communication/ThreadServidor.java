@@ -82,10 +82,17 @@ public class ThreadServidor extends Thread implements iObserver{
                         String[] arrayComandos = (String[]) Objectreader.readObject();
                         switch(arrayComandos[0]){
                             case "attack":
-                                String jugadorEnemigo = arrayComandos[1];
-                                String personaje = arrayComandos[2];
-                                String arma = arrayComandos[3];
-                                server.controlMain.attack(nombre, jugadorEnemigo, personaje, arma);
+                                if(this.id == server.getTurno()){
+                                    String jugadorEnemigo = arrayComandos[1];
+                                    String personaje = arrayComandos[2];
+                                    String arma = arrayComandos[3];
+                                    server.controlMain.attack(nombre, jugadorEnemigo, personaje, arma);
+                                    // Pasar de turno cuando ataca
+                                    server.controlMain.pasarTurno(server.getTurno());
+                                }
+                                else{
+                                    error();
+                                }
                                 break;
                             case "chat":
                                 String mensaje = arrayComandos[1];
@@ -101,16 +108,7 @@ public class ThreadServidor extends Thread implements iObserver{
                                     server.controlMain.pasarTurno(server.getTurno());
                                 }
                                 else{
-                                    for (int i = 0; i < server.conexiones.size(); i++) {
-                                        ThreadServidor current = server.conexiones.get(i);
-                                        try {
-                                            if(i == this.id){
-                                                current.writer.writeInt(3);
-                                            }
-                                        } catch (IOException ex) {
-                                            Logger.getLogger(ChatCommand.class.getName()).log(Level.SEVERE, null, ex);
-                                        }
-                                    }
+                                    error();
                                 }
                                 break;
                             case "privatechat":
@@ -119,12 +117,26 @@ public class ThreadServidor extends Thread implements iObserver{
                                 server.controlMain.chatPrivado(mensajePrivado, nombre, jugador);
                                 break;
                             case "reload":
+                                // Determinar si es su turno
+                                if(this.id == server.getTurno()){
+                                    // logica aqui
+                                }
+                                else{
+                                    error();
+                                }
                                 break;
                             case "select":
                                 String jugadorSeleccionado = arrayComandos[1];
                                 server.controlMain.seleccionarJugador(jugadorSeleccionado);
                                 break;    
                             case "wildcard":
+                                // Determinar si es su turno
+                                if(this.id == server.getTurno()){
+                                    // logica aqui
+                                }
+                                else{
+                                    error();
+                                }
                                 break;
                         }
                         break;
@@ -300,6 +312,19 @@ public class ThreadServidor extends Thread implements iObserver{
                 Objectwriter.writeObject(indices);
             } catch (IOException ex) {
                 Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    private void error() {
+        for (int i = 0; i < server.conexiones.size(); i++) {
+            ThreadServidor current = server.conexiones.get(i);
+            try {
+                if(i == this.id){
+                    current.writer.writeInt(3);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(ChatCommand.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
