@@ -76,7 +76,6 @@ public class ThreadCliente extends Thread{
                                     String tipoPersonaje = reader.readUTF();
                                     Integer danho = reader.readInt();
                                     refPantalla.ultimoAtaqueHecho(victima, imagenAtacante, arma, tipoPersonaje, danho);
-                                    refPantalla.addLine();
                                 }
                                 break;
                             case "attackVictim":
