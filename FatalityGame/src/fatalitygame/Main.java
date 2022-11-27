@@ -678,10 +678,26 @@ public class Main extends javax.swing.JDialog {
     }
 
     public void comodin() {
-            JOptionPane.showMessageDialog(null, "Ha recibido un comodin!!", "Info", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Ha recibido un comodin!!", "Info", JOptionPane.INFORMATION_MESSAGE);
     }
     
     public void ganador() {
-            JOptionPane.showMessageDialog(null, "Ha ganado!! Felicidades", "Info", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Ha ganado!! Felicidades", "Info", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void salidadGrupal(String remitente) throws IOException {
+        int reply = JOptionPane.showConfirmDialog(null,
+        remitente+" ha propuesto una salida agrupal. Acepta?", "Info", JOptionPane.YES_NO_OPTION);
+        System.out.println("reply:");
+        System.out.println(reply);
+        if (reply == JOptionPane.YES_OPTION) {
+            refCliente.hiloCliente.writer.writeInt(4);
+        } else {
+            refCliente.hiloCliente.writer.writeInt(5);
+        }
+    }
+
+    public void avisoEmpate() {
+        JOptionPane.showMessageDialog(null, "Salida Mutua ejecutada con exito. Nadie ha ganado", "Info", JOptionPane.INFORMATION_MESSAGE);
     }
 }

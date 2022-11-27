@@ -36,6 +36,7 @@ public class Controlador implements iObserved{
     CommandManager manager = CommandManager.getIntance(); 
     public Personaje personajeAtacante;
     public Arma lastArma;
+    public boolean salir = false;
     
     public Controlador(Servidor server){
         this.server = server;
@@ -130,7 +131,7 @@ public class Controlador implements iObserved{
         ArrayList<String> commandArgs = new ArrayList<String>();
         commandArgs.add(nombre);
         ICommand command = manager.getCommand("groupexit");   
-        command.execute(commandArgs, System.out, server.conexiones);  
+        command.execute(commandArgs, System.out, server.conexiones); 
     }
     
     public void comodinJugadores(String atacante, String victimaJ, String personaje1, String arma1, String personaje2, String arma2){

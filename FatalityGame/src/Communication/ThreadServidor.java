@@ -233,6 +233,12 @@ public class ThreadServidor extends Thread implements iObserver{
                     case 3:
                         writer.writeInt(3);
                         break;
+                    case 4:
+                        server.controlMain.salir = true;
+                        break;
+                    case 5:
+                        server.controlMain.salir = false;
+                        break;
                     default:
                         break;
                 }
@@ -348,9 +354,24 @@ public class ThreadServidor extends Thread implements iObserver{
             // --------------------- WILDCARD ---------------------
             case "wildcard":
                 atacar(source);
+                try {
+                    writer.writeInt(2);
+                    writer.writeUTF("wildcard");
+                } catch (IOException ex) {
+                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 break;
+
             // --------------------- GROUP EXIT ---------------------
             case "groupexit":
+                String remitente = (String)source;
+                try {
+                    writer.writeInt(2);
+                    writer.writeUTF("groupexit");
+                    writer.writeUTF(remitente);
+                } catch (IOException ex) {
+                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 break;
                 
             // --------------------- ATTACK ---------------------
@@ -537,6 +558,18 @@ public class ThreadServidor extends Thread implements iObserver{
                 armaActual = personajeAct.getArmas().get(k);
                 armaActual.setAvailable(true);
             }
+        }
+    }
+    
+    public boolean determinar(){
+        System.out.println("-------------");
+        System.out.println("salir: " +server.controlMain.salir);
+        if(server.controlMain.salir){
+            // todos dijeron que si
+            return true;
+        }else{
+            // alguno dijo que no
+            return false;
         }
     }
 }

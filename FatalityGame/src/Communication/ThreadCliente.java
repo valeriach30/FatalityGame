@@ -113,7 +113,8 @@ public class ThreadCliente extends Thread{
                                 break;
                             case "groupexit":
                                 if(player.isActivo()){
-                                    // groupexit
+                                    String remitente = reader.readUTF();
+                                    refPantalla.salidadGrupal(remitente);
                                 }
                                 break;
                             case "pass":
@@ -137,7 +138,7 @@ public class ThreadCliente extends Thread{
                                 break;    
                             case "wildcard":
                                 if(player.isActivo()){
-                                    // wildcard
+                                    refPantalla.addMensaje("Comodin ejecutandose/ejecutado");
                                 }
                                 break;
                         }
@@ -156,6 +157,9 @@ public class ThreadCliente extends Thread{
                     case 7:
                         refPantalla.ganador();
                         break;
+                    case 8:
+                        refPantalla.desactivarConsola();
+                        refPantalla.avisoEmpate();
                     default:
                         break;
                 }
