@@ -440,6 +440,8 @@ public class Main extends javax.swing.JDialog {
 
     private void consolaTxtaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_consolaTxtaKeyPressed
         if (evt.getKeyCode() == evt.VK_ENTER){
+            System.out.println("comando:");
+            System.out.println(command);
             String[] arrayComandos = command.split(" -");
             try {
                 // Llamar al thread
@@ -455,6 +457,9 @@ public class Main extends javax.swing.JDialog {
         }else{
             if(evt.getKeyCode() != evt.VK_CAPS_LOCK){
                 command += evt.getKeyChar();
+            }
+            if(evt.getKeyCode() == evt.VK_DELETE){
+                command = "";
             }
         }
     }//GEN-LAST:event_consolaTxtaKeyPressed

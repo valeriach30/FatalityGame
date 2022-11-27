@@ -24,6 +24,7 @@ import java.util.ArrayList;
  * @author vchin
  */
 public class Controlador implements iObserved{
+    
     public Juego juego = new Juego();
     public ArrayList<iObserver> observers;
     public ArrayList<String> nombres = null;
@@ -39,9 +40,8 @@ public class Controlador implements iObserved{
         this.server = server;
     }
     
-    void crear() {
-        // nada
-    }
+    
+    // ----------------------------------COMANDOS----------------------------------
     
     public void agregarJugador(Jugador jugador){
         if(juego.getJugadores() != null){
@@ -92,6 +92,40 @@ public class Controlador implements iObserved{
         command.execute(commandArgs, System.out, server.conexiones);        
     }
     
+    public Integer recargar(String nombre) {
+        Jugador jugador = getJugador(nombre);
+        boolean bandera = false;
+        // Determinar si todas las armas del jugador estan deshabilitadas
+        for (int j = 0; j < jugador.getPersonajes().size(); j++) {
+            Personaje personajeAct = jugador.getPersonajes().get(j);
+            
+            // Armas
+            Arma armaActual = null;
+            for (int k = 0; k < personajeAct.getArmas().size(); k++) {
+                // Obtener el arma 
+                armaActual = personajeAct.getArmas().get(k);
+                if(armaActual.isAvailable()){
+                    bandera = true;
+                }
+            }
+        }
+        // Bandera falsa -> ningun arma esta activa
+        if(!bandera){
+            ArrayList<String> commandArgs = new ArrayList<String>();
+            commandArgs.add(nombre);
+            ICommand command = manager.getCommand("reload");   
+            command.execute(commandArgs, System.out, server.conexiones);    
+            return 0;
+        }
+        // Bandera verdadera -> algun arma esta activa
+        else{
+            // error
+            return -1;
+        }
+    }
+    
+    
+    // ----------------------------------OBSERVER----------------------------------
     
     @Override
     public void notificarTodos(String command, Object source) {
@@ -105,6 +139,10 @@ public class Controlador implements iObserved{
         this.observers.add(observer);
     }
 
+    
+    // ----------------------------------FUNCIONES DE APOYO----------------------------------
+    
+    
     public void attack(String nombre, String jugadorEnemigo, String personaje, String arma) {
         // calcula el dano aca?
         ArrayList<String> commandArgs = new ArrayList<String>();
@@ -285,4 +323,21 @@ public class Controlador implements iObserved{
             }
         }
     }
+
+    public void desactivarArmas(String nombreJugador) {
+        Jugador jugador = getJugador(nombreJugador);
+        // Buscar todos los personajes y activarles todas las armas
+        for (int j = 0; j < jugador.getPersonajes().size(); j++) {
+            Personaje personajeAct = jugador.getPersonajes().get(j);
+            // Armas
+            Arma armaActual = null;
+            for (int k = 0; k < personajeAct.getArmas().size(); k++) {
+                // Obtener el arma 
+                armaActual = personajeAct.getArmas().get(k);
+                armaActual.setAvailable(false);
+            }
+        }
+    }
+
+    
 }

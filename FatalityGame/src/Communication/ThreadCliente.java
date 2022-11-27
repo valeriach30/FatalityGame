@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  *
  * @author vchin
  */
-public class ThreadCliente extends Thread implements iObserver{
+public class ThreadCliente extends Thread{
 
     private Socket socketRef;
     public DataInputStream reader;
@@ -122,7 +122,7 @@ public class ThreadCliente extends Thread implements iObserver{
                                 break;
                             case "reload":
                                 if(player.isActivo()){
-                                    // reload
+                                    refPantalla.addMensaje("Armas recargadas!");
                                 }
                                 break;
                             case "select":
@@ -160,10 +160,4 @@ public class ThreadCliente extends Thread implements iObserver{
     public int getTurnoActual() {
         return turnoActual;
     }
-
-   @Override
-    public void notificar(String command, Object source) {
-        // hace algo de la pantalla aca
-    }
-    
 }

@@ -87,8 +87,7 @@ public class ThreadServidor extends Thread implements iObserver{
                                     String personaje = arrayComandos[2];
                                     String arma = arrayComandos[3];
                                     server.controlMain.attack(nombre, jugadorEnemigo, personaje, arma);
-                                    // Pasar de turno cuando ataca
-                                    server.controlMain.pasarTurno(server.getTurno());
+                                    
                                 }
                                 else{
                                     error();
@@ -122,7 +121,15 @@ public class ThreadServidor extends Thread implements iObserver{
                             case "reload":
                                 // Determinar si es su turno
                                 if(this.id == server.getTurno()){
-                                    // logica aqui
+                                    Integer respuesta = server.controlMain.recargar(nombre);
+                                    if(respuesta == -1){
+                                        try {
+                                            writer.writeInt(4);
+                                            writer.writeUTF("Alguna de las armas sigue disponible");
+                                        } catch (IOException ex) {
+                                            Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                    }
                                 }
                                 else{
                                     error();
@@ -140,6 +147,11 @@ public class ThreadServidor extends Thread implements iObserver{
                                 else{
                                     error();
                                 }
+                                break;
+                            case "desactivar":
+                                server.controlMain.desactivarArmas(nombre);
+                                writer.writeInt(4);
+                                writer.writeUTF("Armas desactivadas");
                                 break;
                         }
                         break;
@@ -228,6 +240,14 @@ public class ThreadServidor extends Thread implements iObserver{
                 }
                 break;
             case "reload":
+                // Activar todas las armas
+                reload((String)source);
+                try {
+                    writer.writeInt(2);
+                    writer.writeUTF("reload");
+                } catch (IOException ex) {
+                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 break;
             case "wildcard":
                 break;
@@ -300,6 +320,8 @@ public class ThreadServidor extends Thread implements iObserver{
                             writer.writeUTF(arma);
                             writer.writeUTF(tipoPersonaje);
                             writer.writeInt(respuesta);
+                            // Pasar de turno cuando ataca
+                            server.controlMain.pasarTurno(server.getTurno());
                         } catch (IOException ex) {
                             Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -358,4 +380,18 @@ public class ThreadServidor extends Thread implements iObserver{
         }
     }
     
+    private void reload(String nombreJugador){
+        Jugador jugador = server.controlMain.getJugador(nombreJugador);
+        // Buscar todos los personajes y activarles todas las armas
+        for (int j = 0; j < jugador.getPersonajes().size(); j++) {
+            Personaje personajeAct = jugador.getPersonajes().get(j);
+            // Armas
+            Arma armaActual = null;
+            for (int k = 0; k < personajeAct.getArmas().size(); k++) {
+                // Obtener el arma 
+                armaActual = personajeAct.getArmas().get(k);
+                armaActual.setAvailable(true);
+            }
+        }
+    }
 }
