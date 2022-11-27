@@ -48,8 +48,3 @@ lance
 ---- lo que falta ----
 
 -logs y scores
-
-
----- arreglar ----
--bug de que cuando alguien se rinde empieza de nuevo en el primer jugador
--hay un bug cunado alguien se rinde y hay 4 jugadores, despues se desmadran los turnos
