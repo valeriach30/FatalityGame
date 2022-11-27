@@ -389,8 +389,7 @@ public class Controlador implements iObserved{
         }
         if(contador == victimaJugador.getPersonajes().size()){
             // Todos los personajes estan muertos
-            // Eliminar (giveup)
-            rendirse(victima);
+
             return true;
         }
         else{

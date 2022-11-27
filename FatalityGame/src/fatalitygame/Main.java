@@ -667,6 +667,7 @@ public class Main extends javax.swing.JDialog {
     
     public void desactivarConsola(){
         consolaTxta.setEnabled(false);
+        JOptionPane.showMessageDialog(null, "Ha perdido :(", "Info", JOptionPane.OK_OPTION);
     }
     
     public void desactivarBotones(){

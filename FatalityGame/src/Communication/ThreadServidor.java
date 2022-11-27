@@ -478,8 +478,11 @@ public class ThreadServidor extends Thread implements iObserver{
                 Objectwriter.writeObject(indices);
                 // Pasar de turno cuando ataca
                 if(pasarTurno == "2"){
-                    System.out.println("paso de turno!!");
                     server.controlMain.pasarTurno(server.getTurno());
+                }
+                if(victimaPerdedor){
+                    // Eliminar (giveup)
+                    server.controlMain.rendirse(victima2);
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
