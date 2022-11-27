@@ -351,9 +351,13 @@ public class Configuracion extends javax.swing.JFrame {
             }
             else{
                 JOptionPane.showMessageDialog(null, "Debe crear 5 armas primero", "Error", JOptionPane.OK_OPTION);
+                cantidadPersonajes--;
             }
         }
         else{
+            agregarArmabtn.setEnabled(false);
+            crearbtn.setEnabled(false);
+            disableTypes();
             // Ir a la pantalla cliente
             this.setVisible(false);
             Main pant1 = new Main(this, true);
