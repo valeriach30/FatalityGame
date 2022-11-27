@@ -133,6 +133,30 @@ public class Controlador implements iObserved{
         command.execute(commandArgs, System.out, server.conexiones);  
     }
     
+    public void comodinJugadores(String atacante, String victimaJ, String personaje1, String arma1, String personaje2, String arma2){
+        ArrayList<String> commandArgs = new ArrayList<String>();
+        commandArgs.add(atacante);
+        commandArgs.add(victimaJ);
+        commandArgs.add(personaje1);
+        commandArgs.add(arma1);
+        commandArgs.add(personaje2);
+        commandArgs.add(arma2);
+        commandArgs.add("1");
+        ICommand command = manager.getCommand("wildcard");   
+        command.execute(commandArgs, System.out, server.conexiones);  
+    }
+    
+    public void comodinArmas(String atacante, String victimaJ, String personaje1, String arma1, String arma2){
+        ArrayList<String> commandArgs = new ArrayList<String>();
+        commandArgs.add(atacante);
+        commandArgs.add(victimaJ);
+        commandArgs.add(personaje1);
+        commandArgs.add(arma1);
+        commandArgs.add(arma2);
+        commandArgs.add("2");
+        ICommand command = manager.getCommand("wildcard");   
+        command.execute(commandArgs, System.out, server.conexiones);  
+    }
     // ----------------------------------OBSERVER----------------------------------
     
     @Override

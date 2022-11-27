@@ -675,4 +675,8 @@ public class Main extends javax.swing.JDialog {
         personaje3btn.setEnabled(false);
         personaje4btn.setEnabled(false);
     }
+
+    public void comodin() {
+            JOptionPane.showMessageDialog(null, "Ha recibido un comodin!!", "Info", JOptionPane.INFORMATION_MESSAGE);
+    }
 }

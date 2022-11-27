@@ -15,6 +15,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import static java.lang.Math.random;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
@@ -38,6 +39,8 @@ public class ThreadServidor extends Thread implements iObserver{
     public String nombre;
     private boolean running = true;
     Servidor server;
+    private boolean comodinHabilitado = false;
+    long startTime = System.currentTimeMillis();
     
     
     public ThreadServidor(Socket socketRef, Servidor server, int id) throws IOException {
@@ -57,8 +60,25 @@ public class ThreadServidor extends Thread implements iObserver{
             try {
                 instruccionId = reader.readInt(); // esperar hasta que reciba un entero
                 System.out.println("instruccion server: " + instruccionId);
+                
+                // Timer
+                long elapsedTime = System.currentTimeMillis() - startTime;
+                long elapsedSeconds = elapsedTime / 1000;
+                long elapsedMinutes = elapsedSeconds / 60;
+                
+                // Numero random
+                Random random=new Random();
+                int randomNumber=(random.nextInt(65536)-32768);
+                
+                // Dar comodin
+                if(elapsedMinutes >= 1 && comodinHabilitado == false /*&& randomNumber > 0*/){ // CAMBIAR A 5 MINUTOS Y HABILITAR RANDOM
+                    comodinHabilitado = true;
+                    writer.writeInt(5);
+                    startTime = System.currentTimeMillis();
+                }
+
                 switch (instruccionId){
-                    //----------------------------INFO PERSONAL----------------------------
+                    //----------------------------INICIO----------------------------
                     case 1:
                         nombre = JOptionPane.showInputDialog("Nickname:");
                         while(server.controlMain.nombreValido(nombre) == false){
@@ -80,7 +100,10 @@ public class ThreadServidor extends Thread implements iObserver{
                     //----------------------------COMMANDOS----------------------------
                     case 2:
                         String[] arrayComandos = (String[]) Objectreader.readObject();
+                        
                         switch(arrayComandos[0]){
+                            
+                            //----------------------------ATACAR----------------------------
                             case "attack":
                                 if(this.id == server.getTurno()){
                                     String jugadorEnemigo = arrayComandos[1];
@@ -95,16 +118,24 @@ public class ThreadServidor extends Thread implements iObserver{
                                     error();
                                 }
                                 break;
+                                
+                            //----------------------------CHAT----------------------------
                             case "chat":
                                 String mensaje = arrayComandos[1];
                                 server.controlMain.chat(mensaje, nombre);
                                 break;
+                                
+                            //----------------------------GIVEUP----------------------------
                             case "giveup":
                                 server.controlMain.rendirse(nombre);
                                 break;
+                                
+                            //----------------------------GROUP EXIT----------------------------
                             case "groupexit":
                                 server.controlMain.salidaGrupal(nombre);
                                 break;
+                            
+                            //----------------------------PASS----------------------------
                             case "pass":
                                 if(this.id == server.getTurno()){
                                     server.controlMain.pasarTurno(server.getTurno());
@@ -113,11 +144,15 @@ public class ThreadServidor extends Thread implements iObserver{
                                     error();
                                 }
                                 break;
+                            
+                            //----------------------------PRIVATE CHAT----------------------------
                             case "privatechat":
                                 String jugador = arrayComandos[1];
                                 String mensajePrivado = arrayComandos[2];
                                 server.controlMain.chatPrivado(mensajePrivado, nombre, jugador);
                                 break;
+                                
+                            //----------------------------RELOAD----------------------------
                             case "reload":
                                 // Determinar si es su turno
                                 if(this.id == server.getTurno()){
@@ -135,19 +170,48 @@ public class ThreadServidor extends Thread implements iObserver{
                                     error();
                                 }
                                 break;
+                            
+                            //----------------------------SELECT----------------------------
                             case "select":
                                 String jugadorSeleccionado = arrayComandos[1];
                                 server.controlMain.seleccionarJugador(jugadorSeleccionado);
                                 break;    
+                                
+                            //----------------------------WILDCARD----------------------------
                             case "wildcard":
                                 // Determinar si es su turno
-                                if(this.id == server.getTurno()){
-                                    // logica aqui
+                                String victimaJ;
+                                String personaje1;
+                                String personaje2;
+                                String arma1;
+                                String arma2;
+                                if(this.id == server.getTurno() && comodinHabilitado == true){
+                                    // Determinar si esta atacando con dos personajes o con dos armas
+                                    if(arrayComandos.length == 6){
+                                        // Comodin: dos jugadores
+                                        victimaJ = arrayComandos[1];
+                                        personaje1 = arrayComandos[2];
+                                        arma1 = arrayComandos[3];
+                                        personaje2 = arrayComandos[4];
+                                        arma2 = arrayComandos[5];
+                                        server.controlMain.comodinJugadores(nombre, victimaJ, personaje1, arma1, personaje2, arma2);
+                                    }
+                                    else{
+                                        if(arrayComandos.length == 5){
+                                            // Comodin dos armas
+                                            victimaJ = arrayComandos[1];
+                                            personaje1 = arrayComandos[2];
+                                            arma1 = arrayComandos[3];
+                                            arma2 = arrayComandos[4];
+                                            server.controlMain.comodinArmas(nombre, victimaJ, personaje1, arma1, arma2);
+                                        }
+                                    }
                                 }
                                 else{
-                                    error();
+                                    error2();
                                 }
                                 break;
+                            //----------------------------DESACTIVAR----------------------------
                             case "desactivar":
                                 server.controlMain.desactivarArmas(nombre);
                                 writer.writeInt(4);
@@ -155,6 +219,7 @@ public class ThreadServidor extends Thread implements iObserver{
                                 break;
                         }
                         break;
+                    //----------------------------OTROS----------------------------
                     case 3:
                         writer.writeInt(3);
                         break;
@@ -169,36 +234,47 @@ public class ThreadServidor extends Thread implements iObserver{
             }
         }
     } 
-
+    
+    // -------------------------------------- OBSERVER --------------------------------------
     @Override
     public void notificar(String command, Object source) {
         switch(command){
+            // --------------------- CHAT ---------------------
             case "chat":
                 try {
                     writer.writeInt(2);
                     writer.writeUTF("chat");
                     writer.writeUTF((String)source);
                 } catch (IOException ex) {
-                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ThreadServidor.class.getName())
+                          .log(Level.SEVERE, null, ex);
                 }
                 break;
+            
+            // --------------------- CHAT PRIVADO ---------------------
             case "privatechat":
                 try {
                     writer.writeInt(2);
                     writer.writeUTF("privatechat");
                     writer.writeUTF((String)source);
                 } catch (IOException ex) {
-                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ThreadServidor.class.getName())
+                            .log(Level.SEVERE, null, ex);
                 }
                 break;
+                
+            // --------------------- SELECT ---------------------
             case "select":
                 try {
                     writer.writeInt(2);
                     writer.writeUTF("select");
                 } catch (IOException ex) {
-                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ThreadServidor.class.getName())
+                            .log(Level.SEVERE, null, ex);
                 }
                 break;
+            
+            // --------------------- PASS ---------------------
             case "pass":
                 try{
                     Integer turno = (Integer)source;
@@ -208,9 +284,12 @@ public class ThreadServidor extends Thread implements iObserver{
                     writer.writeInt(turno);
                     writer.writeUTF(nombreDelTurno);
                 } catch (IOException ex) {
-                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ThreadServidor.class.getName())
+                    .log(Level.SEVERE, null, ex);
                 }
                 break;
+                
+            // --------------------- GIVEUP ---------------------
             case "giveup":
                 try {
                     // Eliminar de las conexiones
@@ -219,7 +298,8 @@ public class ThreadServidor extends Thread implements iObserver{
                     writer.writeUTF("giveup");
 
                     // Eliminar conexion
-                    ArrayList<ThreadServidor> nuevasConexiones = new ArrayList<ThreadServidor>();
+                    ArrayList<ThreadServidor> nuevasConexiones;
+                    nuevasConexiones = new ArrayList<ThreadServidor>();
                     for (int i = 0; i < server.conexiones.size(); i++) {
                         if(i != indice){
                             nuevasConexiones.add(server.conexiones.get(i));
@@ -236,9 +316,12 @@ public class ThreadServidor extends Thread implements iObserver{
                     // Pasar turno
                     server.controlMain.pasarTurno(server.getTurno());
                 } catch (IOException ex) {
-                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ThreadServidor.class.getName())
+                    .log(Level.SEVERE, null, ex);
                 }
                 break;
+                  
+            // --------------------- RELOAD ---------------------
             case "reload":
                 // Activar todas las armas
                 reload((String)source);
@@ -246,13 +329,20 @@ public class ThreadServidor extends Thread implements iObserver{
                     writer.writeInt(2);
                     writer.writeUTF("reload");
                 } catch (IOException ex) {
-                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ThreadServidor.class.getName())
+                    .log(Level.SEVERE, null, ex);
                 }
                 break;
+                
+            // --------------------- WILDCARD ---------------------
             case "wildcard":
                 break;
+                
+            // --------------------- GROUP EXIT ---------------------
             case "groupexit":
                 break;
+                
+            // --------------------- ATTACK ---------------------
             // Ataque del atacante
             case "attack":
                 atacar(source);
@@ -261,25 +351,30 @@ public class ThreadServidor extends Thread implements iObserver{
             case "attackVictim":
                 atacarVictima(source);
                 break;
+                
+            // --------------------- DEFAULT ---------------------
             default:
                 break;
         }
     }
     
+    // ----------------------------------------- FUNCIONES DE APOYO -----------------------------------------
     private void atacar(Object source){
         // Info
         ArrayList<String> infoAtaque = (ArrayList<String>)source;
         String victima= infoAtaque.get(0);
         String personaje= infoAtaque.get(1);
         String arma= infoAtaque.get(2);
-        Integer respuesta = server.controlMain.determinarAtaqueValido(nombre, victima, personaje, arma, 1);
+        Integer respuesta = server.controlMain.determinarAtaqueValido(nombre,
+                            victima, personaje, arma, 1);
         System.out.println("respuesta: " + respuesta);
         if(respuesta == 0){
             try {
                 writer.writeInt(4);
                 writer.writeUTF("Error: el arma ya fue usada");
             } catch (IOException ex) {
-                Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ThreadServidor.class.getName())
+                .log(Level.SEVERE, null, ex);
             }
         }
         else{
@@ -288,7 +383,8 @@ public class ThreadServidor extends Thread implements iObserver{
                     writer.writeInt(4);
                     writer.writeUTF("Error: el arma no existe");
                 } catch (IOException ex) {
-                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ThreadServidor.class.getName())
+                            .log(Level.SEVERE, null, ex);
                 }
             }
             else{
@@ -297,7 +393,8 @@ public class ThreadServidor extends Thread implements iObserver{
                         writer.writeInt(4);
                         writer.writeUTF("Error: el personaje no existe");
                     } catch (IOException ex) {
-                        Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(ThreadServidor.class.getName())
+                                .log(Level.SEVERE, null, ex);
                     }
                 }
                 else{
@@ -306,7 +403,8 @@ public class ThreadServidor extends Thread implements iObserver{
                             writer.writeInt(4);
                             writer.writeUTF("Error: el jugador no existe");
                         } catch (IOException ex) {
-                            Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(ThreadServidor.class.getName())
+                                    .log(Level.SEVERE, null, ex);
                         }
                     }
                     else{
@@ -315,14 +413,17 @@ public class ThreadServidor extends Thread implements iObserver{
                                 writer.writeInt(4);
                                 writer.writeUTF("Error: el personaje esta muerto. No puede atacar");
                             } catch (IOException ex) {
-                                Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(ThreadServidor.class
+                                .getName()).log(Level.SEVERE, null, ex);
                             }    
                         }
                         else{
                             // Ataque valido
                             try{
-                                String tipoPersonaje = server.controlMain.personajeAtacante.getNombreCategoria();
-                                String imagenAtacante = server.controlMain.personajeAtacante.getApariencia();
+                                String tipoPersonaje = server.controlMain
+                                        .personajeAtacante.getNombreCategoria();
+                                String imagenAtacante = server.controlMain
+                                        .personajeAtacante.getApariencia();
                                 writer.writeInt(2);
                                 writer.writeUTF("attack");
                                 writer.writeUTF(victima);
@@ -331,7 +432,8 @@ public class ThreadServidor extends Thread implements iObserver{
                                 writer.writeUTF(tipoPersonaje);
                                 writer.writeInt(respuesta);
                             } catch (IOException ex) {
-                                Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(ThreadServidor.class
+                                .getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     }
@@ -392,7 +494,18 @@ public class ThreadServidor extends Thread implements iObserver{
             }
         }
     }
-    
+    private void error2() {
+        for (int i = 0; i < server.conexiones.size(); i++) {
+            ThreadServidor current = server.conexiones.get(i);
+            try {
+                if(i == this.id){
+                    current.writer.writeInt(6);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(ChatCommand.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
     private void reload(String nombreJugador){
         Jugador jugador = server.controlMain.getJugador(nombreJugador);
         // Buscar todos los personajes y activarles todas las armas

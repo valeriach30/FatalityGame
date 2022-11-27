@@ -17,6 +17,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -147,6 +148,11 @@ public class ThreadCliente extends Thread{
                     case 4:
                         refPantalla.addMensaje(reader.readUTF() + "\n>");
                         break;
+                    case 5:
+                        refPantalla.comodin();
+                        break;
+                    case 6:
+                        refPantalla.addMensaje("No es su turno o no tiene un comodin habilitado\n>");
                     default:
                         break;
                 }

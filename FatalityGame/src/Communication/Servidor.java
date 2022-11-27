@@ -8,10 +8,12 @@ package Communication;
 import Libreria.Juego.Juego;
 import Libreria.Juego.Jugador;
 import Modelo.Controlador;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import javax.swing.Timer;
 
 /**
  *
@@ -50,6 +52,9 @@ public class Servidor {
         }
     }
     
+    public void timerComodin(){
+        
+    }
     public void runServer() throws IOException{
         
         int contador = 0;
@@ -59,6 +64,7 @@ public class Servidor {
             refPantalla.addMensaje(".: Esperando conexiones");
             Socket refSocket = srv.accept();
             if(!partidaIniciada){
+                timerComodin();
                 refPantalla.addMensaje(".: Conexion realizada: " + (++contador));
 
                 // Thread
