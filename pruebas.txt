@@ -1,0 +1,56 @@
+/imagenes/cetrion.png
+/imagenes/erronblack.png
+/imagenes/kitana.png
+/imagenes/kotal.png
+/imagenes/kunglao.png
+/imagenes/mileena.png
+/imagenes/raiden.png
+/imagenes/scorpion.png
+/imagenes/shao.png
+/imagenes/sindel.png
+/imagenes/sonya.png
+/imagenes/subzero.png
+/imagenes/kronika.png
+
+-------------------------------------------------------------------------------
+
+attack –raul -shao -knife
+giveup
+groupexit
+reload
+desactivar
+wildcard -raul -mileena -knife -kronika -blade
+wildcard -raul -milleena -knife -blade
+select -vale
+pass
+chat -hola a todos
+privateChat -raul -hola todo bien?
+
+
+-------------------------------------------------------------------------------
+
+knife
+gun
+canyon
+pencil
+hands
+stick
+blade
+club
+ax
+sword
+spear
+halberd
+pike
+lance
+
+-------------------------------------------------------------------------------
+---- lo que falta ----
+
+-salida mutua
+-logs y scores
+
+
+---- arreglar ----
+-bug de que cuando alguien se rinde empieza de nuevo en el primer jugador
+-hay un bug cunado alguien se rinde y hay 4 jugadores, despues se desmadran los turnos
