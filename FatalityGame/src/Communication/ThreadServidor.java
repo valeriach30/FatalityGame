@@ -242,12 +242,9 @@ public class ThreadServidor extends Thread implements iObserver{
                     default:
                         break;
                 }
-                
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                 System.out.println("error servidor");
                 System.out.println(ex.toString());
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     } 
@@ -255,60 +252,42 @@ public class ThreadServidor extends Thread implements iObserver{
     // -------------------------------------- OBSERVER --------------------------------------
     @Override
     public void notificar(String command, Object source) {
-        switch(command){
-            // --------------------- CHAT ---------------------
-            case "chat":
-                try {
+        try {
+            switch(command){
+
+                // --------------------- CHAT ---------------------
+                case "chat":
                     writer.writeInt(2);
                     writer.writeUTF("chat");
                     writer.writeUTF((String)source);
-                } catch (IOException ex) {
-                    Logger.getLogger(ThreadServidor.class.getName())
-                          .log(Level.SEVERE, null, ex);
-                }
-                break;
-            
-            // --------------------- CHAT PRIVADO ---------------------
-            case "privatechat":
-                try {
+                    break;
+
+                // --------------------- CHAT PRIVADO ---------------------
+                case "privatechat":
                     writer.writeInt(2);
                     writer.writeUTF("privatechat");
                     writer.writeUTF((String)source);
-                } catch (IOException ex) {
-                    Logger.getLogger(ThreadServidor.class.getName())
-                            .log(Level.SEVERE, null, ex);
-                }
-                break;
-                
-            // --------------------- SELECT ---------------------
-            case "select":
-                try {
+                    break;
+
+                // --------------------- SELECT ---------------------
+                case "select":
                     writer.writeInt(2);
                     writer.writeUTF("select");
-                } catch (IOException ex) {
-                    Logger.getLogger(ThreadServidor.class.getName())
-                            .log(Level.SEVERE, null, ex);
-                }
-                break;
-            
-            // --------------------- PASS ---------------------
-            case "pass":
-                try{
+                    break;
+
+                // --------------------- PASS ---------------------
+                case "pass":
                     Integer turno = (Integer)source;
                     String nombreDelTurno = server.conexiones.get(server.getTurno()).nombre;
                     writer.writeInt(2);
                     writer.writeUTF("pass");
                     writer.writeInt(turno);
                     writer.writeUTF(nombreDelTurno);
-                } catch (IOException ex) {
-                    Logger.getLogger(ThreadServidor.class.getName())
-                    .log(Level.SEVERE, null, ex);
-                }
-                break;
-                
-            // --------------------- GIVEUP ---------------------
-            case "giveup":
-                try {
+                    break;
+
+                // --------------------- GIVEUP ---------------------
+                case "giveup":
+
                     // Eliminar de las conexiones
                     Integer indice = (Integer)source;
                     writer.writeInt(2);
@@ -323,70 +302,56 @@ public class ThreadServidor extends Thread implements iObserver{
                         }
                     }
                     server.conexiones=(ArrayList<ThreadServidor>) nuevasConexiones.clone();
-                    
+
                     // Eliminar de los jugadores del juego
                     server.controlMain.eliminarJugador(nombre);
-                    
+
                     // Actualizar id para cada thread servidor 
                     server.controlMain.actualizarIndices();
-                    
+
                     // Pasar turno
                     server.controlMain.pasarTurno(server.getTurno());
-                } catch (IOException ex) {
-                    Logger.getLogger(ThreadServidor.class.getName())
-                    .log(Level.SEVERE, null, ex);
-                }
-                break;
-                  
-            // --------------------- RELOAD ---------------------
-            case "reload":
-                // Activar todas las armas
-                reload((String)source);
-                try {
+                    break;
+
+                // --------------------- RELOAD ---------------------
+                case "reload":
+                    // Activar todas las armas
+                    reload((String)source);
                     writer.writeInt(2);
                     writer.writeUTF("reload");
-                } catch (IOException ex) {
-                    Logger.getLogger(ThreadServidor.class.getName())
-                    .log(Level.SEVERE, null, ex);
-                }
-                break;
-                
-            // --------------------- WILDCARD ---------------------
-            case "wildcard":
-                atacar(source);
-                try {
+                    break;
+
+                // --------------------- WILDCARD ---------------------
+                case "wildcard":
+                    atacar(source);
                     writer.writeInt(2);
                     writer.writeUTF("wildcard");
-                } catch (IOException ex) {
-                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
+                    break;
 
-            // --------------------- GROUP EXIT ---------------------
-            case "groupexit":
-                String remitente = (String)source;
-                try {
+                // --------------------- GROUP EXIT ---------------------
+                case "groupexit":
+                    String remitente = (String)source;
                     writer.writeInt(2);
                     writer.writeUTF("groupexit");
                     writer.writeUTF(remitente);
-                } catch (IOException ex) {
-                    Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-                
-            // --------------------- ATTACK ---------------------
-            // Ataque del atacante
-            case "attack":
-                atacar(source);
-                break;
-            // Ataque de la victima
-            case "attackVictim":
-                atacarVictima(source);
-                break;
-                
-            // --------------------- DEFAULT ---------------------
-            default:
-                break;
+                    break;
+
+                // --------------------- ATTACK ---------------------
+                // Ataque del atacante
+                case "attack":
+                    atacar(source);
+                    break;
+                // Ataque de la victima
+                case "attackVictim":
+                    atacarVictima(source);
+                    break;
+
+                // --------------------- DEFAULT ---------------------
+                default:
+                    break;
+            }
+        }catch(Exception e){
+
         }
     }
     
@@ -400,58 +365,34 @@ public class ThreadServidor extends Thread implements iObserver{
         Integer respuesta = server.controlMain.determinarAtaqueValido(nombre,
                             victima, personaje, arma, 1);
         System.out.println("respuesta: " + respuesta);
-        if(respuesta == 0){
-            try {
+        try {
+            if(respuesta == 0){
                 writer.writeInt(4);
                 writer.writeUTF("Error: el arma ya fue usada");
-            } catch (IOException ex) {
-                Logger.getLogger(ThreadServidor.class.getName())
-                .log(Level.SEVERE, null, ex);
-            }
-        }
-        else{
-            if(respuesta == -1){
-                try {
-                    writer.writeInt(4);
-                    writer.writeUTF("Error: el arma no existe");
-                } catch (IOException ex) {
-                    Logger.getLogger(ThreadServidor.class.getName())
-                            .log(Level.SEVERE, null, ex);
-                }
+
             }
             else{
-                if(respuesta == -2){
-                    try {
-                        writer.writeInt(4);
-                        writer.writeUTF("Error: el personaje no existe");
-                    } catch (IOException ex) {
-                        Logger.getLogger(ThreadServidor.class.getName())
-                                .log(Level.SEVERE, null, ex);
-                    }
+                if(respuesta == -1){
+                    writer.writeInt(4);
+                    writer.writeUTF("Error: el arma no existe");
                 }
                 else{
-                    if(respuesta == -3){
-                        try {
-                            writer.writeInt(4);
-                            writer.writeUTF("Error: el jugador no existe");
-                        } catch (IOException ex) {
-                            Logger.getLogger(ThreadServidor.class.getName())
-                                    .log(Level.SEVERE, null, ex);
-                        }
+                    if(respuesta == -2){
+                        writer.writeInt(4);
+                        writer.writeUTF("Error: el personaje no existe");
                     }
                     else{
-                        if(respuesta == -4){
-                            try {
-                                writer.writeInt(4);
-                                writer.writeUTF("Error: el personaje esta muerto. No puede atacar");
-                            } catch (IOException ex) {
-                                Logger.getLogger(ThreadServidor.class
-                                .getName()).log(Level.SEVERE, null, ex);
-                            }    
+                        if(respuesta == -3){
+                            writer.writeInt(4);
+                            writer.writeUTF("Error: el jugador no existe");
                         }
                         else{
-                            // Ataque valido
-                            try{
+                            if(respuesta == -4){
+                                writer.writeInt(4);
+                                writer.writeUTF("Error: el personaje esta muerto. No puede atacar");
+                            }
+                            else{
+                                // Ataque valido
                                 String tipoPersonaje = server.controlMain
                                         .personajeAtacante.getNombreCategoria();
                                 String imagenAtacante = server.controlMain
@@ -463,14 +404,13 @@ public class ThreadServidor extends Thread implements iObserver{
                                 writer.writeUTF(arma);
                                 writer.writeUTF(tipoPersonaje);
                                 writer.writeInt(respuesta);
-                            } catch (IOException ex) {
-                                Logger.getLogger(ThreadServidor.class
-                                .getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     }
                 }
             }
+        }catch(Exception e){
+
         }
     }
     
@@ -523,16 +463,17 @@ public class ThreadServidor extends Thread implements iObserver{
     }
 
     private void error() {
-        for (int i = 0; i < server.conexiones.size(); i++) {
-            ThreadServidor current = server.conexiones.get(i);
-            try {
-                if(i == this.id){
-                    current.writer.writeInt(3);
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(ChatCommand.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            for (int i = 0; i < server.conexiones.size(); i++) {
+                ThreadServidor current = server.conexiones.get(i);
+                    if(i == this.id){
+                        current.writer.writeInt(3);
+                    }
             }
+        }catch (IOException ex) {
+           Logger.getLogger(ChatCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
     private void error2() {
         for (int i = 0; i < server.conexiones.size(); i++) {

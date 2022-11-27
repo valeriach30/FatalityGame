@@ -163,11 +163,9 @@ public class ThreadCliente extends Thread{
                     default:
                         break;
                 }
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                 System.out.println("error cliente");
                 System.out.println(ex.toString());
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(ThreadCliente.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
