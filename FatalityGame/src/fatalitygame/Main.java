@@ -7,6 +7,7 @@ package fatalitygame;
 import Communication.Cliente;
 import Juego.Personaje.Personaje;
 import Libreria.Juego.Jugador;
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -440,8 +441,7 @@ public class Main extends javax.swing.JDialog {
 
     private void consolaTxtaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_consolaTxtaKeyPressed
         if (evt.getKeyCode() == evt.VK_ENTER){
-            System.out.println("comando:");
-            System.out.println(command);
+            System.out.println("comando:" + command);
             String[] arrayComandos = command.split(" -");
             try {
                 // Llamar al thread
@@ -624,24 +624,36 @@ public class Main extends javax.swing.JDialog {
                     porcentaje1.setText(danhoAtacante.toString() + "%");
                     // Actualizar vida
                     Integer vidaActual = Integer.parseInt(prc1.getText());
+                    if(vidaActual < 0){
+                        personaje1btn.setEnabled(false);
+                    }
                     Integer vidaResultante = vidaActual - danhoAtacante;
                     prc1.setText(vidaResultante.toString());
                     break;
                 case 1:
                     porcentaje2.setText(danhoAtacante.toString()+ "%");
                     Integer vidaActual2 = Integer.parseInt(prc2.getText());
+                    if(vidaActual2 < 0){
+                        personaje1btn.setEnabled(false);
+                    }
                     Integer vidaResultante2 = vidaActual2 - danhoAtacante;
                     prc2.setText(vidaResultante2.toString());
                     break;
                 case 2:
                     porcentaje3.setText(danhoAtacante.toString()+ "%");
                     Integer vidaActual3 = Integer.parseInt(prc3.getText());
+                    if(vidaActual3 < 0){
+                        personaje1btn.setEnabled(false);
+                    }
                     Integer vidaResultante3 = vidaActual3 - danhoAtacante;
                     prc3.setText(vidaResultante3.toString());
                     break;
                 case 3:
                     porcentaje4.setText(danhoAtacante.toString()+ "%");
                     Integer vidaActual4 = Integer.parseInt(prc4.getText());
+                    if(vidaActual4 < 0){
+                        personaje1btn.setEnabled(false);
+                    }
                     Integer vidaResultante4 = vidaActual4 - danhoAtacante;
                     prc4.setText(vidaResultante4.toString());
                     break;
@@ -655,5 +667,12 @@ public class Main extends javax.swing.JDialog {
     
     public void desactivarConsola(){
         consolaTxta.setEnabled(false);
+    }
+    
+    public void desactivarBotones(){
+        personaje1btn.setEnabled(false);
+        personaje2btn.setEnabled(false);
+        personaje3btn.setEnabled(false);
+        personaje4btn.setEnabled(false);
     }
 }

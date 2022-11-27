@@ -35,7 +35,8 @@ public class Controlador implements iObserved{
     public ObjectOutputStream Objectwriter;
     CommandManager manager = CommandManager.getIntance(); 
     public Personaje personajeAtacante;
-
+    public Arma lastArma;
+    
     public Controlador(Servidor server){
         this.server = server;
     }
@@ -124,6 +125,13 @@ public class Controlador implements iObserved{
         }
     }
     
+    public void salidaGrupal(String nombre) {
+        // falta implementar
+        ArrayList<String> commandArgs = new ArrayList<String>();
+        commandArgs.add(nombre);
+        ICommand command = manager.getCommand("groupexit");   
+        command.execute(commandArgs, System.out, server.conexiones);  
+    }
     
     // ----------------------------------OBSERVER----------------------------------
     
@@ -168,7 +176,13 @@ public class Controlador implements iObserved{
             Personaje personajeAct = null;
             for (int j = 0; j < jugadorAct.getPersonajes().size(); j++) {
                 if(jugadorAct.getPersonajes().get(j).getNombre().equals(personaje)){
+                    // Determinar si el personaje esta vivo
                     personajeAct = jugadorAct.getPersonajes().get(j);
+                    if(personajeAct.getVida() < 0){
+                        // ataque invalido: el personaje esta muerto
+                        personajeAct = null;
+                        return -4;
+                    }
                 }
             }
 
@@ -182,9 +196,7 @@ public class Controlador implements iObserved{
                 }
                 if(armaActual != null){
                     if(armaActual.isAvailable()){
-                        if(pasada == 2){
-                            armaActual.setAvailable(false);
-                        }
+                        lastArma = armaActual;
                         // ataque 
                         personajeAtacante = personajeAct;
                         // determinar la cantidad de danho que le va a hacer a los personajes
@@ -264,7 +276,7 @@ public class Controlador implements iObserved{
         Jugador victimaJugador = getJugador(nombreJugador);
         for (int i = 0; i < victimaJugador.getPersonajes().size(); i++) {
             String tipoCatPerActual = victimaJugador.getPersonajes().get(i).getNombreCategoria();
-            if(tipoCatPerActual.equals(categoria)){
+            if(tipoCatPerActual.equals(categoria) && victimaJugador.getPersonajes().get(i).getVida() > 0){
                 victimas.add(victimaJugador.getPersonajes().get(i));
             }
         }
@@ -338,6 +350,31 @@ public class Controlador implements iObserved{
             }
         }
     }
+
+    public boolean perdedor(String victima) {
+        Integer contador = 0;
+        
+        // Determinar la cantidad de personajes que murieron
+        Jugador victimaJugador = getJugador(victima);
+        for (int i = 0; i < victimaJugador.getPersonajes().size(); i++) {
+            String tipoCatPerActual = victimaJugador.getPersonajes().get(i).getNombreCategoria();
+            if(victimaJugador.getPersonajes().get(i).getVida() < 0){
+                contador++;
+            }
+        }
+        if(contador == victimaJugador.getPersonajes().size()){
+            // Todos los personajes estan muertos
+            // Eliminar (giveup)
+            rendirse(victima);
+            return true;
+        }
+        else{
+            // No todos los personajes han muerto
+            return false;
+        }
+    }
+
+    
 
     
 }

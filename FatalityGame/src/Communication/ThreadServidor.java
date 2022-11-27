@@ -87,7 +87,9 @@ public class ThreadServidor extends Thread implements iObserver{
                                     String personaje = arrayComandos[2];
                                     String arma = arrayComandos[3];
                                     server.controlMain.attack(nombre, jugadorEnemigo, personaje, arma);
-                                    
+                                    if(server.controlMain.lastArma != null){
+                                        server.controlMain.lastArma.setAvailable(false);
+                                    }
                                 }
                                 else{
                                     error();
@@ -101,11 +103,9 @@ public class ThreadServidor extends Thread implements iObserver{
                                 server.controlMain.rendirse(nombre);
                                 break;
                             case "groupexit":
+                                server.controlMain.salidaGrupal(nombre);
                                 break;
                             case "pass":
-                                System.out.println("pass");
-                                System.out.println("id: " + this.id);
-                                System.out.println("turno server: " + server.getTurno());
                                 if(this.id == server.getTurno()){
                                     server.controlMain.pasarTurno(server.getTurno());
                                 }
@@ -273,6 +273,7 @@ public class ThreadServidor extends Thread implements iObserver{
         String personaje= infoAtaque.get(1);
         String arma= infoAtaque.get(2);
         Integer respuesta = server.controlMain.determinarAtaqueValido(nombre, victima, personaje, arma, 1);
+        System.out.println("respuesta: " + respuesta);
         if(respuesta == 0){
             try {
                 writer.writeInt(4);
@@ -309,21 +310,29 @@ public class ThreadServidor extends Thread implements iObserver{
                         }
                     }
                     else{
-                        // Ataque valido
-                        try{
-                            String tipoPersonaje = server.controlMain.personajeAtacante.getNombreCategoria();
-                            String imagenAtacante = server.controlMain.personajeAtacante.getApariencia();
-                            writer.writeInt(2);
-                            writer.writeUTF("attack");
-                            writer.writeUTF(victima);
-                            writer.writeUTF(imagenAtacante);
-                            writer.writeUTF(arma);
-                            writer.writeUTF(tipoPersonaje);
-                            writer.writeInt(respuesta);
-                            // Pasar de turno cuando ataca
-                            server.controlMain.pasarTurno(server.getTurno());
-                        } catch (IOException ex) {
-                            Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                        if(respuesta == -4){
+                            try {
+                                writer.writeInt(4);
+                                writer.writeUTF("Error: el personaje esta muerto. No puede atacar");
+                            } catch (IOException ex) {
+                                Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                            }    
+                        }
+                        else{
+                            // Ataque valido
+                            try{
+                                String tipoPersonaje = server.controlMain.personajeAtacante.getNombreCategoria();
+                                String imagenAtacante = server.controlMain.personajeAtacante.getApariencia();
+                                writer.writeInt(2);
+                                writer.writeUTF("attack");
+                                writer.writeUTF(victima);
+                                writer.writeUTF(imagenAtacante);
+                                writer.writeUTF(arma);
+                                writer.writeUTF(tipoPersonaje);
+                                writer.writeInt(respuesta);
+                            } catch (IOException ex) {
+                                Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
                     }
                 }
@@ -338,7 +347,7 @@ public class ThreadServidor extends Thread implements iObserver{
         String personaje2= infoAtaque2.get(2);
         String arma2= infoAtaque2.get(3);
         Integer danho = server.controlMain.determinarAtaqueValido(jugadorAtacante, victima2, personaje2, arma2, 2);
-        if(danho != -1 && danho != -2 && danho != -3 && danho != 0){
+        if(danho != -1 && danho != -2 && danho != -3 && danho != 0 && danho != -4){
             // ataque valido
             // Obtener las victimas
             String tipoAtacante = server.controlMain.personajeAtacante.getNombreCategoria();
@@ -347,10 +356,11 @@ public class ThreadServidor extends Thread implements iObserver{
             atacante.setDamage(danho);
             atacante.setEnemigos(victimas);
             String resultado = atacante.atacar();
-
+            // Determinar si todos los personajes murieron
+            ArrayList<Integer> indices = server.controlMain.getIndicesVictimas(victima2, tipoAtacante);
+            boolean victimaPerdedor = server.controlMain.perdedor(victima2);
             try{
                 String imagenAtacante = atacante.getApariencia();
-                ArrayList<Integer> indices = server.controlMain.getIndicesVictimas(victima2, tipoAtacante);
                 writer.writeInt(2);
                 writer.writeUTF("attackVictim");
                 writer.writeUTF(atacante.getNombre());
@@ -360,7 +370,10 @@ public class ThreadServidor extends Thread implements iObserver{
                 writer.writeUTF(arma2);
                 writer.writeInt(danho);
                 writer.writeUTF(resultado);
+                writer.writeBoolean(victimaPerdedor);
                 Objectwriter.writeObject(indices);
+                // Pasar de turno cuando ataca
+                server.controlMain.pasarTurno(server.getTurno());
             } catch (IOException ex) {
                 Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
             }

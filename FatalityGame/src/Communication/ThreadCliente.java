@@ -88,11 +88,18 @@ public class ThreadCliente extends Thread{
                                     String arma = reader.readUTF();
                                     Integer danhoAtacante = reader.readInt();
                                     String ataque = reader.readUTF();
+                                    boolean perdio = reader.readBoolean();
+                                    
                                     ArrayList<Integer> indices = (ArrayList<Integer>) Objectreader.readObject();
                                     refPantalla.ultimoAtaqueRecibido(nombreAtacante, imagen, 
                                     tipoAtacante, jugadorAtacante, danhoAtacante, indices, arma);
                                     refPantalla.addMensaje(ataque);
                                     refPantalla.addLine();
+                                    
+                                    if(perdio){
+                                        refPantalla.addMensaje("Ha perdido :(" + "\n>");
+                                        refPantalla.desactivarBotones();
+                                    }
                                 }
                                 break;
                             case "chat":

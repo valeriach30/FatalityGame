@@ -31,7 +31,6 @@ public class AttackCommand extends BaseCommand{
             ThreadServidor current = conexiones.get(i);
             // Thread servidor del atacante
             if(current.nombre.equals(atacante)){
-                
                 ArrayList<String> infoAtaque = new ArrayList<String>();
                 infoAtaque.add(victima);
                 infoAtaque.add(personaje);
