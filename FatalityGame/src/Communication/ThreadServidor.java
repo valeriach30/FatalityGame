@@ -117,6 +117,11 @@ public class ThreadServidor extends Thread implements iObserver{
                                 else{
                                     error();
                                 }
+                                // Determinar si ya gano
+                                boolean gano = server.controlMain.ganador(nombre);
+                                if(gano){
+                                    writer.writeInt(7);
+                                }
                                 break;
                                 
                             //----------------------------CHAT----------------------------
@@ -210,6 +215,11 @@ public class ThreadServidor extends Thread implements iObserver{
                                 else{
                                     error2();
                                 }
+                                // Determinar si ya gano
+                                boolean gano2 = server.controlMain.ganador(nombre);
+                                if(gano2){
+                                    writer.writeInt(7);
+                                }
                                 break;
                             //----------------------------DESACTIVAR----------------------------
                             case "desactivar":
@@ -226,6 +236,7 @@ public class ThreadServidor extends Thread implements iObserver{
                     default:
                         break;
                 }
+                
             } catch (IOException ex) {
                 System.out.println("error servidor");
                 System.out.println(ex.toString());

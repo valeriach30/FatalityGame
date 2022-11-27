@@ -680,4 +680,8 @@ public class Main extends javax.swing.JDialog {
     public void comodin() {
             JOptionPane.showMessageDialog(null, "Ha recibido un comodin!!", "Info", JOptionPane.INFORMATION_MESSAGE);
     }
+    
+    public void ganador() {
+            JOptionPane.showMessageDialog(null, "Ha ganado!! Felicidades", "Info", JOptionPane.INFORMATION_MESSAGE);
+    }
 }

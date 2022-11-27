@@ -399,6 +399,13 @@ public class Controlador implements iObserved{
     }
 
     
-
+    public boolean ganador(String nombre){
+        if(server.conexiones.size() == 1 && server.conexiones.get(0).nombre.equals(nombre)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     
 }

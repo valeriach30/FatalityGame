@@ -153,6 +153,9 @@ public class ThreadCliente extends Thread{
                         break;
                     case 6:
                         refPantalla.addMensaje("No es su turno o no tiene un comodin habilitado\n>");
+                    case 7:
+                        refPantalla.ganador();
+                        break;
                     default:
                         break;
                 }
