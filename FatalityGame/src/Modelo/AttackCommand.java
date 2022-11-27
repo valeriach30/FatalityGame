@@ -45,6 +45,7 @@ public class AttackCommand extends BaseCommand{
                     infoAtaque.add(victima);
                     infoAtaque.add(personaje);
                     infoAtaque.add(arma);
+                    infoAtaque.add("2");
                     current.notificar("attackVictim", infoAtaque);
                 }
             }

@@ -336,8 +336,8 @@ public class ThreadServidor extends Thread implements iObserver{
                 
             // --------------------- WILDCARD ---------------------
             case "wildcard":
+                atacar(source);
                 break;
-                
             // --------------------- GROUP EXIT ---------------------
             case "groupexit":
                 break;
@@ -448,6 +448,8 @@ public class ThreadServidor extends Thread implements iObserver{
         String victima2= infoAtaque2.get(1);
         String personaje2= infoAtaque2.get(2);
         String arma2= infoAtaque2.get(3);
+        String pasarTurno= infoAtaque2.get(4);
+        
         Integer danho = server.controlMain.determinarAtaqueValido(jugadorAtacante, victima2, personaje2, arma2, 2);
         if(danho != -1 && danho != -2 && danho != -3 && danho != 0 && danho != -4){
             // ataque valido
@@ -475,7 +477,10 @@ public class ThreadServidor extends Thread implements iObserver{
                 writer.writeBoolean(victimaPerdedor);
                 Objectwriter.writeObject(indices);
                 // Pasar de turno cuando ataca
-                server.controlMain.pasarTurno(server.getTurno());
+                if(pasarTurno == "2"){
+                    System.out.println("paso de turno!!");
+                    server.controlMain.pasarTurno(server.getTurno());
+                }
             } catch (IOException ex) {
                 Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
             }

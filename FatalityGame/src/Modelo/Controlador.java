@@ -152,11 +152,24 @@ public class Controlador implements iObserved{
         commandArgs.add(victimaJ);
         commandArgs.add(personaje1);
         commandArgs.add(arma1);
+        commandArgs.add("");
         commandArgs.add(arma2);
         commandArgs.add("2");
         ICommand command = manager.getCommand("wildcard");   
         command.execute(commandArgs, System.out, server.conexiones);  
     }
+
+    public void attack(String nombre, String jugadorEnemigo, String personaje, String arma) {
+        ArrayList<String> commandArgs = new ArrayList<String>();
+        commandArgs.add(nombre);
+        commandArgs.add(jugadorEnemigo);
+        commandArgs.add(personaje);
+        commandArgs.add(arma);
+        ICommand command = manager.getCommand("attack");   
+        command.execute(commandArgs, System.out, server.conexiones);        
+    }
+    
+    
     // ----------------------------------OBSERVER----------------------------------
     
     @Override
@@ -173,18 +186,6 @@ public class Controlador implements iObserved{
 
     
     // ----------------------------------FUNCIONES DE APOYO----------------------------------
-    
-    
-    public void attack(String nombre, String jugadorEnemigo, String personaje, String arma) {
-        // calcula el dano aca?
-        ArrayList<String> commandArgs = new ArrayList<String>();
-        commandArgs.add(nombre);
-        commandArgs.add(jugadorEnemigo);
-        commandArgs.add(personaje);
-        commandArgs.add(arma);
-        ICommand command = manager.getCommand("attack");   
-        command.execute(commandArgs, System.out, server.conexiones);        
-    }
     
     
     public Integer determinarAtaqueValido(String nombre, String victima, String personaje, String arma, Integer pasada) {
