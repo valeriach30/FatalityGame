@@ -80,7 +80,7 @@ public class ThreadServidor extends Thread implements iObserver{
                 int randomNumber=(random.nextInt(65536)-32768);
                 
                 // Dar comodin
-                if(elapsedMinutes >= 1 && comodinHabilitado == false /*&& randomNumber > 0*/){ // CAMBIAR A 5 MINUTOS Y HABILITAR RANDOM
+                if(elapsedMinutes >= 5 && comodinHabilitado == false && randomNumber > 0){ 
                     comodinHabilitado = true;
                     writer.writeInt(5);
                     startTime = System.currentTimeMillis();

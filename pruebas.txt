@@ -45,8 +45,3 @@ pike
 lance
 
 -------------------------------------------------------------------------------
----- lo que falta ----
-
--scores
--revisar si se deshabilita un arma despues del comodin
--actualizar el comodin de 1 min a 5 min
