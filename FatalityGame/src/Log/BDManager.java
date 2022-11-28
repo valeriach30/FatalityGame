@@ -90,10 +90,11 @@ public class BDManager implements BDServer{
         }
     }
     @Override
-    public void mostrarTabla(){
-        System.out.println("--------------------------------Tabla--------------------------------");
+    public String mostrarTabla(){
+        String respuesta = "--------------------------------LOG--------------------------------";
         for (int i = 0; i < tabla.size(); i++) {
-            System.out.println(tabla.get(i).toString());
+            respuesta += "\n"+ tabla.get(i).toString();
         }
+        return respuesta;
     }
 }

@@ -51,6 +51,7 @@ public class ThreadServidor extends Thread implements iObserver{
         writer = new DataOutputStream(socketRef.getOutputStream());
         Objectreader = new ObjectInputStream(socketRef.getInputStream());
         Objectwriter = new ObjectOutputStream(socketRef.getOutputStream());
+        this.bdManagerProxy = new BDManagerProxy();
         this.server = server;
         this.id = id;
     }
@@ -111,16 +112,19 @@ public class ThreadServidor extends Thread implements iObserver{
                                     String jugadorEnemigo = arrayComandos[1];
                                     String personaje = arrayComandos[2];
                                     String arma = arrayComandos[3];
+                                    
+                                    bdManagerProxy.insert("{Command: Attack; -From " + nombre + " To "
+                                    + jugadorEnemigo + " With Pj " + personaje + " With Wp " + arma + "}");
+                                    
                                     server.controlMain.attack(nombre, jugadorEnemigo, personaje, arma);
+                                    
                                     if(server.controlMain.lastArma != null){
                                         server.controlMain.lastArma.setAvailable(false);
                                     }
-                                    bdManagerProxy.insert("{Command Succesful}"); // TODO: Revisar si esta en el luga correcto
-
                                 }
                                 
                                 else{
-                                    bdManagerProxy.insert("{Command Error}");
+                                    bdManagerProxy.insert("{Command Attack Error: Not right turn}");
                                     error();
                                 }
                                 // Determinar si ya gano
@@ -133,30 +137,30 @@ public class ThreadServidor extends Thread implements iObserver{
                             //----------------------------CHAT----------------------------
                             case "chat":
                                 String mensaje = arrayComandos[1];
+                                bdManagerProxy.insert("{Command: Chat; " + mensaje + " -From " + nombre +"}");
                                 server.controlMain.chat(mensaje, nombre);
-                                bdManagerProxy.insert("{Command Succesful}");
                                 break;
                                 
                             //----------------------------GIVEUP----------------------------
                             case "giveup":
+                                bdManagerProxy.insert("{Command: GiveUp; -From " + nombre + "}");
                                 server.controlMain.rendirse(nombre);
-                                bdManagerProxy.insert("{Command Succesful}");
                                 break;
                                 
                             //----------------------------GROUP EXIT----------------------------
                             case "groupexit":
+                                bdManagerProxy.insert("{Command: GruopExit; -From " + nombre + "}");
                                 server.controlMain.salidaGrupal(nombre);
-                                bdManagerProxy.insert("{Command Succesful}");
                                 break;
                             
                             //----------------------------PASS----------------------------
                             case "pass":
                                 if(this.id == server.getTurno()){
+                                    bdManagerProxy.insert("{Command: Pass; turno " + server.getTurno() + "}");
                                     server.controlMain.pasarTurno(server.getTurno());
-                                    bdManagerProxy.insert("{Command Succesful}");
                                 }
                                 else{
-                                    bdManagerProxy.insert("{Command Error}");
+                                    bdManagerProxy.insert("{Command Error: Not right turn}");
                                     error();
                                 }
                                 break;
@@ -165,24 +169,25 @@ public class ThreadServidor extends Thread implements iObserver{
                             case "privatechat":
                                 String jugador = arrayComandos[1];
                                 String mensajePrivado = arrayComandos[2];
+                                
+                                bdManagerProxy.insert("{Command: Privatechat;" 
+                                + mensajePrivado + " -From " + nombre + " -To " 
+                                + jugador + "}");
+                                
                                 server.controlMain.chatPrivado(mensajePrivado, nombre, jugador);
-                                bdManagerProxy.insert("{Command Succesful}");
                                 break;
                                 
                             //----------------------------RELOAD----------------------------
                             case "reload":
                                 // Determinar si es su turno
                                 if(this.id == server.getTurno()){
+                                    bdManagerProxy.insert("{Command: Reload; -From " + nombre +"}");
                                     Integer respuesta = server.controlMain.recargar(nombre);
                                     if(respuesta == -1){
-                                        try {
-                                            writer.writeInt(4);
-                                            writer.writeUTF("Alguna de las armas sigue disponible");
-                                        } catch (IOException ex) {
-                                            Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
-                                        }
+                                        writer.writeInt(4);
+                                        writer.writeUTF("Alguna de las armas sigue disponible");
+                                        bdManagerProxy.insert("{Command Error}");
                                     }
-                                    bdManagerProxy.insert("{Command Succesful}");
                                 }
                                 else{
                                     bdManagerProxy.insert("{Command Error}");
@@ -193,6 +198,7 @@ public class ThreadServidor extends Thread implements iObserver{
                             //----------------------------SELECT----------------------------
                             case "select":
                                 String jugadorSeleccionado = arrayComandos[1];
+                                bdManagerProxy.insert("{Command: Select; -From " + jugadorSeleccionado + "}");
                                 server.controlMain.seleccionarJugador(jugadorSeleccionado);
                                 break;    
                                 
@@ -213,7 +219,14 @@ public class ThreadServidor extends Thread implements iObserver{
                                         arma1 = arrayComandos[3];
                                         personaje2 = arrayComandos[4];
                                         arma2 = arrayComandos[5];
-                                        server.controlMain.comodinJugadores(nombre, victimaJ, personaje1, arma1, personaje2, arma2);
+                                        
+                                        bdManagerProxy.insert("{Command: WildCard; -From " + nombre 
+                                        + " With Pj " + personaje1 + " With Wp " + arma1 + " With Pj " + 
+                                        personaje2 + " With Wp " + arma2 + " To " + victimaJ + "}");
+                                        
+                                        server.controlMain
+                                        .comodinJugadores(nombre,victimaJ, personaje1, arma1,
+                                        personaje2,arma2);
                                     }
                                     else{
                                         if(arrayComandos.length == 5){
@@ -222,10 +235,16 @@ public class ThreadServidor extends Thread implements iObserver{
                                             personaje1 = arrayComandos[2];
                                             arma1 = arrayComandos[3];
                                             arma2 = arrayComandos[4];
-                                            server.controlMain.comodinArmas(nombre, victimaJ, personaje1, arma1, arma2);
+                                            
+                                            bdManagerProxy.insert("{Command: WildCard; -From " + nombre 
+                                            + " With Pj"+ personaje1 + " With Wp " + arma1 + " and " + arma2 
+                                            + " To " + victimaJ + "}"); 
+                                            
+                                            server.controlMain.comodinArmas(nombre, 
+                                            victimaJ, personaje1, arma1, arma2);
+                                            
                                         }
                                     }
-                                    bdManagerProxy.insert("{Command Succesful}");
                                 }
                                 else{
                                     bdManagerProxy.insert("{Command Error}");
@@ -238,10 +257,15 @@ public class ThreadServidor extends Thread implements iObserver{
                                 }
                                 break;
                             //----------------------------DESACTIVAR----------------------------
-                            case "desactivar":  // TODO: Revisar en controlador
+                            case "desactivar":  
+                                bdManagerProxy.insert("{Command: Desactivar}");
                                 server.controlMain.desactivarArmas(nombre);
                                 writer.writeInt(4);
                                 writer.writeUTF("Armas desactivadas");
+                                bdManagerProxy.insert("{Command Succesful}");
+                                break;
+                            case "log":
+                                server.controlMain.log(nombre);
                                 break;
                         }
                         break;
@@ -258,9 +282,10 @@ public class ThreadServidor extends Thread implements iObserver{
                     default:
                         break;
                 }
-            } catch (Exception ex) {
-                System.out.println("error servidor");
-                System.out.println(ex.toString());
+            }  catch (IOException ex) {
+                Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     } 
@@ -276,6 +301,7 @@ public class ThreadServidor extends Thread implements iObserver{
                     writer.writeInt(2);
                     writer.writeUTF("chat");
                     writer.writeUTF((String)source);
+                    bdManagerProxy.insert("{Command Succesful}");
                     break;
 
                 // --------------------- CHAT PRIVADO ---------------------
@@ -283,6 +309,7 @@ public class ThreadServidor extends Thread implements iObserver{
                     writer.writeInt(2);
                     writer.writeUTF("privatechat");
                     writer.writeUTF((String)source);
+                    bdManagerProxy.insert("{Command Succesful}");
                     break;
 
                 // --------------------- SELECT ---------------------
@@ -299,6 +326,7 @@ public class ThreadServidor extends Thread implements iObserver{
                     writer.writeUTF("pass");
                     writer.writeInt(turno);
                     writer.writeUTF(nombreDelTurno);
+                    bdManagerProxy.insert("{Command Succesful}");
                     break;
 
                 // --------------------- GIVEUP ---------------------
@@ -327,6 +355,8 @@ public class ThreadServidor extends Thread implements iObserver{
 
                     // Pasar turno
                     server.controlMain.pasarTurno(server.getTurno());
+                    
+                    bdManagerProxy.insert("{Command Succesful}");
                     break;
 
                 // --------------------- RELOAD ---------------------
@@ -335,6 +365,7 @@ public class ThreadServidor extends Thread implements iObserver{
                     reload((String)source);
                     writer.writeInt(2);
                     writer.writeUTF("reload");
+                    bdManagerProxy.insert("{Command Succesful}");
                     break;
 
                 // --------------------- WILDCARD ---------------------
@@ -361,13 +392,20 @@ public class ThreadServidor extends Thread implements iObserver{
                 case "attackVictim":
                     atacarVictima(source);
                     break;
-
+                
+                // --------------------- LOG ---------------------
+                case "log":
+                    String log = bdManagerProxy.mostrarTabla();
+                    writer.writeInt(2);
+                    writer.writeUTF("log");
+                    writer.writeUTF(log);
+                    break;
                 // --------------------- DEFAULT ---------------------
                 default:
                     break;
             }
-        }catch(Exception e){
-
+        } catch (IOException ex) {
+            Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -385,27 +423,31 @@ public class ThreadServidor extends Thread implements iObserver{
             if(respuesta == 0){
                 writer.writeInt(4);
                 writer.writeUTF("Error: el arma ya fue usada");
-
+                bdManagerProxy.insert("{Command Error: Weapon already used}"); 
             }
             else{
                 if(respuesta == -1){
                     writer.writeInt(4);
                     writer.writeUTF("Error: el arma no existe");
+                    bdManagerProxy.insert("{Command Error: Weapon does not exist}"); 
                 }
                 else{
                     if(respuesta == -2){
                         writer.writeInt(4);
                         writer.writeUTF("Error: el personaje no existe");
+                        bdManagerProxy.insert("{Command Error: Character does not exist}"); 
                     }
                     else{
                         if(respuesta == -3){
                             writer.writeInt(4);
                             writer.writeUTF("Error: el jugador no existe");
+                            bdManagerProxy.insert("{Command Error: Player does not exist}"); 
                         }
                         else{
                             if(respuesta == -4){
                                 writer.writeInt(4);
                                 writer.writeUTF("Error: el personaje esta muerto. No puede atacar");
+                                bdManagerProxy.insert("{Command Error: Character dead}"); 
                             }
                             else{
                                 // Ataque valido
@@ -420,6 +462,7 @@ public class ThreadServidor extends Thread implements iObserver{
                                 writer.writeUTF(arma);
                                 writer.writeUTF(tipoPersonaje);
                                 writer.writeInt(respuesta);
+                                bdManagerProxy.insert("{Command Succesful}"); 
                             }
                         }
                     }
@@ -523,9 +566,11 @@ public class ThreadServidor extends Thread implements iObserver{
         System.out.println("salir: " +server.controlMain.salir);
         if(server.controlMain.salir){
             // todos dijeron que si
+            bdManagerProxy.insert("{Command Succesful}");
             return true;
         }else{
             // alguno dijo que no
+            bdManagerProxy.insert("{Command Not Succesful: Someone said no}");
             return false;
         }
     }

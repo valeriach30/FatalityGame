@@ -12,5 +12,5 @@ public interface BDServer {
     public int insert(String json);
     public int delete(int id);
     public int update(int id, String json);
-    public void mostrarTabla();
+    public String mostrarTabla();
 }

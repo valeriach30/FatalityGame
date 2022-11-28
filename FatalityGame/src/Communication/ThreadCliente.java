@@ -141,6 +141,9 @@ public class ThreadCliente extends Thread{
                                     refPantalla.addMensaje("Comodin ejecutandose/ejecutado");
                                 }
                                 break;
+                            case "log":
+                                refPantalla.addMensaje(reader.readUTF());
+                                break;
                         }
                         break;
                     case 3:

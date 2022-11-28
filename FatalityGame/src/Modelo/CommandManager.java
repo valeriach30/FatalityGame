@@ -25,6 +25,7 @@ public class CommandManager {
         registCommand(ReloadCommand.COMMAND_NAME, ReloadCommand.class);
         registCommand(SelectPlayerCommand.COMMAND_NAME, SelectPlayerCommand.class);
         registCommand(WildcardCommand.COMMAND_NAME, WildcardCommand.class);
+        registCommand(LogCommand.COMMAND_NAME, LogCommand.class);
     }      
     
     public static synchronized CommandManager getIntance() {           

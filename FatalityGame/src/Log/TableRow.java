@@ -49,7 +49,7 @@ public class TableRow {
 
     @Override
     public String toString() {
-        return "Fila{" + "id=" + id + ", json=" + json + ", createTS=" + createTS + '}';
+        return "{" +json + ", createTS=" + createTS + '}';
     }
     
 }

@@ -147,8 +147,8 @@ public class BDManagerProxy implements BDServer {
     }
     
     @Override
-    public void mostrarTabla(){
-        bdManager.mostrarTabla();
+    public String mostrarTabla(){
+        return bdManager.mostrarTabla();
     }
     
 }
