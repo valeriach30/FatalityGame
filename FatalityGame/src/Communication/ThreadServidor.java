@@ -85,7 +85,7 @@ public class ThreadServidor extends Thread implements iObserver{
                     writer.writeInt(5);
                     startTime = System.currentTimeMillis();
                 }
-
+                
                 switch (instruccionId){
                     //----------------------------INICIO----------------------------
                     case 1:
@@ -289,9 +289,11 @@ public class ThreadServidor extends Thread implements iObserver{
                         // Actualizar los rankings
                         String resultado = scores.toString();
                         String against = server.controlMain.toStringScores(nombre);
+                        String ranking = server.controlMain.ranking();
                         writer.writeInt(9);
                         writer.writeUTF(resultado);
                         writer.writeUTF(against);
+                        writer.writeUTF(ranking);
                         break;
                     //----------------------------OTROS----------------------------
                     case 3:

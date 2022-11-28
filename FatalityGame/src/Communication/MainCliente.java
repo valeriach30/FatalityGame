@@ -12,7 +12,7 @@ import fatalitygame.Configuracion;
  * @author vchin
  */
 public class MainCliente {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         try{
             Configuracion pantalla = new Configuracion();
             pantalla.setVisible(true); 

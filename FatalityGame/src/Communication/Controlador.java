@@ -439,8 +439,13 @@ public class Controlador implements iObserved{
 
     
     public boolean ganador(String nombre){
-        if(server.conexiones.size() == 1 && server.conexiones.get(0).nombre.equals(nombre)){
-            return true;
+        if(server.conexiones.get(0).nombre != null){
+            if(server.conexiones.size() == 1 && server.conexiones.get(0).nombre.equals(nombre)){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
         else{
             return false;
@@ -521,5 +526,9 @@ public class Controlador implements iObserved{
             
         }
         return resultado;
+    }
+
+    String ranking() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

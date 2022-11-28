@@ -708,4 +708,8 @@ public class Main extends javax.swing.JDialog {
     public void actualizarAgainst(String enemies) {
         enemiestxta.setText(enemies);
     }
+
+    public void actualizarRanking(String readUTF) {
+        rankingtxta.setText(readUTF);
+    }
 }

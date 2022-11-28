@@ -166,6 +166,7 @@ public class ThreadCliente extends Thread{
                     case 9:
                         refPantalla.actualizarStatus(reader.readUTF());
                         refPantalla.actualizarAgainst(reader.readUTF());
+                        refPantalla.actualizarRanking(reader.readUTF());
                     default:
                         break;
                 }

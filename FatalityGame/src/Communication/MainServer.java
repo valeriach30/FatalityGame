@@ -12,7 +12,7 @@ import java.io.IOException;
  * @author vchin
  */
 public class MainServer {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         ServerForm  pantalla = new ServerForm();
         Servidor srv = new Servidor(pantalla);
         pantalla.serverRef =srv;
