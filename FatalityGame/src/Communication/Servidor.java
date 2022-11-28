@@ -8,6 +8,7 @@ package Communication;
 import Libreria.Juego.Juego;
 import Libreria.Juego.Jugador;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -25,12 +26,13 @@ public class Servidor {
     private ServerSocket srv;
     private int turno;
     public boolean partidaIniciada = false;
-    public Controlador controlMain = new Controlador(this);
+    public Controlador controlMain;
     
-    public Servidor(ServerForm refPantalla) throws IOException{
+    public Servidor(ServerForm refPantalla) throws IOException, FileNotFoundException, ClassNotFoundException{
         this.refPantalla = refPantalla;
-        conexiones = new ArrayList<ThreadServidor>();
+        this.conexiones = new ArrayList<ThreadServidor>();
         this.refPantalla.setSrv(this);
+        this.controlMain = new Controlador(this);
     }
     
     public void iniciarPartida(){

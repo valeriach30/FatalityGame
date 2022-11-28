@@ -49,7 +49,7 @@ public class ThreadServidor extends Thread implements iObserver{
     public Servidor server;
     private boolean comodinHabilitado = false;
     public long startTime = System.currentTimeMillis();
-    public Scores scores = new Scores(0,0,0,0,0,0);
+    public Scores scores; 
     
     public ThreadServidor(Socket socketRef, Servidor server, int id) throws IOException {
         this.socketRef = socketRef;
@@ -94,10 +94,12 @@ public class ThreadServidor extends Thread implements iObserver{
                             nombre = JOptionPane.showInputDialog("Nickname:");
                         }
                         
+                        server.controlMain.agregarNombre(nombre);
+                        
+                        scores = new Scores(nombre, 0,0,0,0,0,0);
+                        
                         // Cargar scores
                         cargarScores();
-                        
-                        server.controlMain.agregarNombre(nombre);
                         
                         Jugador player = (Jugador) Objectreader.readObject();
                         player.setNombre(nombre);
@@ -286,8 +288,10 @@ public class ThreadServidor extends Thread implements iObserver{
                         }
                         // Actualizar los rankings
                         String resultado = scores.toString();
+                        String against = server.controlMain.toStringScores(nombre);
                         writer.writeInt(9);
                         writer.writeUTF(resultado);
+                        writer.writeUTF(against);
                         break;
                     //----------------------------OTROS----------------------------
                     case 3:
@@ -610,6 +614,7 @@ public class ThreadServidor extends Thread implements iObserver{
         String nombreArchivo = "/" + nombre +".txt";
         File f = new File(System.getProperty("user.dir") + nombreArchivo);
         
+        
         // El jugador ya existe, entonces se cargan los datos
         if(f.exists()){
             
@@ -618,6 +623,7 @@ public class ThreadServidor extends Thread implements iObserver{
 
             Scores obj = (Scores) objectIn.readObject();
             this.scores = obj;
+            server.controlMain.scores.add(obj);
         }
         
         // El jugador no existe, se crea el archivo
@@ -625,7 +631,9 @@ public class ThreadServidor extends Thread implements iObserver{
             FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.dir") + nombreArchivo);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
             objectOut.writeObject(scores);
+            server.controlMain.scores.add(scores);
         }
+        server.controlMain.actualizarScores();
     }
     
     public void actualizarScores() throws FileNotFoundException, IOException{
@@ -633,5 +641,13 @@ public class ThreadServidor extends Thread implements iObserver{
         FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.dir") + nombreArchivo);
         ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
         objectOut.writeObject(scores);
+        
+        // Actualizar score del controlador
+        for (int i = 0; i < server.controlMain.scores.size(); i++) {
+            Scores current = server.controlMain.scores.get(i);
+            if(current.getNombre().equals(nombre)){
+                current = this.scores;
+            }
+        }
     }
 }

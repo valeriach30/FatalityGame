@@ -165,6 +165,7 @@ public class ThreadCliente extends Thread{
                         refPantalla.avisoEmpate();
                     case 9:
                         refPantalla.actualizarStatus(reader.readUTF());
+                        refPantalla.actualizarAgainst(reader.readUTF());
                     default:
                         break;
                 }

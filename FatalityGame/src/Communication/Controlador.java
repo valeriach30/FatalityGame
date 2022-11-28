@@ -21,6 +21,11 @@ import java.util.ArrayList;
 import Log.BDManagerProxy;
 import Modelo.CommandManager;
 import Modelo.ICommand;
+import Modelo.Scores;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 /**
  *
@@ -30,6 +35,7 @@ public class Controlador implements iObserved{
     
     public Juego juego = new Juego();
     public ArrayList<iObserver> observers;
+    public ArrayList<Scores> scores = new ArrayList<Scores>();
     public ArrayList<String> nombres = null;
     private Servidor server;
     public DataInputStream reader;
@@ -41,8 +47,9 @@ public class Controlador implements iObserved{
     public Arma lastArma;
     public boolean salir = false;
     
-    public Controlador(Servidor server)throws IOException{
+    public Controlador(Servidor server)throws IOException, FileNotFoundException, ClassNotFoundException{
         this.server = server;
+        cargarScores();
     }
     
     
@@ -448,6 +455,7 @@ public class Controlador implements iObserved{
                 current.actualizarScores();
             }
         }
+        actualizarScores();
     }
     
     public void actualizarAtaques(String nombre, Integer danho, Integer cantidadVictimas) throws IOException{
@@ -467,5 +475,51 @@ public class Controlador implements iObserved{
                 current.actualizarScores();
             }
         }
+        actualizarScores();
+    }
+
+    private void cargarScores() throws FileNotFoundException, IOException, ClassNotFoundException {
+        File f = new File(System.getProperty("user.dir") + "/scores.txt");
+        
+        // El archivo ya existe, entonces se cargan los datos
+        if(f.exists()){
+            
+            FileInputStream fileIn = new FileInputStream(System.getProperty("user.dir") + "/scores.txt");
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+
+            ArrayList<Scores> obj = (ArrayList<Scores>) objectIn.readObject();
+            this.scores = obj;
+        }
+        
+        // El archivo no existe, se crea
+        else{
+            FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.dir") + "/scores.txt");
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(scores);
+        }
+    }
+    
+    public void actualizarScores() throws FileNotFoundException, IOException{
+        FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.dir") + "/scores.txt");
+        ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+        objectOut.writeObject(scores);
+        for (int i = 0; i < scores.size(); i++) {
+            System.out.println("nombre: " + scores.get(i).getNombre());
+        }
+    }
+    
+    public String toStringScores(String nombre){
+        String resultado = "";
+        for (int i = 0; i < this.scores.size(); i++) {
+            Scores current = scores.get(i);
+            if(current.getNombre().equals(nombre)){
+            }
+            else{
+                resultado += "\nJUGADOR: " + current.getNombre();
+                resultado += "\n" + current.toString();
+            }
+            
+        }
+        return resultado;
     }
 }

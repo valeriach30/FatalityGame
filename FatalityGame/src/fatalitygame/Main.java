@@ -704,4 +704,8 @@ public class Main extends javax.swing.JDialog {
     public void actualizarStatus(String status) {
         statustxta.setText(status);
     }
+
+    public void actualizarAgainst(String enemies) {
+        enemiestxta.setText(enemies);
+    }
 }

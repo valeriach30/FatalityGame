@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @author vchin
  */
 public class Scores implements Serializable{
+    private String nombre;
     private int ataquesExitosos;
     private int ataquesFracasados;
     private int muertes;
@@ -20,8 +21,9 @@ public class Scores implements Serializable{
     private int rendiciones;
     private static final long serialVersionUID = 6529685098267757690L;
     
-    public Scores(int ataquesExitosos, int ataquesFracasados, 
+    public Scores(String nombre, int ataquesExitosos, int ataquesFracasados, 
     int muertes, int ganes, int perdidas, int rendiciones) {
+        this.nombre = nombre;
         this.ataquesExitosos = ataquesExitosos;
         this.ataquesFracasados = ataquesFracasados;
         this.muertes = muertes;
@@ -79,6 +81,14 @@ public class Scores implements Serializable{
 
     public void setRendiciones(int rendiciones) {
         this.rendiciones = rendiciones;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     @Override
