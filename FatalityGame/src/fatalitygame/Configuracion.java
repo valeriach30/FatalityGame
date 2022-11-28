@@ -5,7 +5,7 @@
 package fatalitygame;
 
 
-import Modelo.Controlador;
+import Communication.Controlador;
 import Communication.Cliente;
 import Juego.Armas.Arma;
 import Juego.Personaje.Personaje;

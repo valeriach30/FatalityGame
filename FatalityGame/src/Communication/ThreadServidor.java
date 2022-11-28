@@ -24,6 +24,12 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import Log.BDManagerProxy;
+import Modelo.Scores;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 
 /**
  *
@@ -40,17 +46,17 @@ public class ThreadServidor extends Thread implements iObserver{
     public ObjectOutputStream Objectwriter;
     public String nombre;
     private boolean running = true;
-    Servidor server;
+    public Servidor server;
     private boolean comodinHabilitado = false;
-    long startTime = System.currentTimeMillis();
-    
+    public long startTime = System.currentTimeMillis();
+    public Scores scores = new Scores(0,0,0,0,0,0);
     
     public ThreadServidor(Socket socketRef, Servidor server, int id) throws IOException {
         this.socketRef = socketRef;
-        reader = new DataInputStream(socketRef.getInputStream());
-        writer = new DataOutputStream(socketRef.getOutputStream());
-        Objectreader = new ObjectInputStream(socketRef.getInputStream());
-        Objectwriter = new ObjectOutputStream(socketRef.getOutputStream());
+        this.reader = new DataInputStream(socketRef.getInputStream());
+        this.writer = new DataOutputStream(socketRef.getOutputStream());
+        this.Objectreader = new ObjectInputStream(socketRef.getInputStream());
+        this.Objectwriter = new ObjectOutputStream(socketRef.getOutputStream());
         this.bdManagerProxy = new BDManagerProxy();
         this.server = server;
         this.id = id;
@@ -87,6 +93,10 @@ public class ThreadServidor extends Thread implements iObserver{
                         while(server.controlMain.nombreValido(nombre) == false){
                             nombre = JOptionPane.showInputDialog("Nickname:");
                         }
+                        
+                        // Cargar scores
+                        cargarScores();
+                        
                         server.controlMain.agregarNombre(nombre);
                         
                         Jugador player = (Jugador) Objectreader.readObject();
@@ -130,6 +140,9 @@ public class ThreadServidor extends Thread implements iObserver{
                                 // Determinar si ya gano
                                 boolean gano = server.controlMain.ganador(nombre);
                                 if(gano){
+                                    // Actualizar scores
+                                    scores.setGanes(scores.getGanes() + 1);
+                                    actualizarScores();
                                     writer.writeInt(7);
                                 }
                                 break;
@@ -253,6 +266,9 @@ public class ThreadServidor extends Thread implements iObserver{
                                 // Determinar si ya gano
                                 boolean gano2 = server.controlMain.ganador(nombre);
                                 if(gano2){
+                                    // Actualizar scores
+                                    scores.setGanes(scores.getGanes() + 1);
+                                    actualizarScores();
                                     writer.writeInt(7);
                                 }
                                 break;
@@ -268,6 +284,10 @@ public class ThreadServidor extends Thread implements iObserver{
                                 server.controlMain.log(nombre);
                                 break;
                         }
+                        // Actualizar los rankings
+                        String resultado = scores.toString();
+                        writer.writeInt(9);
+                        writer.writeUTF(resultado);
                         break;
                     //----------------------------OTROS----------------------------
                     case 3:
@@ -356,6 +376,12 @@ public class ThreadServidor extends Thread implements iObserver{
                     // Pasar turno
                     server.controlMain.pasarTurno(server.getTurno());
                     
+                    // Actualizar scores
+                    scores.setRendiciones(scores.getRendiciones() + 1);
+                    scores.setPerdidas(scores.getPerdidas() + 1);
+                    actualizarScores();
+                    
+                    // Insertar al log
                     bdManagerProxy.insert("{Command Succesful}");
                     break;
 
@@ -381,6 +407,9 @@ public class ThreadServidor extends Thread implements iObserver{
                     writer.writeInt(2);
                     writer.writeUTF("groupexit");
                     writer.writeUTF(remitente);
+                    // Actualizar scores
+                    scores.setRendiciones(scores.getRendiciones() + 1);
+                    actualizarScores();
                     break;
 
                 // --------------------- ATTACK ---------------------
@@ -461,7 +490,9 @@ public class ThreadServidor extends Thread implements iObserver{
                                 writer.writeUTF(imagenAtacante);
                                 writer.writeUTF(arma);
                                 writer.writeUTF(tipoPersonaje);
-                                writer.writeInt(respuesta);
+                                Integer danho = server.controlMain.getDanho(victima, 
+                                tipoPersonaje, respuesta);
+                                writer.writeInt(danho);
                                 bdManagerProxy.insert("{Command Succesful}"); 
                             }
                         }
@@ -473,7 +504,7 @@ public class ThreadServidor extends Thread implements iObserver{
         }
     }
     
-    private void atacarVictima(Object source){
+    private void atacarVictima(Object source) throws IOException{
         ArrayList<String> infoAtaque2 = (ArrayList<String>)source;
         String jugadorAtacante= infoAtaque2.get(0);
         String victima2= infoAtaque2.get(1);
@@ -486,14 +517,14 @@ public class ThreadServidor extends Thread implements iObserver{
             // ataque valido
             // Obtener las victimas
             String tipoAtacante = server.controlMain.personajeAtacante.getNombreCategoria();
-            ArrayList<Personaje> victimas = server.controlMain.getVictimas(victima2, tipoAtacante);
+            ArrayList<Personaje> victimas = server.controlMain.getVictimas(victima2, tipoAtacante, danho, jugadorAtacante);
             Personaje atacante = server.controlMain.personajeAtacante;
             atacante.setDamage(danho);
             atacante.setEnemigos(victimas);
             String resultado = atacante.atacar();
             // Determinar si todos los personajes murieron
             ArrayList<Integer> indices = server.controlMain.getIndicesVictimas(victima2, tipoAtacante);
-            boolean victimaPerdedor = server.controlMain.perdedor(victima2);
+            boolean victimaPerdedor = server.controlMain.perdedor(victima2, jugadorAtacante);
             try{
                 String imagenAtacante = atacante.getApariencia();
                 writer.writeInt(2);
@@ -573,5 +604,34 @@ public class ThreadServidor extends Thread implements iObserver{
             bdManagerProxy.insert("{Command Not Succesful: Someone said no}");
             return false;
         }
+    }
+
+    private void cargarScores() throws IOException, ClassNotFoundException {
+        String nombreArchivo = "/" + nombre +".txt";
+        File f = new File(System.getProperty("user.dir") + nombreArchivo);
+        
+        // El jugador ya existe, entonces se cargan los datos
+        if(f.exists()){
+            
+            FileInputStream fileIn = new FileInputStream(System.getProperty("user.dir") + nombreArchivo);
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+
+            Scores obj = (Scores) objectIn.readObject();
+            this.scores = obj;
+        }
+        
+        // El jugador no existe, se crea el archivo
+        else{
+            FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.dir") + nombreArchivo);
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(scores);
+        }
+    }
+    
+    public void actualizarScores() throws FileNotFoundException, IOException{
+        String nombreArchivo = "/" + nombre +".txt";
+        FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.dir") + nombreArchivo);
+        ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+        objectOut.writeObject(scores);
     }
 }

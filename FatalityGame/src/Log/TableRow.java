@@ -15,7 +15,7 @@ public class TableRow {
     private int id;
     private String json;
     private Date createTS;
-
+    
     public TableRow(int id, String json, Date createTS) {
         this.id = id;
         this.json = json;

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Modelo;
+package Communication;
 
 import Communication.Servidor;
 import Communication.ThreadServidor;
@@ -19,6 +19,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import Log.BDManagerProxy;
+import Modelo.CommandManager;
+import Modelo.ICommand;
 
 /**
  *
@@ -34,7 +36,7 @@ public class Controlador implements iObserved{
     public DataOutputStream writer;
     public ObjectInputStream Objectreader;
     public ObjectOutputStream Objectwriter;
-    CommandManager manager = CommandManager.getIntance(); 
+    public CommandManager manager = CommandManager.getIntance(); 
     public Personaje personajeAtacante;
     public Arma lastArma;
     public boolean salir = false;
@@ -304,7 +306,8 @@ public class Controlador implements iObserved{
         return danho;
     }
     
-    public ArrayList<Personaje> getVictimas(String nombreJugador, String categoria){
+    public ArrayList<Personaje> getVictimas(String nombreJugador, String categoria, 
+        Integer danho, String atacante) throws IOException{
         ArrayList<Personaje> victimas = new ArrayList<Personaje>();
         Jugador victimaJugador = getJugador(nombreJugador);
         for (int i = 0; i < victimaJugador.getPersonajes().size(); i++) {
@@ -313,7 +316,25 @@ public class Controlador implements iObserved{
                 victimas.add(victimaJugador.getPersonajes().get(i));
             }
         }
+        
+        // Actualizar los scores del atacante
+        actualizarAtaques(atacante, danho, victimas.size());
         return victimas;
+    }
+    
+    public Integer getDanho(String nombreJugador, String categoria, Integer danho){
+        Integer cantidadVictimas = 0;
+        Jugador victimaJugador = getJugador(nombreJugador);
+        for (int i = 0; i < victimaJugador.getPersonajes().size(); i++) {
+            String tipoCatPerActual = victimaJugador.getPersonajes().get(i).getNombreCategoria();
+            if(tipoCatPerActual.equals(categoria) && victimaJugador.getPersonajes().get(i).getVida() > 0){
+                cantidadVictimas++;
+            }
+        }
+        if(cantidadVictimas == 0){
+            cantidadVictimas = 1;
+        }
+        return danho * cantidadVictimas;
     }
     
     public ArrayList<Integer> getIndicesVictimas(String nombreJugador, String categoria){
@@ -384,7 +405,7 @@ public class Controlador implements iObserved{
         }
     }
 
-    public boolean perdedor(String victima) {
+    public boolean perdedor(String victima, String atacante) throws IOException {
         Integer contador = 0;
         
         // Determinar la cantidad de personajes que murieron
@@ -395,6 +416,9 @@ public class Controlador implements iObserved{
                 contador++;
             }
         }
+        // Actualizar los scores del atacante
+        actualizarMuertes(atacante, contador);
+        
         if(contador == victimaJugador.getPersonajes().size()){
             // Todos los personajes estan muertos
 
@@ -416,5 +440,32 @@ public class Controlador implements iObserved{
         }
     }
 
+    public void actualizarMuertes(String nombre, Integer contador) throws IOException{
+        for (int i = 0; i < server.conexiones.size(); i++) {
+            ThreadServidor current = server.conexiones.get(i);
+            if(current.nombre.equals(nombre)){
+                current.scores.setMuertes(current.scores.getMuertes() + contador);
+                current.actualizarScores();
+            }
+        }
+    }
     
+    public void actualizarAtaques(String nombre, Integer danho, Integer cantidadVictimas) throws IOException{
+        Integer porcentajeDanho = danho * cantidadVictimas;
+        
+        for (int i = 0; i < server.conexiones.size(); i++) {
+            ThreadServidor current = server.conexiones.get(i);
+            if(current.nombre.equals(nombre)){
+                if(porcentajeDanho < 100){
+                    // ataque fallido
+                    current.scores.setAtaquesFracasados(current.scores.getAtaquesFracasados() + 1);
+                }
+                else{
+                    // ataque exitoso
+                    current.scores.setAtaquesExitosos(current.scores.getAtaquesExitosos() + 1);
+                }
+                current.actualizarScores();
+            }
+        }
+    }
 }

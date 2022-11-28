@@ -27,3 +27,51 @@ Mon Nov 28 09:14:53 CST 2022 insert into tabla values{Command Succesful}
 Mon Nov 28 09:14:53 CST 2022 insert into tabla values{Command Succesful}
 Mon Nov 28 09:15:12 CST 2022 insert into tabla values{Command: Attack; -From vale To adri With Pj xd With Wp xd}
 Mon Nov 28 09:15:12 CST 2022 insert into tabla values{Command Error: Character does not exist}
+Mon Nov 28 10:58:39 CST 2022 insert into tabla values{Command: Pass; turno 0}
+Mon Nov 28 10:58:39 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 10:58:39 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 10:59:04 CST 2022 insert into tabla values{Command: Attack; -From raul To vale With Pj kronika2 With Wp Weapon}
+Mon Nov 28 10:59:04 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 10:59:04 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 10:59:04 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:04:20 CST 2022 insert into tabla values{Command: Attack; -From vale To raul With Pj subzero With Wp a}
+Mon Nov 28 11:04:20 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:04:20 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:04:20 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:07:21 CST 2022 insert into tabla values{Command: Attack; -From vale To raul With Pj sonya With Wp a}
+Mon Nov 28 11:07:21 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:07:21 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:07:21 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:15:08 CST 2022 insert into tabla values{Command: Chat; hola a todos -From vale}
+Mon Nov 28 11:15:08 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:16:35 CST 2022 insert into tabla values{Command: Attack; -From vale To raul With Pj kitana With Wp a}
+Mon Nov 28 11:16:35 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:16:35 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:16:35 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:16:49 CST 2022 insert into tabla values{Command: Chat; que tal -From vale}
+Mon Nov 28 11:16:49 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:16:49 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:18:55 CST 2022 insert into tabla values{Command: Chat; hola -From raul}
+Mon Nov 28 11:18:55 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:18:55 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:32:35 CST 2022 insert into tabla values{Command: Chat; hola a todos -From vale}
+Mon Nov 28 11:32:35 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:32:35 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:32:46 CST 2022 insert into tabla values{Command: Chat;  todo bien￿? -From raul}
+Mon Nov 28 11:32:46 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:32:46 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:33:09 CST 2022 insert into tabla values{Command: Attack; -From vale To raul With Pj mileena With Wp aaaa}
+Mon Nov 28 11:33:09 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:33:09 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:33:09 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:33:43 CST 2022 insert into tabla values{Command: Attack; -From raul To vale With Pj raiden With Wp d}
+Mon Nov 28 11:33:43 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:33:43 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:33:43 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:34:10 CST 2022 insert into tabla values{Command: GiveUp; -From vale}
+Mon Nov 28 11:34:10 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:34:10 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:34:21 CST 2022 insert into tabla values{Command: Chat; xd -From raul}
+Mon Nov 28 11:34:21 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 11:34:33 CST 2022 insert into tabla values{Command: Attack; -From raul To vale With Pj raiden With Wp d}
+Mon Nov 28 11:34:33 CST 2022 insert into tabla values{Command Error: Weapon already used}

@@ -163,6 +163,8 @@ public class ThreadCliente extends Thread{
                     case 8:
                         refPantalla.desactivarConsola();
                         refPantalla.avisoEmpate();
+                    case 9:
+                        refPantalla.actualizarStatus(reader.readUTF());
                     default:
                         break;
                 }

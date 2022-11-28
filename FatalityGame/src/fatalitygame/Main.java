@@ -700,4 +700,8 @@ public class Main extends javax.swing.JDialog {
     public void avisoEmpate() {
         JOptionPane.showMessageDialog(null, "Salida Mutua ejecutada con exito. Nadie ha ganado", "Info", JOptionPane.INFORMATION_MESSAGE);
     }
+
+    public void actualizarStatus(String status) {
+        statustxta.setText(status);
+    }
 }
