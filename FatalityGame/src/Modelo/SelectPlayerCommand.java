@@ -30,7 +30,7 @@ public class SelectPlayerCommand extends BaseCommand{
         for (int i = 0; i < conexiones.size(); i++) {
             ThreadServidor current = conexiones.get(i);
             if(current.nombre.equals(jugador)){
-                current.notificar("select", "");
+                current.notificar("select", jugador);
             }
         }
         ArrayList<String> array = new ArrayList<String>();

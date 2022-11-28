@@ -61,6 +61,7 @@ public class ThreadCliente extends Thread{
                         this.turnoActual = reader.readInt();
                         refPantalla.setID(id);
                         nombre = reader.readUTF();
+                        this.player.setNombre(nombre);
                         refPantalla.pintarSiguienteTurno (reader.readUTF());
                         refPantalla.setTitle(nombre);
                         refPantalla.setVisible(true);

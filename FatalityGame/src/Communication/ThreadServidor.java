@@ -242,6 +242,10 @@ public class ThreadServidor extends Thread implements iObserver{
                                         server.controlMain
                                         .comodinJugadores(nombre,victimaJ, personaje1, arma1,
                                         personaje2,arma2);
+                                        
+                                        if(server.controlMain.lastArma != null){
+                                            server.controlMain.lastArma.setAvailable(false);
+                                        }
                                     }
                                     else{
                                         if(arrayComandos.length == 5){
@@ -257,7 +261,9 @@ public class ThreadServidor extends Thread implements iObserver{
                                             
                                             server.controlMain.comodinArmas(nombre, 
                                             victimaJ, personaje1, arma1, arma2);
-                                            
+                                            if(server.controlMain.lastArma != null){
+                                                server.controlMain.lastArma.setAvailable(false);
+                                            }
                                         }
                                     }
                                 }
