@@ -28,7 +28,7 @@ public class Servidor {
     public boolean partidaIniciada = false;
     public Controlador controlMain = new Controlador(this);
     
-    public Servidor(ServerForm refPantalla) {
+    public Servidor(ServerForm refPantalla) throws IOException{
         this.refPantalla = refPantalla;
         conexiones = new ArrayList<ThreadServidor>();
         this.refPantalla.setSrv(this);

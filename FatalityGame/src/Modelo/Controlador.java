@@ -64,7 +64,7 @@ public class Controlador implements iObserved{
         commandArgs.add(mensaje);
         commandArgs.add(nombre);
         ICommand command = manager.getCommand("chat");   
-        bdManagerProxy.insert("{Command: Chat}");
+        bdManagerProxy.insert("{Command: Chat; " + mensaje + " -From " + nombre +"}");
         command.execute(commandArgs, System.out, server.conexiones);        
     }
     
@@ -74,7 +74,7 @@ public class Controlador implements iObserved{
         commandArgs.add(nombre);
         commandArgs.add(jugador);
         ICommand command = manager.getCommand("privatechat");   
-        bdManagerProxy.insert("{Command: Privatechat}");
+        bdManagerProxy.insert("{Command: Privatechat;" + mensaje + " -From " + nombre + " -To " + jugador + "}");
         command.execute(commandArgs, System.out, server.conexiones);        
     }
 
@@ -83,7 +83,7 @@ public class Controlador implements iObserved{
         ArrayList<String> commandArgs = new ArrayList<String>();
         commandArgs.add(Integer.toString(turno));
         ICommand command = manager.getCommand("pass");   
-        bdManagerProxy.insert("{Command: Pass}");
+        bdManagerProxy.insert("{Command: Pass; turno " + turno + "}");
         ArrayList<String> resultados = command.execute(commandArgs, System.out, server.conexiones);        
     }
     
@@ -91,7 +91,7 @@ public class Controlador implements iObserved{
         ArrayList<String> commandArgs = new ArrayList<String>();
         commandArgs.add(jugador);
         ICommand command = manager.getCommand("select");   
-        bdManagerProxy.insert("{Command: Select}");
+        bdManagerProxy.insert("{Command: Select; -From " + jugador + "}");
         command.execute(commandArgs, System.out, server.conexiones);        
     }
     
@@ -99,7 +99,7 @@ public class Controlador implements iObserved{
         ArrayList<String> commandArgs = new ArrayList<String>();
         commandArgs.add(nombre);
         ICommand command = manager.getCommand("giveup");  
-        bdManagerProxy.insert("{Command: GiveUp}");
+        bdManagerProxy.insert("{Command: GiveUp; -From " + nombre + "}");
         command.execute(commandArgs, System.out, server.conexiones);        
     }
     
@@ -125,7 +125,7 @@ public class Controlador implements iObserved{
             ArrayList<String> commandArgs = new ArrayList<String>();
             commandArgs.add(nombre);
             ICommand command = manager.getCommand("reload");  
-            bdManagerProxy.insert("{Command: Reload}");
+            bdManagerProxy.insert("{Command: Reload; -From " + nombre +"}");
             command.execute(commandArgs, System.out, server.conexiones);    
             return 0;
         }
@@ -141,7 +141,7 @@ public class Controlador implements iObserved{
         ArrayList<String> commandArgs = new ArrayList<String>();
         commandArgs.add(nombre);
         ICommand command = manager.getCommand("groupexit"); 
-        bdManagerProxy.insert("{Command: GruopExit}");
+        bdManagerProxy.insert("{Command: GruopExit; -From " + nombre + "}");
         command.execute(commandArgs, System.out, server.conexiones); 
     }
     
@@ -155,7 +155,7 @@ public class Controlador implements iObserved{
         commandArgs.add(arma2);
         commandArgs.add("1");
         ICommand command = manager.getCommand("wildcard");   
-        bdManagerProxy.insert("{Command: WildCard}");
+        bdManagerProxy.insert("{Command: WildCard; -From " + atacante + " With Pj " + personaje1 + " With Wp " + arma1 + " To " + victimaJ + " With Pj " + personaje2 + " With Wp " + arma2 + "}");
         command.execute(commandArgs, System.out, server.conexiones);  
     }
     
@@ -169,7 +169,7 @@ public class Controlador implements iObserved{
         commandArgs.add(arma2);
         commandArgs.add("2");
         ICommand command = manager.getCommand("wildcard");  // Revisar si el nombre es el mismo
-        bdManagerProxy.insert("{Command: WildCart}");
+        bdManagerProxy.insert("{Command: WildCart}"); //TODO: Revisar cuales son los parametros
         command.execute(commandArgs, System.out, server.conexiones);  
     }
 
@@ -180,7 +180,7 @@ public class Controlador implements iObserved{
         commandArgs.add(personaje);
         commandArgs.add(arma);
         ICommand command = manager.getCommand("attack");   
-        bdManagerProxy.insert("{Command: Attack}");
+        bdManagerProxy.insert("{Command: Attack; -From " + nombre + " To " + jugadorEnemigo + " With Pj " + personaje + " With Wp " + arma + "}");
         command.execute(commandArgs, System.out, server.conexiones);        
     }
     

@@ -23,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import Log.BDManagerProxy;
 
 /**
  *
@@ -31,6 +32,7 @@ import javax.swing.JOptionPane;
 public class ThreadServidor extends Thread implements iObserver{
     
     public int id;
+    public BDManagerProxy bdManagerProxy = new BDManagerProxy();
     private Socket socketRef;
     public DataInputStream reader;
     public DataOutputStream writer;
@@ -113,8 +115,12 @@ public class ThreadServidor extends Thread implements iObserver{
                                     if(server.controlMain.lastArma != null){
                                         server.controlMain.lastArma.setAvailable(false);
                                     }
+                                    bdManagerProxy.insert("{Command Succesful}"); // TODO: Revisar si esta en el luga correcto
+
                                 }
+                                
                                 else{
+                                    bdManagerProxy.insert("{Command Error}");
                                     error();
                                 }
                                 // Determinar si ya gano
@@ -128,24 +134,29 @@ public class ThreadServidor extends Thread implements iObserver{
                             case "chat":
                                 String mensaje = arrayComandos[1];
                                 server.controlMain.chat(mensaje, nombre);
+                                bdManagerProxy.insert("{Command Succesful}");
                                 break;
                                 
                             //----------------------------GIVEUP----------------------------
                             case "giveup":
                                 server.controlMain.rendirse(nombre);
+                                bdManagerProxy.insert("{Command Succesful}");
                                 break;
                                 
                             //----------------------------GROUP EXIT----------------------------
                             case "groupexit":
                                 server.controlMain.salidaGrupal(nombre);
+                                bdManagerProxy.insert("{Command Succesful}");
                                 break;
                             
                             //----------------------------PASS----------------------------
                             case "pass":
                                 if(this.id == server.getTurno()){
                                     server.controlMain.pasarTurno(server.getTurno());
+                                    bdManagerProxy.insert("{Command Succesful}");
                                 }
                                 else{
+                                    bdManagerProxy.insert("{Command Error}");
                                     error();
                                 }
                                 break;
@@ -155,6 +166,7 @@ public class ThreadServidor extends Thread implements iObserver{
                                 String jugador = arrayComandos[1];
                                 String mensajePrivado = arrayComandos[2];
                                 server.controlMain.chatPrivado(mensajePrivado, nombre, jugador);
+                                bdManagerProxy.insert("{Command Succesful}");
                                 break;
                                 
                             //----------------------------RELOAD----------------------------
@@ -170,8 +182,10 @@ public class ThreadServidor extends Thread implements iObserver{
                                             Logger.getLogger(ThreadServidor.class.getName()).log(Level.SEVERE, null, ex);
                                         }
                                     }
+                                    bdManagerProxy.insert("{Command Succesful}");
                                 }
                                 else{
+                                    bdManagerProxy.insert("{Command Error}");
                                     error();
                                 }
                                 break;
@@ -211,8 +225,10 @@ public class ThreadServidor extends Thread implements iObserver{
                                             server.controlMain.comodinArmas(nombre, victimaJ, personaje1, arma1, arma2);
                                         }
                                     }
+                                    bdManagerProxy.insert("{Command Succesful}");
                                 }
                                 else{
+                                    bdManagerProxy.insert("{Command Error}");
                                     error2();
                                 }
                                 // Determinar si ya gano
@@ -222,7 +238,7 @@ public class ThreadServidor extends Thread implements iObserver{
                                 }
                                 break;
                             //----------------------------DESACTIVAR----------------------------
-                            case "desactivar":
+                            case "desactivar":  // TODO: Revisar en controlador
                                 server.controlMain.desactivarArmas(nombre);
                                 writer.writeInt(4);
                                 writer.writeUTF("Armas desactivadas");
