@@ -102,3 +102,30 @@ Mon Nov 28 12:23:53 CST 2022 insert into tabla values{Command Succesful}
 Mon Nov 28 12:24:12 CST 2022 insert into tabla values{Command: Chat; holaa -From vale}
 Mon Nov 28 12:24:12 CST 2022 insert into tabla values{Command Succesful}
 Mon Nov 28 12:24:12 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 14:13:42 CST 2022 insert into tabla values{Command: Chat; hola -From chat}
+Mon Nov 28 14:13:42 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 14:15:58 CST 2022 insert into tabla values{Command: Chat; hola -From vale}
+Mon Nov 28 14:15:58 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 14:15:58 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 14:21:55 CST 2022 insert into tabla values{Command: Chat; hola -From raul}
+Mon Nov 28 14:21:55 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 14:21:55 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 14:23:58 CST 2022 insert into tabla values{Command: Pass; turno 0}
+Mon Nov 28 14:23:58 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 14:23:58 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 14:24:02 CST 2022 insert into tabla values{Command: GiveUp; -From raul}
+Mon Nov 28 14:24:02 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 14:24:02 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 14:24:12 CST 2022 insert into tabla values{Command: Chat; hopla -From vale}
+Mon Nov 28 14:24:12 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 14:24:24 CST 2022 insert into tabla values{Command: Attack; -From vale To raul With Pj xd- With Wp xd}
+Mon Nov 28 14:24:24 CST 2022 insert into tabla values{Command Error: Character does not exist}
+Mon Nov 28 14:30:20 CST 2022 insert into tabla values{Command: Chat; hola -From raul}
+Mon Nov 28 14:30:20 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 14:30:20 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 14:32:22 CST 2022 insert into tabla values{Command: Chat; hola -From vale}
+Mon Nov 28 14:32:22 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 14:32:22 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 14:35:56 CST 2022 insert into tabla values{Command: Chat; hola -From raul}
+Mon Nov 28 14:35:56 CST 2022 insert into tabla values{Command Succesful}
+Mon Nov 28 14:35:56 CST 2022 insert into tabla values{Command Succesful}

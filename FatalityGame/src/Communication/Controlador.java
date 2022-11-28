@@ -26,6 +26,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  *
@@ -529,6 +534,46 @@ public class Controlador implements iObserved{
     }
 
     String ranking() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String resultado = "";
+        HashMap<String, Integer> rank = new HashMap<String, Integer>();
+
+        for (int i = 0; i < scores.size(); i++) {
+            String nombre = scores.get(i).getNombre();
+            Integer muertes = scores.get(i).getMuertes();
+            if(muertes == 0){
+                muertes = 1;
+            }
+            Integer calificacion = scores.get(i).getGanes() / muertes;
+            rank.put(nombre, calificacion);
+        }
+        
+        LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
+        ArrayList<Integer> list = new ArrayList<>();
+       
+        for (Map.Entry<String, Integer> entry : rank.entrySet()) {
+            list.add(entry.getValue());
+        }
+        //Collections.reverse(list); 
+        list.sort(Collections.reverseOrder());
+
+        System.out.println("list");
+        System.out.println(list.toString());
+        for (int num : list) {
+            for (Entry<String, Integer> entry : rank.entrySet()) {
+                if (entry.getValue().equals(num)) {
+                    sortedMap.put(entry.getKey(), num);
+                }
+            }
+        }
+        System.out.println(sortedMap);
+        Integer contador = 0;
+        for(String key: sortedMap.keySet()){
+            Integer valor = sortedMap.get(key);
+            if(contador <= 10){
+                resultado += "\n" + (contador + 1) + ". " + key + " - " + valor + " - ";
+            }
+            contador += 1;
+        }
+        return resultado;
     }
 }
