@@ -86,7 +86,6 @@ public class Controlador implements iObserved{
     }
     
     public void seleccionarJugador(String jugador){
-        System.out.println("jugador seleccionado: " + jugador);
         ArrayList<String> commandArgs = new ArrayList<String>();
         commandArgs.add(jugador);
         ICommand command = manager.getCommand("select");   
@@ -366,7 +365,6 @@ public class Controlador implements iObserved{
     public boolean nombreValido(String nombre){
         
         if(nombres != null){
-            System.out.println(nombres.toString());
             if(nombres.contains(nombre)){
                 return false;
             }
@@ -514,9 +512,6 @@ public class Controlador implements iObserved{
         FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.dir") + "/scores.txt");
         ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
         objectOut.writeObject(scores);
-        for (int i = 0; i < scores.size(); i++) {
-            System.out.println("nombre: " + scores.get(i).getNombre());
-        }
     }
     
     public String toStringScores(String nombre){
@@ -562,7 +557,6 @@ public class Controlador implements iObserved{
                 }
             }
         }
-        System.out.println(sortedMap);
         Integer contador = 0;
         for(String key: sortedMap.keySet()){
             Float valor = sortedMap.get(key);

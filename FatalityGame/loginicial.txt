@@ -212,3 +212,5 @@ Mon Nov 28 15:06:58 CST 2022 insert into tabla values{Command Succesful}
 Mon Nov 28 15:06:58 CST 2022 insert into tabla values{Command Succesful}
 Mon Nov 28 15:07:18 CST 2022 insert into tabla values{Command: Select; -From raul}
 Mon Nov 28 15:13:05 CST 2022 insert into tabla values{Command: Select; -From vale}
+Mon Nov 28 15:14:30 CST 2022 insert into tabla values{Command: GruopExit; -From vale}
+Mon Nov 28 15:14:48 CST 2022 insert into tabla values{Command Succesful}

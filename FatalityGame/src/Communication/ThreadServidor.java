@@ -605,8 +605,6 @@ public class ThreadServidor extends Thread implements iObserver{
     }
     
     public boolean determinar(){
-        System.out.println("-------------");
-        System.out.println("salir: " +server.controlMain.salir);
         if(server.controlMain.salir){
             // todos dijeron que si
             bdManagerProxy.insert("{Command Succesful}");
