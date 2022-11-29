@@ -80,12 +80,19 @@ public class ThreadServidor extends Thread implements iObserver{
                 int randomNumber=(random.nextInt(65536)-32768);
                 
                 // Dar comodin
-                if(elapsedMinutes >= 5 && comodinHabilitado == false && randomNumber > 0){ 
+                if(elapsedMinutes >= 2 && comodinHabilitado == false && randomNumber > 0){ 
                     comodinHabilitado = true;
                     writer.writeInt(5);
                     startTime = System.currentTimeMillis();
                 }
-                
+                // Determinar si ya gano
+                boolean gano1 = server.controlMain.ganador(nombre);
+                if(gano1){
+                    // Actualizar scores
+                    scores.setGanes(scores.getGanes() + 1);
+                    actualizarScores();
+                    writer.writeInt(7);
+                }
                 switch (instruccionId){
                     //----------------------------INICIO----------------------------
                     case 1:

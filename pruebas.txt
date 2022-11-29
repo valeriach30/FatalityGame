@@ -24,9 +24,9 @@ wildcard -raul -milleena -knife -blade
 select -vale
 pass
 chat -hola a todos
-privateChat -raul -hola todo bien?
+privatechat -raul -hola todo bien?
 
-
+select, chat, privatechat, pass, attack, wildcard, giveup, groupexit
 -------------------------------------------------------------------------------
 
 knife
